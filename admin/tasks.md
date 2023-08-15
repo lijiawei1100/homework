@@ -5,7 +5,7 @@ Use the entries below as an example.
 
 ## Week 4
 
-Everyone: create application skeleton / delegate tasks - meeting 11:00am Friday 18 Aug
+Everyone: create application skeleton / delegate tasks - meeting 11:00am Thursday 17 Aug
 
 ## Week 5
 
