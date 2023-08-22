@@ -9,14 +9,14 @@ declaration: >-
 # members).  
 contributions:
   - uid:  u7531534
-    contribution: 35
+    contribution: 50
   - uid: u7471333
-    contribution: 65
+    contribution: 50
 
 # Sign *your* name and uids here. (Remove entries if you have fewer
 # than three members)
 signatures:
   - name: Jiawei Li
     uid: u7531534
-  - name:
-    uid:
+  - name: Benjamin Campbell
+    uid: u7471333
