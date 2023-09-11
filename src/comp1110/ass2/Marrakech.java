@@ -1,6 +1,8 @@
 package comp1110.ass2;
 
 public class Marrakech {
+    public final static int NUMBER_OF_PLAYERS = 4;
+
 
     /**
      * Determine whether a rug String is valid.
