@@ -10,16 +10,16 @@ public class Move {
     private int diceNumber;
 
 
-    void pay(Player[] players, Assam assam) {
-        // calculate how much palyers need to pay if the player who last moved Assam is not the player who owns the rug landed on
-    }
-
-    void placerug(Board board, Player turn, Rug rugs) {
-        //place the rugs on the board for the player in his/her turn
-    }
+  void pay(Player[] players,Assam assam){
+    // calculate how much players need to pay if the player who last moved Assam is not the player who owns the rug landed on
+  }
+  void placeRug(Board board,Player turn,Rug rugs){
+      //place the rugs on the board for the player in his/her turn
+  }
 
     void walk(Assam assam, int diceNumber) {
         //return the position after the assam walked;
     }
 }
 
+}
