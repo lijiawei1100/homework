@@ -1,5 +1,8 @@
 package comp1110.ass2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Marrakech {
     public final static int NUMBER_OF_PLAYERS = 4;
 
@@ -26,7 +29,41 @@ public class Marrakech {
      */
     public static boolean isRugValid(String gameString, String rug) {
         // FIXME: Task 4
-        return false;
+         //1.to see if the string is 7 characters long
+        if(rug.length()!=7) return false;
+        //2.to see if the first character in the String corresponds to the color in the game
+        //TODO Since the player will lose the game, the list should be changeable
+        List list = new ArrayList();
+        list.add('r');
+        list.add('y');
+        list.add('c');
+        list.add('p');
+        if (list.contains(rug.charAt(0)) == false) return false;
+        //3. to see if the next two characters are digits
+        if (!Character.isDigit(rug.charAt(1))|!Character.isDigit(rug.charAt(2))) return false;
+        //4. to see if the next four characters are digits and on the board. To see if the position of the two squares are next to each other.
+        boolean boolean_1 = true;
+        boolean boolean_2 = false;
+        boolean boolean_3 = false;
+
+        for(int i = 0;i<4;i++){
+            if(!Character.isDigit(rug.charAt(i+3))) boolean_1 = false;
+        }
+        if((((int)rug.charAt(3) == (int)rug.charAt(5)) & (Math.abs((int)rug.charAt(4)-(int)rug.charAt(6)) == 1))
+                | (((int)rug.charAt(4) == (int)rug.charAt(6)) & (Math.abs((int)rug.charAt(3)-(int)rug.charAt(5)) == 1))
+        ) boolean_2 = true;
+
+        if (Character.getNumericValue(rug.charAt(3))<7 & Character.getNumericValue(rug.charAt(4))<7 & Character.getNumericValue(rug.charAt(5))<7 & Character.getNumericValue(rug.charAt(6))<7) boolean_3 = true;
+
+        if ((boolean_1 & (boolean_2) & (boolean_3)) ==false) return false;
+
+        //5. to see if the same rug is on the board
+        List list_1 = new ArrayList();
+        for (int i=0;i<49 ;i++){
+            list_1.add(gameString.substring(i*3+37,i*3+40));
+            if (list_1.contains(rug.substring(0,3)) == true) return false;
+        }
+        return true;
     }
 
     /**

@@ -7,7 +7,7 @@ public class Player{
      * rugsNumber represents the remaining numbers of rugs, it should be a two-digit number. 00 when there is no rugs. 15 is the starting number.
      * gameState represents if players are in the game or not. 'p' represents they are in the game, 'o' represents out of the game.
      */
-    private String colour;
+    public String colour;
     private String money;
     private int rugsNumber;
     private char gameState;
