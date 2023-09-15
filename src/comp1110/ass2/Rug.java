@@ -7,7 +7,7 @@ public class Rug {
     private Square[] squares ;
     private String id;
 
-    Rug(String colour,String id, Square[] squares){
+    Rug(String colour,String id, Square[] squares){ //maybe Square[2]?
         this.colour = colour;
         this.id = id;
         this.squares = squares;

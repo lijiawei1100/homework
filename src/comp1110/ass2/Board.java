@@ -8,14 +8,9 @@ import static comp1110.ass2.Rug.RUG_01;
 import static comp1110.ass2.Rug.rugToString;
 
 public class Board {
-    // The width of the board (left to right)
-    public final static int BOARD_WIDTH = 7;
-    // The height of the board (top to bottom)
-    public final static int BOARD_HEIGHT = 7;
-
+    public final static int BOARD_WIDTH = 7; // The width of the board (left to right)
+    public final static int BOARD_HEIGHT = 7; // The height of the board (top to bottom)
     public static Square[][] boardMatrix;
-
-
 
     private int length;
     private int width;
