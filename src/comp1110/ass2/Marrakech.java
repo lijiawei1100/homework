@@ -89,11 +89,8 @@ public class Marrakech {
      * @return The result of the roll of the die meeting the criteria above
      */
     public static int rollDie() {
-        // FIXME: Task 6
-        // get random number and then depending on that number transform to the result.
-        // return a random integer between 1 and 6
         Random rand = new Random();
-        int randomNum = rand.nextInt(6) + 1;
+        int randomNum = rand.nextInt(6) + 1; // return a random integer between 1 and 6
         int MarrakechDie;
         if (randomNum == 1) {
             MarrakechDie = 1;
@@ -102,7 +99,7 @@ public class Marrakech {
         } else if (randomNum == 4 || randomNum == 5) {
             MarrakechDie = 3;
         } else {
-            MarrakechDie = 4;
+            MarrakechDie = 4; //maps the random number to different sides of a Marrakech Die
         }
         return MarrakechDie;
     }
