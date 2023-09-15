@@ -1,6 +1,7 @@
 package comp1110.ass2;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.List;
 
 public class Marrakech {
@@ -46,14 +47,21 @@ public class Marrakech {
         boolean boolean_2 = false;
         boolean boolean_3 = false;
 
-        for(int i = 0;i<4;i++){
-            if(!Character.isDigit(rug.charAt(i+3))) boolean_1 = false;
-        }
-        if((((int)rug.charAt(3) == (int)rug.charAt(5)) & (Math.abs((int)rug.charAt(4)-(int)rug.charAt(6)) == 1))
-                | (((int)rug.charAt(4) == (int)rug.charAt(6)) & (Math.abs((int)rug.charAt(3)-(int)rug.charAt(5)) == 1))
-        ) boolean_2 = true;
+        for (int i = 0;i<4;i++) {
+            if (!Character.isDigit(rug.charAt(i+3))) {
+                boolean_1 = false;
+            }
+        } //check whether last four characters are digits
 
-        if (Character.getNumericValue(rug.charAt(3))<7 & Character.getNumericValue(rug.charAt(4))<7 & Character.getNumericValue(rug.charAt(5))<7 & Character.getNumericValue(rug.charAt(6))<7) boolean_3 = true;
+        if ((((int)rug.charAt(3) == (int)rug.charAt(5)) & (Math.abs((int)rug.charAt(4)-(int)rug.charAt(6)) == 1))
+                | (((int)rug.charAt(4) == (int)rug.charAt(6)) & (Math.abs((int)rug.charAt(3)-(int)rug.charAt(5)) == 1))) {
+            boolean_2 = true;
+        } //check whether the coordinates are next to each other
+
+        if (Character.getNumericValue(rug.charAt(3))<7 & Character.getNumericValue(rug.charAt(4))<7
+                & Character.getNumericValue(rug.charAt(5))<7 & Character.getNumericValue(rug.charAt(6))<7) {
+            boolean_3 = true;
+        } //check whether the coordinates are on the board
 
         if ((boolean_1 & (boolean_2) & (boolean_3)) ==false) return false;
 
@@ -82,7 +90,21 @@ public class Marrakech {
      */
     public static int rollDie() {
         // FIXME: Task 6
-        return -1;
+        // get random number and then depending on that number transform to the result.
+        // return a random integer between 1 and 6
+        Random rand = new Random();
+        int randomNum = rand.nextInt(6) + 1;
+        int MarrakechDie;
+        if (randomNum == 1) {
+            MarrakechDie = 1;
+        } else if (randomNum == 2 || randomNum == 3) {
+            MarrakechDie = 2;
+        } else if (randomNum == 4 || randomNum == 5) {
+            MarrakechDie = 3;
+        } else {
+            MarrakechDie = 4;
+        }
+        return MarrakechDie;
     }
 
     /**
