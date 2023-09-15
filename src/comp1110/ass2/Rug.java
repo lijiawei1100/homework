@@ -31,7 +31,4 @@ public class Rug {
     public static void main(String[] args) {
         System.out.println(rugToString(RUG_01));
     }
-
-//    private Colour colour;
-//    private Square[] squares;
 }
