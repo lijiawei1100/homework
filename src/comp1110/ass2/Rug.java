@@ -5,7 +5,6 @@ import javafx.util.Pair;
 public class Rug {
     private String colour;
     private Square[] squares ;
-
     private String id;
 
     Rug(String colour,String id, Square[] squares){
@@ -33,4 +32,6 @@ public class Rug {
         System.out.println(rugToString(RUG_01));
     }
 
+//    private Colour colour;
+//    private Square[] squares;
 }

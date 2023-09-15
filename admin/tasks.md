@@ -9,15 +9,15 @@ Everyone: create application skeleton / delegate tasks - meeting 11:00am Thursda
 
 ## Week 5
 
-Zhang San: Task 3 isPlayerStateWellFormed - 23 Mar
+Jiawei Li: Task 3/4
+
+Benjamin Campbell: Task 5/6
 
 Jane Bloggs: Task 5 drawTileFromBag - 23 Mar
 
-Erika Mustermann: Task 6 refillFactories - 25 Mar (depends on Task 5)
-
 ## Week 6
 
-...
+Everyone: Meeting 9-11am Friday 1 September
 
 ## Mid-Semester Break
 
