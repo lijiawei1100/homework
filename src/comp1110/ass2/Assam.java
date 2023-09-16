@@ -14,21 +14,13 @@ public class Assam {
      */
 
     private int angle;
-    private int direction;
-    private static Pair<Integer,Integer> position;
-    private String currentAssam;
+    private Pair<Integer,Integer> position;
     private Square Square;
 
-    Assam(int angle,Square square){
+    Assam(int angle, Pair<Integer,Integer> position){
         this.angle = angle;
-        position = square.position;
+        this.position = position;
     }
-
-    /**
-     * initialize current state of assam
-     */
-    public static Assam ASSAM = new Assam(0, new Square(false,new Pair<>(3,4),null));
-
 
     /**to return Assam's direction*/
     public char getAssamDirection(){
@@ -40,11 +32,51 @@ public class Assam {
         return 'O';
     }
 
+    public static Assam stringToAssam(String inputString) throws Exception {
+        int angle;
+        char angleChar = inputString.charAt(3);
+        if (angleChar == 'N') {
+            angle = 0;
+        } else if (angleChar == 'E') {
+            angle = 90;
+        } else if(angleChar == 'S') {
+            angle = 180;
+        } else if(angleChar == 'W') {
+            angle = 270;
+        } else {
+            throw new Exception("direction is not a valid character");
+        }
+        Pair<Integer,Integer> location;
+        char charX = inputString.charAt(1);
+        char charY = inputString.charAt(2);
+        Integer intX = Integer.parseInt(String.valueOf(charX));
+        Integer intY = Integer.parseInt(String.valueOf(charY));
+        location = new Pair<>(intX,intY);
+        return (new Assam(angle,location));
+    }
+
+    /**
+     * initialize current state of assam
+     */
+    public static Assam ASSAM = new Assam(0,new Pair<>(0,3));
+
+
     public static String assamToString(Assam ASSAM) {
         return "A"+ ASSAM.position.getKey() + ASSAM.position.getValue().toString() + ASSAM.getAssamDirection();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        String input1 = "A04E";
+        String input2 = "A53S";
+        Assam assam1 = stringToAssam(input1);
+        Assam assam2 = stringToAssam(input2);
+        System.out.println("String 1: " + input1);
+        System.out.println("Assam1 direction: " + assam1.angle);
+        System.out.println("Assam1 position: " + assam1.position);
+        System.out.println("String 2: " + input2);
+        System.out.println("Assam2 direction: " + assam2.angle);
+        System.out.println("Assam2 position: " + assam2.position);
+
         System.out.println(assamToString(ASSAM));
     }
 }
