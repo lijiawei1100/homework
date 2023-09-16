@@ -19,6 +19,24 @@ public class Player{
         this.gameState = gameState;
     }
 
+    public static Player stringToPlayer(String inputString) throws Exception {
+        String colour;
+        char colourChar = inputString.charAt(2);
+        if (colourChar == 'c') {
+            colour = "cyan";
+        } if (colourChar == 'y') {
+            colour = "yellow";
+        } if(colourChar == 'r') {
+            colour = "red";
+        } if(colourChar == 'p') {
+            colour = "purple";
+        } else {
+            throw new Exception("colour is not a valid character");
+        }
+        Player player = new Player(colour,);
+        return (player);
+    }
+
     /**
      * create different players and initiate their color,dirhams,rugsnumber and gamestate.
      */
