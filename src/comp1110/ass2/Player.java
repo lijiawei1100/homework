@@ -21,35 +21,34 @@ public class Player{
 
     public static Player stringToPlayer(String inputString) throws Exception {
         String colour;
-        char colourChar = inputString.charAt(2);
+        char colourChar = inputString.charAt(1);
         if (colourChar == 'c') {
             colour = "cyan";
-        } if (colourChar == 'y') {
+        } else if (colourChar == 'y') {
             colour = "yellow";
-        } if(colourChar == 'r') {
+        } else if(colourChar == 'r') {
             colour = "red";
-        } if(colourChar == 'p') {
+        } else if(colourChar == 'p') {
             colour = "purple";
         } else {
             throw new Exception("colour is not a valid character");
         }
         int money;
-        String dihramString = inputString.substring(3,5);
+        String dihramString = inputString.substring(2,5);
         money = Integer.parseInt(dihramString);
         int rugsNumber;
-        String rugsString = inputString.substring(6,7);
+        String rugsString = inputString.substring(5,7);
         rugsNumber = Integer.parseInt(rugsString);
         Boolean isPlaying;
-        char isPlayingChar = inputString.charAt(8);
+        char isPlayingChar = inputString.charAt(7);
         if (isPlayingChar == 'i') {
-            isPlaying = Boolean.FALSE;
-        } if (isPlayingChar == 'y') {
             isPlaying = Boolean.TRUE;
+        } else if (isPlayingChar == 'o') {
+            isPlaying = Boolean.FALSE;
         } else {
             throw new Exception("isPlaying not a valid character");
         }
-        Player player = new Player(colour,money,rugsNumber,isPlaying);
-        return (player);
+        return (new Player(colour,money,rugsNumber,isPlaying));
     }
 
     /**
@@ -67,7 +66,22 @@ public class Player{
     public static String playerToString(Player player) {
         return ("P"+ player.colour.charAt(0) + player.money + player.rugsNumber + player.isPlaying);
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        String input1 = "Pr12345i";
+        String input2 = "Pc00415o";
+        Player player1 = stringToPlayer(input1);
+        Player player2 = stringToPlayer(input2);
+        System.out.println("String 1: " + input1);
+        System.out.println("Player1 colour: " + player1.colour);
+        System.out.println("Player1 money: " + player1.money);
+        System.out.println("Player1 rugs: " + player1.rugsNumber);
+        System.out.println("Player1 is playing: " + player1.isPlaying);
+        System.out.println("String 2: " + input2);
+        System.out.println("Player2 colour: " + player2.colour);
+        System.out.println("Player2 money: " + player2.money);
+        System.out.println("Player2 rugs: " + player2.rugsNumber);
+        System.out.println("Player2 is playing: " + player2.isPlaying);
+
         System.out.println(playerToString(CYAN));
         System.out.println(playerToString(YELLOW));
         System.out.println(playerToString(RED));
