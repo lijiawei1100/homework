@@ -27,7 +27,7 @@ public class Game extends Application {
         for(int i =0;i<players.length;i++){
             gameString += playerToString(players[i]);}
         gameString += assamToString(assam);
-        gameString += boardToString(board);
+//        gameString += boardToString(board);
 
         return gameString;
     }
