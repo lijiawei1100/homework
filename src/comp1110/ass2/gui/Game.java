@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import static comp1110.ass2.Assam.ASSAM;
 import static comp1110.ass2.Assam.assamToString;
-import static comp1110.ass2.Board.boardToString;
+//import static comp1110.ass2.Board.boardToString;
 import static comp1110.ass2.Player.*;
 
 public class Game extends Application {
