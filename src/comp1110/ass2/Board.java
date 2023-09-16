@@ -12,7 +12,8 @@ public class Board {
     public final static int BOARD_HEIGHT = 7; // The height of the board (top to bottom)
     public Square[][] boardMatrix;
 
-    public Board() {
+    public Board(Square[][] boardMatrix) {
+        this.boardMatrix = boardMatrix;
     }
 
     /**
@@ -42,27 +43,26 @@ public class Board {
 //                }
 //            }
 //        }
-    public static Assam stringToBoard(String inputString) throws Exception {
-        int angle;
-        char angleChar = inputString.charAt(3);
-        if (angleChar == 'N') {
-            angle = 0;
-        } else if (angleChar == 'E') {
-            angle = 90;
-        } else if(angleChar == 'S') {
-            angle = 180;
-        } else if(angleChar == 'W') {
-            angle = 270;
-        } else {
-            throw new Exception("direction is not a valid character");
-        }
-        Pair<Integer,Integer> location;
-        char charX = inputString.charAt(1);
-        char charY = inputString.charAt(2);
-        Integer intX = Integer.parseInt(String.valueOf(charX));
-        Integer intY = Integer.parseInt(String.valueOf(charY));
-        location = new Pair<>(intX,intY);
-        return (new Assam(angle,location));
+    public static Board stringToBoard(String inputString) throws Exception {
+        Square[][] boardMatrix = new Square[7][7];
+        int squareIndex = 1;
+        for (int x = 0;x<BOARD_WIDTH;x++){
+            for (int y = 0; y<BOARD_HEIGHT ; y++){
+                if (x==0 | y==0 | x==6 | y==6){
+                    boardMatrix[x][y] = new Square(true,new Pair<>(x,y),getRug(squareIndex, inputString));}
+                else {
+                    boardMatrix[x][y] = new Square(false,new Pair<>(x,y),getRug(squareIndex, inputString));
+                    }
+                squareIndex++;
+                }
+            squareIndex++; //index means each square has the rug from string
+            }
+        return (new Board(boardMatrix));
+    }
+    public static Rug getRug(int n, String inputString) throws Exception {
+        String rugString;
+        rugString = inputString.substring((1 + 3*(n-1)),(4 + 3*(n-1)));
+        return stringToAbbreviatedRug(rugString);
     }
     /**
      *
