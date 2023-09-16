@@ -10,13 +10,13 @@ public class Player{
     public String colour;
     private int money;
     private int rugsNumber;
-    private char gameState;
+    private Boolean isPlaying;
 
-    Player(String colour, int money , int rugsNumber, char gameState){
+    Player(String colour, int money , int rugsNumber, Boolean isPlaying){
         this.colour = colour;
         this.money = money;
         this.rugsNumber = rugsNumber;
-        this.gameState = gameState;
+        this.isPlaying = isPlaying;
     }
 
     public static Player stringToPlayer(String inputString) throws Exception {
@@ -36,25 +36,36 @@ public class Player{
         int money;
         String dihramString = inputString.substring(3,5);
         money = Integer.parseInt(dihramString);
-
-        Player player = new Player(colour,money,);
+        int rugsNumber;
+        String rugsString = inputString.substring(6,7);
+        rugsNumber = Integer.parseInt(rugsString);
+        Boolean isPlaying;
+        char isPlayingChar = inputString.charAt(8);
+        if (isPlayingChar == 'i') {
+            isPlaying = Boolean.FALSE;
+        } if (isPlayingChar == 'y') {
+            isPlaying = Boolean.TRUE;
+        } else {
+            throw new Exception("isPlaying not a valid character");
+        }
+        Player player = new Player(colour,money,rugsNumber,isPlaying);
         return (player);
     }
 
     /**
      * create different players and initiate their color,dirhams,rugsnumber and gamestate.
      */
-    public static final Player CYAN = new Player("cyan",0,15,'i');
-    public static final Player YELLOW = new Player("yellow",0,15,'i');
-    public static final Player RED = new Player("red",0,15,'i');
-    public static final Player PURPLE = new Player("purple",0,15,'i');
+    public static final Player CYAN = new Player("cyan",0,15,Boolean.TRUE);
+    public static final Player YELLOW = new Player("yellow",0,15,Boolean.TRUE);
+    public static final Player RED = new Player("red",0,15,Boolean.TRUE);
+    public static final Player PURPLE = new Player("purple",0,15,Boolean.TRUE);
 
     /**
      * @param player one of the four players
      * @return return playerString to easily express their state
      */
     public static String playerToString(Player player) {
-        return ("P"+ player.colour.charAt(0) + player.money + player.rugsNumber + player.gameState);
+        return ("P"+ player.colour.charAt(0) + player.money + player.rugsNumber + player.isPlaying);
     }
     public static void main(String[] args) {
         System.out.println(playerToString(CYAN));
