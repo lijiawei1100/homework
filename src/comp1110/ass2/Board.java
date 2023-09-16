@@ -5,7 +5,8 @@ import javafx.util.Pair;
 import java.sql.SQLOutput;
 
 import static comp1110.ass2.Rug.RUG_01;
-import static comp1110.ass2.Rug.rugToString;
+import static comp1110.ass2.Rug.stringToAbbreviatedRug;
+//import static comp1110.ass2.Rug.rugToString;
 
 public class Board {
     public final static int BOARD_WIDTH = 7; // The width of the board (left to right)
@@ -84,17 +85,17 @@ public class Board {
      * @param rug : created rugs
      * @return :the first three chars in the rugToString, which is the abbeiviated information of rugs
      */
-    static String getAbbreviatedRug(Rug rug){
-        return rugToString(rug).substring(0,3);
-    }
+//    static String getAbbreviatedRug(Rug rug){
+//        return rugToString(rug).substring(0,3);
+//    }
     /**
      *
      * @param args
      * output the board String at the end, which is consisting with 47 abbreviated rugs strings
      */
     public static void main(String[] args) {
-        Board board = new Board();
-        System.out.println(getAbbreviatedRug(RUG_01));
+//        Board board = new Board();
+//        System.out.println(getAbbreviatedRug(RUG_01));
 //        System.out.println(boardToString(board));
     }
 

@@ -37,7 +37,7 @@ public class Game extends Application {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println(gameToString(new Player[]{CYAN, YELLOW, RED, PURPLE},ASSAM,new Board()));
+//        System.out.println(gameToString(new Player[]{CYAN, YELLOW, RED, PURPLE},ASSAM,new Board()));
     }
 
     @Override
