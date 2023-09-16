@@ -8,11 +8,11 @@ public class Player{
      * gameState represents if players are in the game or not. 'p' represents they are in the game, 'o' represents out of the game.
      */
     public String colour;
-    private String money;
+    private int money;
     private int rugsNumber;
     private char gameState;
 
-    Player(String colour, String money , int rugsNumber, char gameState){
+    Player(String colour, int money , int rugsNumber, char gameState){
         this.colour = colour;
         this.money = money;
         this.rugsNumber = rugsNumber;
@@ -33,17 +33,21 @@ public class Player{
         } else {
             throw new Exception("colour is not a valid character");
         }
-        Player player = new Player(colour,);
+        int money;
+        String dihramString = inputString.substring(3,5);
+        money = Integer.parseInt(dihramString);
+
+        Player player = new Player(colour,money,);
         return (player);
     }
 
     /**
      * create different players and initiate their color,dirhams,rugsnumber and gamestate.
      */
-    public static final Player CYAN = new Player("cyan","000",15,'i');
-    public static final Player YELLOW = new Player("yellow","000",15,'i');
-    public static final Player RED = new Player("red","000",15,'i');
-    public static final Player PURPLE = new Player("purple","000",15,'i');
+    public static final Player CYAN = new Player("cyan",0,15,'i');
+    public static final Player YELLOW = new Player("yellow",0,15,'i');
+    public static final Player RED = new Player("red",0,15,'i');
+    public static final Player PURPLE = new Player("purple",0,15,'i');
 
     /**
      * @param player one of the four players
