@@ -27,7 +27,7 @@ public class Assam {
     /**
      * initialize current state of assam
      */
-    public static Assam ASSAM = new Assam(0, new Square(false,new Pair<>(3,4),"n00"));
+    public static Assam ASSAM = new Assam(0, new Square(false,new Pair<>(3,4),null));
 
 
     /**to return Assam's direction*/

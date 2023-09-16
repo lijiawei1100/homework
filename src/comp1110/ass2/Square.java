@@ -7,15 +7,16 @@ public class Square {
     /**
      * occupiedRugs represents the abbreviation of the rugs information ilke p12 (color:purple, rug_id:12),n00 means there is no an occupied rug
      */
-    private String occupiedRug;
+    private Rug occupiedRug; // draft- have changed to rug for Object-Oriented programming.
+    //will need to change
 
-    public Square(Boolean isEdge,Pair<Integer,Integer> position,String occupiedRug){
+    public Square(Boolean isEdge,Pair<Integer,Integer> position,Rug occupiedRug){
         this.isEdge = isEdge;
         this.position = position;
         this.occupiedRug = occupiedRug;
     }
 
-    public String getOccupiedRug() {
+    public Rug getOccupiedRug() {
         return occupiedRug;
     }
 }

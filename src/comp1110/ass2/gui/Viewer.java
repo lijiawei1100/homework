@@ -9,12 +9,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+
+import java.awt.*;
 
 public class Viewer extends Application {
 
     private static final int VIEWER_WIDTH = 1200;
-    private static final int VIEWER_HEIGHT = 700;
+    private static final int VIEWER_HEIGHT = 600;
 
     private final Group root = new Group();
     private final Group controls = new Group();
@@ -28,7 +32,23 @@ public class Viewer extends Application {
      */
     void displayState(String state) {
         // FIXME Task 5: implement the simple state viewer
+        Line baseline = new Line();//Example...
+        baseline.setStartX(0.0);
+        baseline.setStartY(0.0);
+        baseline.setEndX(VIEWER_WIDTH);
+        baseline.setEndY(VIEWER_HEIGHT);
+        root.getChildren().addAll(baseline);
+        //now get the objects from the string.....
+        //objects should be in the format ()
+        //then display the game state based on the objects
     }
+//    private void clearStateDisplay() {
+//        // Remove any previously displayed elements from the root or controls Group.
+//        // This can be done by removing all child nodes.
+//        root.getChildren().clear();
+//        controls.getChildren().clear();
+//    }
+
 
     /**
      * Create a basic text field for input and a refresh button.

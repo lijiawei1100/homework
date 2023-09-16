@@ -22,7 +22,7 @@ public class Board {
      */
     public Board() {
         boardMatrix = new Square[BOARD_HEIGHT][BOARD_WIDTH];
-        populateBoard();
+        populateEmptyBoard();
     }
 
     void calcScore (Player player) {
@@ -36,13 +36,13 @@ public class Board {
     /**
      * populate the Board, if the square is on edge,then isEdge is true;Since it's starting state, the occupiedRug should be "n00";
      */
-    public static void populateBoard(){
+    public static void populateEmptyBoard(){
         for (int x = 0;x<BOARD_WIDTH;x++){
             for (int y = 0; y<BOARD_HEIGHT ; y++){
                 if (x==0 | y==0 | x==6 | y==6){
-                    boardMatrix[x][y] = new Square(true,new Pair<>(x,y),"n00");}
+                    boardMatrix[x][y] = new Square(true,new Pair<>(x,y),null);}
                 else {
-                    boardMatrix[x][y] = new Square(false,new Pair<>(x,y),"n00");
+                    boardMatrix[x][y] = new Square(false,new Pair<>(x,y),null);
                     }
                 }
             }

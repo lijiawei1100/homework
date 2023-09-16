@@ -20,7 +20,7 @@ public class Rug {
     /**
      * initialize new rug
      */
-    public static Rug RUG_01 = new Rug("red",0, new Square[]{new Square(false, new Pair<>(3, 4),"n00"), new Square(true, new Pair<>(4, 5),"n00")});
+    public static Rug RUG_01 = new Rug("red",0, new Square[]{new Square(false, new Pair<>(3, 4),null), new Square(true, new Pair<>(4, 5),null)});
 
     /**
      *A Game string is the concatenation of one player string for each player, followed by one Assam string, followed by one board string.
