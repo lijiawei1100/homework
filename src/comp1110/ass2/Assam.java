@@ -31,13 +31,8 @@ public class Assam {
 
 
     /**to return Assam's direction*/
-    public char getAssamDirection(){
-        // return direction;
-        if (angle == 0) return 'N';
-        if (angle == 90) return 'E';
-        if (angle == 180) return 'S';
-        if (angle == 270) return 'W';
-        return 'O';
+    public int getAngle(){
+        return this.angle;
     }
 
     public static Assam stringToAssam(String inputString) throws Exception {
@@ -63,10 +58,6 @@ public class Assam {
         return (new Assam(angle,location));
     }
 
-    public static String assamToString(Assam ASSAM) {
-        return "A"+ ASSAM.position.getKey() + ASSAM.position.getValue().toString() + ASSAM.getAssamDirection();
-    }
-
 //    /**
 //     * testing code here
 //      * @param args
@@ -83,6 +74,5 @@ public class Assam {
 //        System.out.println("String 2: " + input2);
 //        System.out.println("Assam2 direction: " + assam2.angle);
 //        System.out.println("Assam2 position: " + assam2.position);
-//        System.out.println(assamToString(ASSAM));
 //    }
 }
