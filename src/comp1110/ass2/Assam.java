@@ -17,7 +17,7 @@ public class Assam {
     private Pair<Integer,Integer> position;
     private Square Square;
 
-    Assam(int angle, Pair<Integer,Integer> position){
+    public Assam(int angle, Pair<Integer, Integer> position){
         this.angle = angle;
         this.position = position;
     }

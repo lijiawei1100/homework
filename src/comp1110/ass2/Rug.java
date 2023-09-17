@@ -1,9 +1,10 @@
 package comp1110.ass2;
 
+import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
 public class Rug {
-    private String colour;
+    public Color colour;
 //    private Square[] squares;
     private int id;
     /*
@@ -11,23 +12,23 @@ public class Rug {
     rugs have been placed and make for better object-oriented programming
     */
 
-    Rug(String colour,int id){ //removed Square[] squares
+    Rug(Color colour,int id){ //removed Square[] squares
         this.colour = colour;
         this.id = id;
 //        this.squares = squares;
     }
 
     public static Rug stringToAbbreviatedRug(String inputString) throws Exception {
-        String colour;
+        Color colour;
         char colourChar = inputString.charAt(1);
         if (colourChar == 'c') {
-            colour = "cyan";
+            colour = Color.CYAN;
         } else if (colourChar == 'y') {
-            colour = "yellow";
+            colour = Color.YELLOW;
         } else if(colourChar == 'r') {
-            colour = "red";
+            colour = Color.RED;
         } else if(colourChar == 'p') {
-            colour = "purple";
+            colour = Color.PURPLE;
         } else {
             throw new Exception("colour is not a valid character");
         }
@@ -40,7 +41,7 @@ public class Rug {
     /**
      * initialize new rug
      */
-    public static Rug RUG_01 = new Rug("red",0);
+    public static Rug RUG_01 = new Rug(Color.RED,0);
 
 //    /**
 //     *A Game string is the concatenation of one player string for each player, followed by one Assam string, followed by one board string.

@@ -1,6 +1,9 @@
 package comp1110.ass2.gui;
 
+import comp1110.ass2.Assam;
+import comp1110.ass2.Board;
 import comp1110.ass2.Player;
+import comp1110.ass2.Square;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,17 +12,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.awt.*;
 
 public class Viewer extends Application {
 
     private static final int VIEWER_WIDTH = 1200;
-    private static final int VIEWER_HEIGHT = 700;
+    private static final int VIEWER_HEIGHT = 600;
 
     private final Group root = new Group();
     private final Group controls = new Group();
@@ -31,7 +37,7 @@ public class Viewer extends Application {
      *
      * @param state an array of two strings, representing the current game state
      */
-    void displayState(String state) {
+    void displayState(String state) throws Exception {
         // FIXME Task 5: implement the simple state viewer
 //        Line baseline = new Line();//Example...
 //        baseline.setStartX(0.0);
@@ -49,6 +55,35 @@ public class Viewer extends Application {
         //get players (colour, money, rugs) using stringToPlayer until you reach 'A'
         //get Assam (location, orientation) using stringToAssam
         //get board (squares - pos, rug) using stringToBoard
+
+        Player player1Placeholder = new Player("red", 5,15,Boolean.TRUE);
+        Player player2Placeholder = new Player("cyan", 6,14,Boolean.FALSE);
+        Assam assamPlaceholder = new Assam(90, new Pair<> (4,6));
+
+        Board boardPlaceHolder = Board.stringToBoard
+                ("Bn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00" +
+                        "n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00");
+
+        GridPane gridPane = new GridPane();
+        for (int x=0; x<7; x++){
+            for (int y=0; y<7 ; y++){
+                //get square at that position
+                Square thisSquare = boardPlaceHolder.boardMatrix[x][y];
+                //create rectangle with square rug colour
+                Rectangle drawSquare = new Rectangle(90,90);
+                Color rugColour = thisSquare.occupiedRug.colour;
+                if (thisSquare.occupiedRug == null) {
+                    drawSquare.setFill(Color.LIGHTGREY);
+                } else {
+                    drawSquare.setFill(rugColour);
+                }
+                //add rectangle to grid
+                gridPane.add(drawSquare, x, y, 1, 1);
+            }
+        }
+        gridPane.setLayoutX(50);
+        gridPane.setLayoutY(50);
+        controls.getChildren().add(gridPane);
 
 
         //objects should be in the format ()
@@ -73,7 +108,11 @@ public class Viewer extends Application {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                displayState(boardTextField.getText());
+                try {
+                    displayState(boardTextField.getText());
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         HBox hb = new HBox();
