@@ -1,12 +1,11 @@
 package comp1110.ass2;
 
 import javafx.scene.paint.Color;
-import javafx.util.Pair;
 
 public class Rug {
     public Color colour;
 //    private Square[] squares;
-    private int id;
+    private final int id;
     /*
     changed id type to integer instead of string - makes it easier to keep track of how many
     rugs have been placed and make for better object-oriented programming
@@ -20,8 +19,10 @@ public class Rug {
 
     public static Rug stringToAbbreviatedRug(String inputString) throws Exception {
         Color colour;
-        char colourChar = inputString.charAt(1);
-        if (colourChar == 'c') {
+        char colourChar = inputString.charAt(0);
+        if (colourChar == 'n') {
+            return null;
+        } else if (colourChar == 'c') {
             colour = Color.CYAN;
         } else if (colourChar == 'y') {
             colour = Color.YELLOW;
@@ -36,6 +37,18 @@ public class Rug {
         String idString = inputString.substring(1,3);
         id = Integer.parseInt(idString);
         return (new Rug(colour,id));
+    }
+
+    public static void main(String[] args) throws Exception {
+//        System.out.println(rugToString(RUG_01));
+        String input1 = "n00";
+        String input2 = "p04";
+        Rug rug2 = stringToAbbreviatedRug(input2);
+        System.out.println("Rug1 string: " + input1);
+        System.out.println("Rug1 is null");
+        System.out.println("Rug2 string: " + input2);
+        System.out.println("Rug2 colour: " + rug2.colour.toString());
+        System.out.println("Rug2 id: " + rug2.id);
     }
 
     /**
@@ -54,8 +67,4 @@ public class Rug {
 //    }
     //change this to make the 'id' field always two digits
     //also add function stringToRug!!!
-
-    public static void main(String[] args) {
-//        System.out.println(rugToString(RUG_01));
-    }
 }
