@@ -32,8 +32,8 @@ public class Rug {
         } else if (colourChar == 'p') {
             colour = Color.PURPLE;
         } else {
-//            throw new Exception("colour is not a valid character");
-            throw new Exception(String.valueOf(colourChar));
+            throw new Exception("colour is not a valid character");
+//            throw new Exception(String.valueOf(colourChar));
         }
         int id;
         String idString = inputString.substring(1, 3);
