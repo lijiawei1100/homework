@@ -91,7 +91,7 @@ public class Viewer extends Application {
         Assam assamPlaceholder = new Assam(90, new Pair<> (4,6));
 
         Board boardPlaceHolder = Board.stringToBoard
-                ("Bn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00" +
+                ("Bn00r00p00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00" +
                         "n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00");
 
         GridPane gridPane = new GridPane();
@@ -101,10 +101,10 @@ public class Viewer extends Application {
                 Square thisSquare = boardPlaceHolder.boardMatrix[x][y];
                 //create rectangle with square rug colour
                 Rectangle drawSquare = new Rectangle(90,90);
-                Color rugColour = thisSquare.occupiedRug.colour;
                 if (thisSquare.occupiedRug == null) {
                     drawSquare.setFill(Color.LIGHTGREY);
                 } else {
+                    Color rugColour = thisSquare.occupiedRug.colour;
                     drawSquare.setFill(rugColour);
                 }
                 //add rectangle to grid
