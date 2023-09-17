@@ -22,6 +22,14 @@ public class Assam {
         this.position = position;
     }
 
+    public Integer getAssamX() {
+        return this.position.getKey();
+    }
+    public Integer getAssamY() {
+        return this.position.getValue();
+    }
+
+
     /**to return Assam's direction*/
     public char getAssamDirection(){
         // return direction;

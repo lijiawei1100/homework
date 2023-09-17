@@ -21,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.awt.geom.AffineTransform;
 import javafx.util.Pair;
 
 
@@ -83,12 +84,14 @@ public class Viewer extends Application {
                 30.0, 40.0,
                 15.0, 40.0, });
         arrow.setFill(Color.BLACK);
-
+        ;
+        int rotationAngle = assam.getAssamX()/90;
+        AffineTransform.getQuadrantRotateInstance((int) rotationAngle,
+                42.5, 42.5);
         VBox assamPane = new VBox();
         assamPane.getChildren().add(arrow);
-
-//        assamPane.setLayoutX(20 + 85 * (assam.));
-//        assamPane.setLayoutY(20 + 85 * ());
+        assamPane.setLayoutY(35 + 86 * (assam.getAssamX()));
+        assamPane.setLayoutX(35 + 86 * (assam.getAssamY()));
 
 
         VBox playerInfo = new VBox();
@@ -106,7 +109,7 @@ public class Viewer extends Application {
             }
         }
 
-        //test board: Pc04106iPy04706iPp00406iPr02806iA00WBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08@2
+        //test board: Pc04106iPy04706iPp00406iPr02806iA15WBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08@2
 
         GridPane gridPane = new GridPane();
         gridPane.setLayoutX(20);
