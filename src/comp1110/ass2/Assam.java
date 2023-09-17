@@ -55,28 +55,26 @@ public class Assam {
         return (new Assam(angle,location));
     }
 
-    /**
-     * initialize current state of assam
-     */
-    public static Assam ASSAM = new Assam(0,new Pair<>(0,3));
-
-
     public static String assamToString(Assam ASSAM) {
         return "A"+ ASSAM.position.getKey() + ASSAM.position.getValue().toString() + ASSAM.getAssamDirection();
     }
 
-    public static void main(String[] args) throws Exception {
-        String input1 = "A04E";
-        String input2 = "A53S";
-        Assam assam1 = stringToAssam(input1);
-        Assam assam2 = stringToAssam(input2);
-        System.out.println("String 1: " + input1);
-        System.out.println("Assam1 direction: " + assam1.angle);
-        System.out.println("Assam1 position: " + assam1.position.getKey()+assam1.position.getValue());
-        System.out.println("String 2: " + input2);
-        System.out.println("Assam2 direction: " + assam2.angle);
-        System.out.println("Assam2 position: " + assam2.position);
-
-        System.out.println(assamToString(ASSAM));
-    }
+//    /**
+//     * testing code here
+//      * @param args
+//     * @throws Exception
+//     */
+//    public static void main(String[] args) throws Exception {
+//        String input1 = "A04E";
+//        String input2 = "A53S";
+//        Assam assam1 = stringToAssam(input1);
+//        Assam assam2 = stringToAssam(input2);
+//        System.out.println("String 1: " + input1);
+//        System.out.println("Assam1 direction: " + assam1.angle);
+//        System.out.println("Assam1 position: " + assam1.position.getKey()+assam1.position.getValue());
+//        System.out.println("String 2: " + input2);
+//        System.out.println("Assam2 direction: " + assam2.angle);
+//        System.out.println("Assam2 position: " + assam2.position);
+//        System.out.println(assamToString(ASSAM));
+//    }
 }

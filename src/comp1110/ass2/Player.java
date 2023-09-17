@@ -54,34 +54,41 @@ public class Player{
         return (new Player(colour,money,rugsNumber,isPlaying));
     }
 
-    /**
-     * create different players and initiate their color,dirhams,rugsnumber and gamestate.
-     */
-    public static final Player CYAN = new Player(Color.CYAN,0,15,Boolean.TRUE);
-    public static final Player YELLOW = new Player(Color.YELLOW,0,15,Boolean.TRUE);
-    public static final Player RED = new Player(Color.RED,0,15,Boolean.TRUE);
-    public static final Player PURPLE = new Player(Color.PURPLE,0,15,Boolean.TRUE);
 
-    public static void main(String[] args) throws Exception {
-        String input1 = "Pr12345i";
-        String input2 = "Pc00415o";
-        Player player1 = stringToPlayer(input1);
-        Player player2 = stringToPlayer(input2);
-        System.out.println("String 1: " + input1);
-        System.out.println("Player1 colour: " + player1.colour);
-        System.out.println("Player1 money: " + player1.money);
-        System.out.println("Player1 rugs: " + player1.rugsNumber);
-        System.out.println("Player1 is playing: " + player1.isPlaying);
-        System.out.println("String 2: " + input2);
-        System.out.println("Player2 colour: " + player2.colour);
-        System.out.println("Player2 money: " + player2.money);
-        System.out.println("Player2 rugs: " + player2.rugsNumber);
-        System.out.println("Player2 is playing: " + player2.isPlaying);
+    public static String getColorName(Color color) {
+        if (color.equals(Color.RED)) {
+            return "Red";
+        } else if (color.equals(Color.CYAN)) {
+            return "Cyan";
+        } else if (color.equals(Color.YELLOW)) {
+            return "Yellow";
+        } else if (color.equals(Color.PURPLE)) {
+            return "Purple";
+        }
+         else {
+            // 如果找不到匹配的颜色，可以返回一个默认值或null
+            return "Unknown";
+        }}
 
-//        for(int n = 0; n<4;n++){
-//            Player[] player;
-//            player[n] = (Player) stringToPlayer(input1);
-//        }
-
-    }
+//    /**
+//     * testing code here
+//     * @param args
+//     * @throws Exception
+//     */
+//    public static void main(String[] args) throws Exception {
+//        String input1 = "Pr12345i";
+//        String input2 = "Pc00415o";
+//        Player player1 = stringToPlayer(input1);
+//        Player player2 = stringToPlayer(input2);
+//        System.out.println("String 1: " + input1);
+//        System.out.println("Player1 colour: " + player1.colour);
+//        System.out.println("Player1 money: " + player1.money);
+//        System.out.println("Player1 rugs: " + player1.rugsNumber);
+//        System.out.println("Player1 is playing: " + player1.isPlaying);
+//        System.out.println("String 2: " + input2);
+//        System.out.println("Player2 colour: " + player2.colour);
+//        System.out.println("Player2 money: " + player2.money);
+//        System.out.println("Player2 rugs: " + player2.rugsNumber);
+//        System.out.println("Player2 is playing: " + player2.isPlaying);
+//    }
 }

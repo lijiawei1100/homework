@@ -57,7 +57,7 @@ public class Viewer extends Application {
 //            if (remainingString.charAt(0) == 'A') break;
 //        }
 
-        //get players (colour, money, rugs) using stringToPlayer until you reach 'A'
+        //get players (colour, money, rugs) using stringToPlayer when you reach ""
         Player[] players = new Player[4];
         int b = 0;
         for(int i =0; i<state.length();i++){
@@ -95,10 +95,12 @@ public class Viewer extends Application {
         VBox playerInfo = new VBox();
         playerInfo.setLayoutX(650);
         playerInfo.setLayoutY(20);
+
+
         for (int i=1; i<5; i++) {
             Player ithPlayer = (Player) Array.get(players, i-1);
             if (ithPlayer != null) {
-                String colour = ithPlayer.colour.toString();
+                String colour = Player.getColorName(ithPlayer.colour);
                 String money = String.valueOf(ithPlayer.money);
                 String rugs = String.valueOf(ithPlayer.rugsNumber);
                 Text playerInfoText = new Text("Player "+i+": " + colour + "\nRemaining Dirhams: " + money + "\nRemaining Rugs: " + rugs + "\n");

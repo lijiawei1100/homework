@@ -15,9 +15,4 @@ public class Square {
         this.position = position;
         this.occupiedRug = occupiedRug;
     }
-
-//    public Rug getOccupiedRug() {
-////        return occupiedR
-//
-//    }
 }
