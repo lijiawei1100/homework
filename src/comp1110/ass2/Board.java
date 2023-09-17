@@ -55,9 +55,23 @@ public class Board {
                     boardMatrix[x][y] = new Square(false,new Pair<>(x,y),getRug(squareIndex, inputString));
                     }
                 squareIndex++;//index means each square has the rug from string
-                }
+            }
             }
         return (new Board(boardMatrix));
+    }
+    public static void main(String[] args) throws Exception{
+        System.out.println("stringToBoard test:");
+        String input1 = "Bn00p02c04r00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
+        String input2 = "Bn00p02c04r00n00";
+        System.out.println("String: " + input2);
+        System.out.println("Rug1 string: " + input2.substring(1,4));
+        Rug rug1 = getRug(1,input2);
+        System.out.println("Rug:" + rug1);
+        //issue is in stringToBoard() -> java.lang.StringIndexOutOfBoundsException: begin 148, end 151, length 148
+
+
+        Board board = stringToBoard(input1);
+        //System.out.println(board.boardMatrix);
     }
     public static Rug getRug(int n, String inputString) throws Exception {
         String rugString;
@@ -92,10 +106,10 @@ public class Board {
      * @param args
      * output the board String at the end, which is consisting with 47 abbreviated rugs strings
      */
-    public static void main(String[] args) throws Exception{
-        String input1 = "Bn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
-        Board board =stringToBoard(input1);
-        System.out.println(board.boardMatrix[6][6].position);
+//    public static void main(String[] args) throws Exception{
+//        String input1 = "Bn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
+//        Board board =stringToBoard(input1);
+//        System.out.println(board.boardMatrix[6][6].position);
 
 
 //        Board board = new Board();
