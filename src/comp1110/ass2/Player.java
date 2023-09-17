@@ -1,4 +1,7 @@
 package comp1110.ass2;
+
+import javafx.scene.paint.Color;
+
 public class Player{
 
     /**
@@ -7,12 +10,12 @@ public class Player{
      * rugsNumber represents the remaining numbers of rugs, it should be a two-digit number. 00 when there is no rugs. 15 is the starting number.
      * gameState represents if players are in the game or not. 'p' represents they are in the game, 'o' represents out of the game.
      */
-    public String colour;
+    public Color colour;
     private int money;
     private int rugsNumber;
     private Boolean isPlaying;
 
-    public Player(String colour, int money, int rugsNumber, Boolean isPlaying){
+    public Player(Color colour, int money, int rugsNumber, Boolean isPlaying){
         this.colour = colour;
         this.money = money;
         this.rugsNumber = rugsNumber;
@@ -20,16 +23,16 @@ public class Player{
     }
 
     public static Player stringToPlayer(String inputString) throws Exception {
-        String colour;
+        Color colour;
         char colourChar = inputString.charAt(1);
         if (colourChar == 'c') {
-            colour = "cyan";
+            colour = Color.CYAN;
         } else if (colourChar == 'y') {
-            colour = "yellow";
+            colour = Color.YELLOW;
         } else if(colourChar == 'r') {
-            colour = "red";
+            colour = Color.RED;
         } else if(colourChar == 'p') {
-            colour = "purple";
+            colour = Color.PURPLE;
         } else {
             throw new Exception("colour is not a valid character");
         }
@@ -54,18 +57,11 @@ public class Player{
     /**
      * create different players and initiate their color,dirhams,rugsnumber and gamestate.
      */
-    public static final Player CYAN = new Player("cyan",0,15,Boolean.TRUE);
-    public static final Player YELLOW = new Player("yellow",0,15,Boolean.TRUE);
-    public static final Player RED = new Player("red",0,15,Boolean.TRUE);
-    public static final Player PURPLE = new Player("purple",0,15,Boolean.TRUE);
+    public static final Player CYAN = new Player(Color.CYAN,0,15,Boolean.TRUE);
+    public static final Player YELLOW = new Player(Color.YELLOW,0,15,Boolean.TRUE);
+    public static final Player RED = new Player(Color.RED,0,15,Boolean.TRUE);
+    public static final Player PURPLE = new Player(Color.PURPLE,0,15,Boolean.TRUE);
 
-    /**
-     * @param player one of the four players
-     * @return return playerString to easily express their state
-     */
-    public static String playerToString(Player player) {
-        return ("P"+ player.colour.charAt(0) + player.money + player.rugsNumber + player.isPlaying);
-    }
     public static void main(String[] args) throws Exception {
         String input1 = "Pr12345i";
         String input2 = "Pc00415o";
@@ -86,11 +82,5 @@ public class Player{
 //            Player[] player;
 //            player[n] = (Player) stringToPlayer(input1);
 //        }
-
-
-        System.out.println(playerToString(CYAN));
-        System.out.println(playerToString(YELLOW));
-        System.out.println(playerToString(RED));
-        System.out.println(playerToString(PURPLE));
     }
 }
