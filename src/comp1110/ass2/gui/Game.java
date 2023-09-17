@@ -22,16 +22,6 @@ public class Game extends Application {
     public Player[] players;
 
 
-    public static String gameToString(Player[] players, Assam assam, Board board) {
-        String gameString = "";
-        for(int i =0;i<players.length;i++){
-            gameString += playerToString(players[i]);}
-        gameString += assamToString(assam);
-//        gameString += boardToString(board);
-
-        return gameString;
-    }
-
     /**
      * combine the players strings、Assam string and Board String
      * @param args

@@ -11,8 +11,8 @@ public class Player{
      * gameState represents if players are in the game or not. 'p' represents they are in the game, 'o' represents out of the game.
      */
     public Color colour;
-    private int money;
-    private int rugsNumber;
+    public int money;
+    public int rugsNumber;
     private Boolean isPlaying;
 
     public Player(Color colour, int money, int rugsNumber, Boolean isPlaying){

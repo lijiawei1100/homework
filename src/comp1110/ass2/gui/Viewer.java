@@ -18,10 +18,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import java.util.ArrayList;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 
 public class Viewer extends Application {
 
@@ -108,9 +112,17 @@ public class Viewer extends Application {
         VBox playerInfo = new VBox();
         playerInfo.setLayoutX(650);
         playerInfo.setLayoutY(20);
-        Color player1colour = player1Placeholder.colour;
+        for (int i=1; i<5; i++) {
+            //Player ithPlayer = ;
+        }
+        String player1colour = player1Placeholder.colour.toString();
+        String player1money = String.valueOf(player1Placeholder.money);
+        String player1rugs = String.valueOf(player1Placeholder.rugsNumber);
+        Text player1info = new Text("Player 1: " + player1colour + "\nRemaining Dirhams: " + player1money + "\nRemaining Rugs: " + player1rugs);
+        player1info.setFont(Font.font(30));
+        playerInfo.getChildren().add(player1info);
 
-        //playerInfo.getChildren().add();
+        controls.getChildren().add(playerInfo);
 
         //test board: Pc04106iPy04706iPp00406iPr02806iA00WBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08@2
 
