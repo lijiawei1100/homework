@@ -25,7 +25,7 @@ import java.awt.*;
 public class Viewer extends Application {
 
     private static final int VIEWER_WIDTH = 1200;
-    private static final int VIEWER_HEIGHT = 600;
+    private static final int VIEWER_HEIGHT = 700;
 
     private final Group root = new Group();
     private final Group controls = new Group();
@@ -91,12 +91,15 @@ public class Viewer extends Application {
         Board boardPlaceHolder = board;
 
         GridPane gridPane = new GridPane();
+        gridPane.setLayoutX(20);
+        gridPane.setLayoutY(20);
         for (int x=0; x<7; x++){
             for (int y=0; y<7 ; y++){
                 //get square at that position
                 Square thisSquare = boardPlaceHolder.boardMatrix[x][y];
                 //create rectangle with square rug colour
-                Rectangle drawSquare = new Rectangle(90,90);
+                Rectangle drawSquare = new Rectangle(85,85);
+                drawSquare.setStroke(Color.BLACK);
                 if (thisSquare.occupiedRug == null) {
                     drawSquare.setFill(Color.LIGHTGREY);
                 } else {
@@ -107,8 +110,6 @@ public class Viewer extends Application {
                 gridPane.add(drawSquare, x, y, 1, 1);
             }
         }
-        gridPane.setLayoutX(50);
-        gridPane.setLayoutY(50);
         controls.getChildren().add(gridPane);
 
 
