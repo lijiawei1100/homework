@@ -83,6 +83,9 @@ public class Viewer extends Application {
         }
         //get board (squares - pos, rug) using stringToBoard
 
+
+
+
         Player player1Placeholder = new Player("red", 5,15,Boolean.TRUE);
         Player player2Placeholder = new Player("cyan", 6,14,Boolean.FALSE);
         Assam assamPlaceholder = new Assam(90, new Pair<> (4,6));

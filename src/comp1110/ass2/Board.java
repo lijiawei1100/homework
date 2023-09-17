@@ -54,9 +54,8 @@ public class Board {
                 else {
                     boardMatrix[x][y] = new Square(false,new Pair<>(x,y),getRug(squareIndex, inputString));
                     }
-                squareIndex++;
+                squareIndex++;//index means each square has the rug from string
                 }
-            squareIndex++; //index means each square has the rug from string
             }
         return (new Board(boardMatrix));
     }
@@ -96,8 +95,7 @@ public class Board {
     public static void main(String[] args) throws Exception{
         String input1 = "Bn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
         Board board =stringToBoard(input1);
-        System.out.println(board.boardMatrix);
-
+        System.out.println(board.boardMatrix[6][6].position);
 
 
 //        Board board = new Board();

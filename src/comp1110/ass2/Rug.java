@@ -20,17 +20,22 @@ public class Rug {
 
     public static Rug stringToAbbreviatedRug(String inputString) throws Exception {
         Color colour;
-        char colourChar = inputString.charAt(1);
-        if (colourChar == 'c') {
+        char colourChar = inputString.charAt(0);
+        if (colourChar == 'n') {
+//            colour = Color.WHITE;
+            return null;
+        } else if (colourChar == 'c') {
             colour = Color.CYAN;
-        } else if (colourChar == 'y') {
+        }
+        else if (colourChar == 'y') {
             colour = Color.YELLOW;
         } else if(colourChar == 'r') {
             colour = Color.RED;
         } else if(colourChar == 'p') {
             colour = Color.PURPLE;
         } else {
-            throw new Exception("colour is not a valid character");
+            throw new Exception(String.valueOf(colourChar));
+//            throw new Exception("colour is not a valid character");
         }
         int id;
         String idString = inputString.substring(1,3);
