@@ -93,7 +93,13 @@ public class Board {
      * @param args
      * output the board String at the end, which is consisting with 47 abbreviated rugs strings
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
+        String input1 = "Bn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
+        Board board =stringToBoard(input1);
+        System.out.println(board.boardMatrix);
+
+
+
 //        Board board = new Board();
 //        System.out.println(getAbbreviatedRug(RUG_01));
 //        System.out.println(boardToString(board));

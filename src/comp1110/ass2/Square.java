@@ -16,7 +16,8 @@ public class Square {
         this.occupiedRug = occupiedRug;
     }
 
-    public Rug getOccupiedRug() {
-        return occupiedRug;
-    }
+//    public Rug getOccupiedRug() {
+////        return occupiedR
+//
+//    }
 }

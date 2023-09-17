@@ -1,5 +1,7 @@
 package comp1110.ass2.gui;
 
+import comp1110.ass2.Assam;
+import comp1110.ass2.Board;
 import comp1110.ass2.Player;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -33,22 +35,56 @@ public class Viewer extends Application {
      */
     void displayState(String state) {
         // FIXME Task 5: implement the simple state viewer
-//        Line baseline = new Line();//Example...
-//        baseline.setStartX(0.0);
-//        baseline.setStartY(0.0);
-//        baseline.setEndX(VIEWER_WIDTH);
-//        baseline.setEndY(VIEWER_HEIGHT);
-//        root.getChildren().addAll(baseline);
+        Line baseline = new Line();//Example...
+        baseline.setStartX(0.0);
+        baseline.setStartY(0.0);
+        baseline.setEndX(VIEWER_WIDTH);
+        baseline.setEndY(VIEWER_HEIGHT);
+        root.getChildren().addAll(baseline);
         //get the objects from the string.....
         int playerStringLength = 0;
-        String remainingString = state;
-        for (int i=0; i<4; i++) {
-            if (remainingString.charAt(0) == 'A') break;
-        }
+
+//        String remainingString = state;
+//        for (int i=0; i<4; i++) {
+//            if (remainingString.charAt(0) == 'A') break;
+//        }
 
         //get players (colour, money, rugs) using stringToPlayer until you reach 'A'
+        try {
+            Player player1 = Player.stringToPlayer(state.substring(0,8));
+        } catch (Exception e) {
+                throw new RuntimeException(e);
+        }
+        try {
+            Player player2 = Player.stringToPlayer(state.substring(8,16));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            Player player3 = Player.stringToPlayer(state.substring(16,24));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            Player player4 = Player.stringToPlayer(state.substring(24,32));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         //get Assam (location, orientation) using stringToAssam
+
+        try {
+            Assam assam = Assam.stringToAssam(state.substring(32,36));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //get board (squares - pos, rug) using stringToBoard
+
+        try {
+            Board board = Board.stringToBoard(state.substring(37,183));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
 
         //objects should be in the format ()
@@ -90,11 +126,15 @@ public class Viewer extends Application {
         primaryStage.setTitle("Marrakech Viewer");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
 
+
         root.getChildren().add(controls);
 
-        makeControls();
 
+        makeControls();
         primaryStage.setScene(scene);
         primaryStage.show();
+
+
+
     }
 }

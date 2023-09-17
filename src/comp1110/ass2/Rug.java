@@ -19,8 +19,10 @@ public class Rug {
 
     public static Rug stringToAbbreviatedRug(String inputString) throws Exception {
         String colour;
-        char colourChar = inputString.charAt(1);
-        if (colourChar == 'c') {
+        char colourChar = inputString.charAt(0);
+        if (colourChar == 'n') {
+            colour ="n";
+        } else if (colourChar == 'c') {
             colour = "cyan";
         } else if (colourChar == 'y') {
             colour = "yellow";

@@ -82,6 +82,12 @@ public class Player{
         System.out.println("Player2 rugs: " + player2.rugsNumber);
         System.out.println("Player2 is playing: " + player2.isPlaying);
 
+//        for(int n = 0; n<4;n++){
+//            Player[] player;
+//            player[n] = (Player) stringToPlayer(input1);
+//        }
+
+
         System.out.println(playerToString(CYAN));
         System.out.println(playerToString(YELLOW));
         System.out.println(playerToString(RED));

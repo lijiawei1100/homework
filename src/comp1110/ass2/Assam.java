@@ -72,7 +72,7 @@ public class Assam {
         Assam assam2 = stringToAssam(input2);
         System.out.println("String 1: " + input1);
         System.out.println("Assam1 direction: " + assam1.angle);
-        System.out.println("Assam1 position: " + assam1.position);
+        System.out.println("Assam1 position: " + assam1.position.getKey()+assam1.position.getValue());
         System.out.println("String 2: " + input2);
         System.out.println("Assam2 direction: " + assam2.angle);
         System.out.println("Assam2 position: " + assam2.position);
