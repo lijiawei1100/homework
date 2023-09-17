@@ -7,7 +7,7 @@ public class Square {
     /**
      * occupiedRugs represents the abbreviation of the rugs information ilke p12 (color:purple, rug_id:12),n00 means there is no an occupied rug
      */
-    private Rug occupiedRug; // draft- have changed to rug for Object-Oriented programming.
+    public Rug occupiedRug; // draft- have changed to rug for Object-Oriented programming.
     //will need to change
 
     public Square(Boolean isEdge,Pair<Integer,Integer> position,Rug occupiedRug){

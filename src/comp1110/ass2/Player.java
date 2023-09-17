@@ -12,7 +12,7 @@ public class Player{
     private int rugsNumber;
     private Boolean isPlaying;
 
-    Player(String colour, int money , int rugsNumber, Boolean isPlaying){
+    public Player(String colour, int money, int rugsNumber, Boolean isPlaying){
         this.colour = colour;
         this.money = money;
         this.rugsNumber = rugsNumber;
