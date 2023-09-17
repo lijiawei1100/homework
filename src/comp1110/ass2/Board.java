@@ -1,11 +1,7 @@
 package comp1110.ass2;
 
 import javafx.util.Pair;
-
-import java.sql.SQLOutput;
-
 import static comp1110.ass2.Rug.stringToAbbreviatedRug;
-//import static comp1110.ass2.Rug.rugToString;
 
 public class Board {
     public final static int BOARD_WIDTH = 7; // The width of the board (left to right)
@@ -45,7 +41,6 @@ public class Board {
         rugString = inputString.substring((1 + 3*(n-1)),(4 + 3*(n-1)));
         return stringToAbbreviatedRug(rugString);
     }
-
 
 //    /**
 //     * for testing

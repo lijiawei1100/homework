@@ -43,10 +43,13 @@ public class Viewer extends Application {
      *
      * @param state an array of two strings, representing the current game state
      */
+
+    //test board: Pc04106iPy04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08@2
+
     void displayState(String state) throws Exception {
         // FIXME Task 5: implement the simple state viewer
 
-        //get players (colour, money, rugs) using stringToPlayer when you reach ""
+        //get players (colour, money, rugs) using stringToPlayer
         Player[] players = new Player[4];
         int b = 0;
         for(int i =0; i<state.length();i++){
@@ -66,7 +69,6 @@ public class Viewer extends Application {
         Assam assam = Assam.stringToAssam(assamString);
 
         //get board (squares - pos, rug) using stringToBoard
-
         String boardString = null;
         for(int i=0;i< state.length();i++){
             if(state.charAt(i) == 'B'){
@@ -75,29 +77,10 @@ public class Viewer extends Application {
         }
         Board board = Board.stringToBoard(boardString);
 
-        Polygon arrow = new Polygon();
-        arrow.getPoints().addAll(new Double[]{
-                42.5, 12.5,
-                70.0, 40.0,
-                55.0, 40.0,
-                55.0, 70.0,
-                30.0, 70.0,
-                30.0, 40.0,
-                15.0, 40.0, });
-        arrow.setFill(Color.BLACK);
-        Rotate rotation = Rotate.rotate(assam.getAngle(), 42.5, 42.5);
-        arrow.getTransforms().add(rotation);
-        VBox assamPane = new VBox();
-        assamPane.getChildren().add(arrow);
-        assamPane.setLayoutY(35 + 86 * (assam.getAssamX()));
-        assamPane.setLayoutX(35 + 86 * (assam.getAssamY()));
-
-
+        //create state viewer Player info
         VBox playerInfo = new VBox();
         playerInfo.setLayoutX(650);
         playerInfo.setLayoutY(20);
-
-
         for (int i=1; i<5; i++) {
             Player ithPlayer = (Player) Array.get(players, i-1);
             if (ithPlayer != null) {
@@ -110,8 +93,7 @@ public class Viewer extends Application {
             }
         }
 
-        //test board: Pc04106iPy04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08@2
-
+        //create state viewer for Board
         GridPane gridPane = new GridPane();
         gridPane.setLayoutX(20);
         gridPane.setLayoutY(20);
@@ -132,21 +114,30 @@ public class Viewer extends Application {
                 gridPane.add(drawSquare, x, y, 1, 1);
             }
         }
+
+        //create state viewer for Assam
+        Polygon arrow = new Polygon();
+        arrow.getPoints().addAll(new Double[]{
+                42.5, 12.5,
+                70.0, 40.0,
+                55.0, 40.0,
+                55.0, 70.0,
+                30.0, 70.0,
+                30.0, 40.0,
+                15.0, 40.0, });
+        arrow.setFill(Color.BLACK);
+        Rotate rotation = Rotate.rotate(assam.getAngle(), 42.5, 42.5);
+        arrow.getTransforms().add(rotation);
+        VBox assamPane = new VBox();
+        assamPane.getChildren().add(arrow);
+        assamPane.setLayoutY(35 + 86 * (assam.getAssamX()));
+        assamPane.setLayoutX(35 + 86 * (assam.getAssamY()));
+
+        //add state viewers to controls
         controls.getChildren().add(gridPane);
         controls.getChildren().add(playerInfo);
         controls.getChildren().add(assamPane);
-
-
-        //objects should be in the format ()
-        //then display the game state based on the objects
     }
-//    private void clearStateDisplay() {
-//        // Remove any previously displayed elements from the root or controls Group.
-//        // This can be done by removing all child nodes.
-//        root.getChildren().clear();
-//        controls.getChildren().clear();
-//    }
-
 
     /**
      * Create a basic text field for input and a refresh button.
