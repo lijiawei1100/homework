@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -30,8 +31,6 @@ public class Viewer extends Application {
     private final Group root = new Group();
     private final Group controls = new Group();
     private TextField boardTextField;
-
-    private Player[] players;
 
 
     /**
@@ -102,11 +101,18 @@ public class Viewer extends Application {
         }
         Board board = Board.stringToBoard(boardString);
 
-        Player player1Placeholder = new Player("red", 5,15,Boolean.TRUE);
-        Player player2Placeholder = new Player("cyan", 6,14,Boolean.FALSE);
+        Player player1Placeholder = new Player(Color.RED, 5,15,Boolean.TRUE);
+        Player player2Placeholder = new Player(Color.CYAN, 6,14,Boolean.FALSE);
         Assam assamPlaceholder = new Assam(90, new Pair<> (4,6));
 
-        Board boardPlaceHolder = board;
+        VBox playerInfo = new VBox();
+        playerInfo.setLayoutX(650);
+        playerInfo.setLayoutY(20);
+        Color player1colour = player1Placeholder.colour;
+
+        //playerInfo.getChildren().add();
+
+        //test board: Pc04106iPy04706iPp00406iPr02806iA00WBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08@2
 
         GridPane gridPane = new GridPane();
         gridPane.setLayoutX(20);
@@ -114,7 +120,7 @@ public class Viewer extends Application {
         for (int x=0; x<7; x++){
             for (int y=0; y<7 ; y++){
                 //get square at that position
-                Square thisSquare = boardPlaceHolder.boardMatrix[x][y];
+                Square thisSquare = board.boardMatrix[x][y];
                 //create rectangle with square rug colour
                 Rectangle drawSquare = new Rectangle(85,85);
                 drawSquare.setStroke(Color.BLACK);
@@ -128,7 +134,6 @@ public class Viewer extends Application {
                 gridPane.add(drawSquare, x, y, 1, 1);
             }
         }
-
         controls.getChildren().add(gridPane);
 
 
