@@ -71,7 +71,7 @@ public class Board {
 
 
         Board board = stringToBoard(input1);
-        //System.out.println(board.boardMatrix);
+//        System.out.println(board.boardMatrix[6][6].position);
     }
     public static Rug getRug(int n, String inputString) throws Exception {
         String rugString;
@@ -117,5 +117,5 @@ public class Board {
 //        System.out.println(boardToString(board));
     }
 
-}
+
 

@@ -53,46 +53,42 @@ public class Viewer extends Application {
 //        }
 
         //get players (colour, money, rugs) using stringToPlayer until you reach 'A'
-//        try {
-//            Player player1 = Player.stringToPlayer(state.substring(0,8));
-//        } catch (Exception e) {
-//                throw new RuntimeException(e);
-//        }
-//        try {
-//            Player player2 = Player.stringToPlayer(state.substring(8,16));
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//        try {
-//            Player player3 = Player.stringToPlayer(state.substring(16,24));
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//        try {
-//            Player player4 = Player.stringToPlayer(state.substring(24,32));
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            Player player1 = Player.stringToPlayer(state.substring(0,8));
+        } catch (Exception e) {
+                throw new RuntimeException(e);
+        }
+        try {
+            Player player2 = Player.stringToPlayer(state.substring(8,16));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            Player player3 = Player.stringToPlayer(state.substring(16,24));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            Player player4 = Player.stringToPlayer(state.substring(24,32));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 //
 //        //get Assam (location, orientation) using stringToAssam
 //
-//        try {
-//            Assam assam = Assam.stringToAssam(state.substring(32,36));
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            Assam assam = Assam.stringToAssam(state.substring(32,36));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //get board (squares - pos, rug) using stringToBoard
-
-
-
+        Board board = Board.stringToBoard(state.substring(36,184));
 
         Player player1Placeholder = new Player("red", 5,15,Boolean.TRUE);
         Player player2Placeholder = new Player("cyan", 6,14,Boolean.FALSE);
         Assam assamPlaceholder = new Assam(90, new Pair<> (4,6));
 
-        Board boardPlaceHolder = Board.stringToBoard
-                ("Bn00r00p00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00" +
-                        "n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00");
+        Board boardPlaceHolder = board;
 
         GridPane gridPane = new GridPane();
         for (int x=0; x<7; x++){

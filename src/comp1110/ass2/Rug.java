@@ -5,14 +5,14 @@ import javafx.util.Pair;
 
 public class Rug {
     public Color colour;
-//    private Square[] squares;
+    //    private Square[] squares;
     private final int id;
     /*
     changed id type to integer instead of string - makes it easier to keep track of how many
     rugs have been placed and make for better object-oriented programming
     */
 
-    Rug(Color colour,int id){ //removed Square[] squares
+    Rug(Color colour, int id) { //removed Square[] squares
         this.colour = colour;
         this.id = id;
 //        this.squares = squares;
@@ -22,22 +22,23 @@ public class Rug {
         Color colour;
         char colourChar = inputString.charAt(0);
         if (colourChar == 'n') {
-            return null;
+           return null;
         } else if (colourChar == 'c') {
             colour = Color.CYAN;
         } else if (colourChar == 'y') {
             colour = Color.YELLOW;
-        } else if(colourChar == 'r') {
+        } else if (colourChar == 'r') {
             colour = Color.RED;
-        } else if(colourChar == 'p') {
+        } else if (colourChar == 'p') {
             colour = Color.PURPLE;
         } else {
-            throw new Exception("colour is not a valid character");
+//            throw new Exception("colour is not a valid character");
+            throw new Exception(String.valueOf(colourChar));
         }
         int id;
-        String idString = inputString.substring(1,3);
+        String idString = inputString.substring(1, 3);
         id = Integer.parseInt(idString);
-        return (new Rug(colour,id));
+        return (new Rug(colour, id));
     }
 
     public static void main(String[] args) throws Exception {
@@ -55,7 +56,7 @@ public class Rug {
     /**
      * initialize new rug
      */
-    public static Rug RUG_01 = new Rug(Color.RED,0);
+    public static Rug RUG_01 = new Rug(Color.RED,0);}
 
 //    /**
 //     *A Game string is the concatenation of one player string for each player, followed by one Assam string, followed by one board string.
