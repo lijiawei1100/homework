@@ -96,14 +96,16 @@ public class Viewer extends Application {
         playerInfo.setLayoutX(650);
         playerInfo.setLayoutY(20);
         for (int i=1; i<5; i++) {
-            //Player ithPlayer = ;
+            Player ithPlayer = (Player) Array.get(players, i-1);
+            if (ithPlayer != null) {
+                String colour = ithPlayer.colour.toString();
+                String money = String.valueOf(ithPlayer.money);
+                String rugs = String.valueOf(ithPlayer.rugsNumber);
+                Text playerInfoText = new Text("Player "+i+": " + colour + "\nRemaining Dirhams: " + money + "\nRemaining Rugs: " + rugs + "\n");
+                playerInfoText.setFont(Font.font(30));
+                playerInfo.getChildren().add(playerInfoText);
+            }
         }
-        String player1colour = player1Placeholder.colour.toString();
-        String player1money = String.valueOf(player1Placeholder.money);
-        String player1rugs = String.valueOf(player1Placeholder.rugsNumber);
-        Text player1info = new Text("Player 1: " + player1colour + "\nRemaining Dirhams: " + player1money + "\nRemaining Rugs: " + player1rugs);
-        player1info.setFont(Font.font(30));
-        playerInfo.getChildren().add(player1info);
 
         controls.getChildren().add(playerInfo);
 
