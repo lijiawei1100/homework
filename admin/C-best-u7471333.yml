@@ -20,7 +20,7 @@ declaration: >-
 # (or remove it altogether if you haven't collaborated with anyone)
 collaboration:
   - name: Jiawei Li
-    comment: implemented getting Board, Player and Assam from the gameString
+    comment: implemented getting Board, Player and Assam from the gameString in first half of stringToBoard
 
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
