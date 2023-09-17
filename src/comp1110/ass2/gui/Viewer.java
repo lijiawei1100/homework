@@ -1,5 +1,6 @@
 package comp1110.ass2.gui;
 
+import comp1110.ass2.Player;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,7 +19,7 @@ import java.awt.*;
 public class Viewer extends Application {
 
     private static final int VIEWER_WIDTH = 1200;
-    private static final int VIEWER_HEIGHT = 600;
+    private static final int VIEWER_HEIGHT = 700;
 
     private final Group root = new Group();
     private final Group controls = new Group();
@@ -32,13 +33,24 @@ public class Viewer extends Application {
      */
     void displayState(String state) {
         // FIXME Task 5: implement the simple state viewer
-        Line baseline = new Line();//Example...
-        baseline.setStartX(0.0);
-        baseline.setStartY(0.0);
-        baseline.setEndX(VIEWER_WIDTH);
-        baseline.setEndY(VIEWER_HEIGHT);
-        root.getChildren().addAll(baseline);
-        //now get the objects from the string.....
+//        Line baseline = new Line();//Example...
+//        baseline.setStartX(0.0);
+//        baseline.setStartY(0.0);
+//        baseline.setEndX(VIEWER_WIDTH);
+//        baseline.setEndY(VIEWER_HEIGHT);
+//        root.getChildren().addAll(baseline);
+        //get the objects from the string.....
+        int playerStringLength = 0;
+        String remainingString = state;
+        for (int i=0; i<4; i++) {
+            if (remainingString.charAt(0) == 'A') break;
+        }
+
+        //get players (colour, money, rugs) using stringToPlayer until you reach 'A'
+        //get Assam (location, orientation) using stringToAssam
+        //get board (squares - pos, rug) using stringToBoard
+
+
         //objects should be in the format ()
         //then display the game state based on the objects
     }
