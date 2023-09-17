@@ -25,11 +25,13 @@ import java.awt.*;
 public class Viewer extends Application {
 
     private static final int VIEWER_WIDTH = 1200;
-    private static final int VIEWER_HEIGHT = 600;
+    private static final int VIEWER_HEIGHT = 700;
 
     private final Group root = new Group();
     private final Group controls = new Group();
     private TextField boardTextField;
+
+    private Player[] players;
 
 
     /**
@@ -53,36 +55,52 @@ public class Viewer extends Application {
 //        }
 
         //get players (colour, money, rugs) using stringToPlayer until you reach 'A'
-        try {
-            Player player1 = Player.stringToPlayer(state.substring(0,8));
-        } catch (Exception e) {
-                throw new RuntimeException(e);
+        Player[] players = new Player[4];
+        int b = 0;
+        for(int i =0; i<state.length();i++){
+            if(state.charAt(i) == 'P'){
+                players[b] = Player.stringToPlayer(state.substring(i, i + 8));
+                b++;
+            }
         }
-        try {
-            Player player2 = Player.stringToPlayer(state.substring(8,16));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            Player player3 = Player.stringToPlayer(state.substring(16,24));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            Player player4 = Player.stringToPlayer(state.substring(24,32));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-//
+
+//        try {
+//            Player player1 = Player.stringToPlayer(state.substring(0,8));
+//        } catch (Exception e) {
+//                throw new RuntimeException(e);
+//        }
+//        try {
+//            Player player2 = Player.stringToPlayer(state.substring(8,16));
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//        try {
+//            Player player3 = Player.stringToPlayer(state.substring(16,24));
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//        try {
+//            Player player4 = Player.stringToPlayer(state.substring(24,32));
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+
 //        //get Assam (location, orientation) using stringToAssam
 //
-        try {
-            Assam assam = Assam.stringToAssam(state.substring(32,36));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            Assam assam = Assam.stringToAssam(state.substring(32,36));
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
         //get board (squares - pos, rug) using stringToBoard
-        Board board = Board.stringToBoard(state.substring(36,184));
+
+        String boardString = null;
+        for(int i=0;i< state.length();i++){
+            if(state.charAt(i) == 'B'){
+                boardString = state.substring(i,i+148);
+            }
+        }
+        Board board = Board.stringToBoard(boardString);
 
         Player player1Placeholder = new Player("red", 5,15,Boolean.TRUE);
         Player player2Placeholder = new Player("cyan", 6,14,Boolean.FALSE);
@@ -91,12 +109,15 @@ public class Viewer extends Application {
         Board boardPlaceHolder = board;
 
         GridPane gridPane = new GridPane();
+        gridPane.setLayoutX(20);
+        gridPane.setLayoutY(20);
         for (int x=0; x<7; x++){
             for (int y=0; y<7 ; y++){
                 //get square at that position
                 Square thisSquare = boardPlaceHolder.boardMatrix[x][y];
                 //create rectangle with square rug colour
-                Rectangle drawSquare = new Rectangle(90,90);
+                Rectangle drawSquare = new Rectangle(85,85);
+                drawSquare.setStroke(Color.BLACK);
                 if (thisSquare.occupiedRug == null) {
                     drawSquare.setFill(Color.LIGHTGREY);
                 } else {
@@ -107,8 +128,7 @@ public class Viewer extends Application {
                 gridPane.add(drawSquare, x, y, 1, 1);
             }
         }
-        gridPane.setLayoutX(50);
-        gridPane.setLayoutY(50);
+
         controls.getChildren().add(gridPane);
 
 
