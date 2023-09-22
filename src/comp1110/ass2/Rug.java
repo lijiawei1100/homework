@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
 public class Rug {
-    public Color colour;
+    private Color colour;
     private final int id;
     /*
     changed id type to integer instead of string - makes it easier to keep track of how many
@@ -14,6 +14,10 @@ public class Rug {
     Rug(Color colour, int id) {
         this.colour = colour;
         this.id = id;
+    }
+
+    public Color getColour() {
+        return this.colour;
     }
 
     public static Rug stringToAbbreviatedRug(String inputString) throws Exception {

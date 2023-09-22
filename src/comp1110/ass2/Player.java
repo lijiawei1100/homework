@@ -10,9 +10,9 @@ public class Player{
      * rugsNumber represents the remaining numbers of rugs, it should be a two-digit number. 00 when there is no rugs. 15 is the starting number.
      * gameState represents if players are in the game or not. 'p' represents they are in the game, 'o' represents out of the game.
      */
-    public Color colour;
-    public int money;
-    public int rugsNumber;
+    private Color colour;
+    private int money;
+    private int rugsNumber;
     private Boolean isPlaying;
 
     public Player(Color colour, int money, int rugsNumber, Boolean isPlaying){
@@ -20,6 +20,18 @@ public class Player{
         this.money = money;
         this.rugsNumber = rugsNumber;
         this.isPlaying = isPlaying;
+    }
+
+    public Color getColour() {
+        return this.colour;
+    }
+
+    public int getMoney() {
+        return this.money;
+    }
+
+    public int getRugsNumber() {
+        return this.rugsNumber;
     }
 
     public static Player stringToPlayer(String inputString) throws Exception {

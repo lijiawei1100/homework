@@ -6,10 +6,15 @@ import static comp1110.ass2.Rug.stringToAbbreviatedRug;
 public class Board {
     public final static int BOARD_WIDTH = 7; // The width of the board (left to right)
     public final static int BOARD_HEIGHT = 7; // The height of the board (top to bottom)
-    public Square[][] boardMatrix;
+    private
+    Square[][] boardMatrix;
 
     public Board(Square[][] boardMatrix) {
         this.boardMatrix = boardMatrix;
+    }
+
+    public Square[][] getBoardMatrix() {
+        return this.boardMatrix;
     }
 
     void calcScore (Player player) {

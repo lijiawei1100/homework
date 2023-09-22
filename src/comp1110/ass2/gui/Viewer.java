@@ -84,9 +84,9 @@ public class Viewer extends Application {
         for (int i=1; i<5; i++) {
             Player ithPlayer = (Player) Array.get(players, i-1);
             if (ithPlayer != null) {
-                String colour = Player.getColorName(ithPlayer.colour);
-                String money = String.valueOf(ithPlayer.money);
-                String rugs = String.valueOf(ithPlayer.rugsNumber);
+                String colour = Player.getColorName(ithPlayer.getColour());
+                String money = String.valueOf(ithPlayer.getMoney());
+                String rugs = String.valueOf(ithPlayer.getRugsNumber());
                 Text playerInfoText = new Text("Player "+i+": " + colour + "\nRemaining Dirhams: " + money + "\nRemaining Rugs: " + rugs + "\n");
                 playerInfoText.setFont(Font.font(30));
                 playerInfo.getChildren().add(playerInfoText);
@@ -100,14 +100,14 @@ public class Viewer extends Application {
         for (int x=0; x<7; x++){
             for (int y=0; y<7 ; y++){
                 //get square at that position
-                Square thisSquare = board.boardMatrix[x][y];
+                Square thisSquare = board.getBoardMatrix()[x][y];
                 //create rectangle with square rug colour
                 Rectangle drawSquare = new Rectangle(85,85);
                 drawSquare.setStroke(Color.BLACK);
                 if (thisSquare.occupiedRug == null) {
                     drawSquare.setFill(Color.LIGHTGREY);
                 } else {
-                    Color rugColour = thisSquare.occupiedRug.colour;
+                    Color rugColour = thisSquare.occupiedRug.getColour();
                     drawSquare.setFill(rugColour);
                 }
                 //add rectangle to grid
