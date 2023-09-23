@@ -11,4 +11,8 @@ public class Square {
         this.position = position;
         this.occupiedRug = occupiedRug;
     }
+
+    public Boolean getIsEdge(){
+        return isEdge;
+    }
 }

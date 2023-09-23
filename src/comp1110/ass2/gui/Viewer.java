@@ -28,7 +28,7 @@ import javafx.util.Pair;
 
 import java.lang.reflect.Array;
 
-public class Viewer extends Application {
+public class   Viewer extends Application {
 
     private static final int VIEWER_WIDTH = 1200;
     private static final int VIEWER_HEIGHT = 700;

@@ -5,13 +5,16 @@ import javafx.util.Pair;
 
 public class Rug {
     public Color colour;
-    private final int id;
+    public final String id;
     /*
     changed id type to integer instead of string - makes it easier to keep track of how many
     rugs have been placed and make for better object-oriented programming
     */
 
-    Rug(Color colour, int id) {
+    /*
+    changed it back to string, since 01 is what we want for rugId, not only 1*/
+
+    Rug(Color colour, String id) {
         this.colour = colour;
         this.id = id;
     }
@@ -34,10 +37,8 @@ public class Rug {
 //            for testing
 //            throw new Exception(String.valueOf(colourChar));
         }
-        int id;
         String idString = inputString.substring(1, 3);
-        id = Integer.parseInt(idString);
-        return (new Rug(colour, id));
+        return (new Rug(colour, idString));
     }
 
 //    /**
