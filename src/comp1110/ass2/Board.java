@@ -47,6 +47,7 @@ public class Board {
         return stringToAbbreviatedRug(rugString);
     }
 
+
 //    /**
 //     * for testing
 //     * @param args
@@ -66,7 +67,7 @@ public class Board {
 //        Board board = stringToBoard(input1);
 //        System.out.println(board.boardMatrix[6][6].position);
 //    }
+
+
     }
-
-
 

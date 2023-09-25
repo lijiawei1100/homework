@@ -38,10 +38,8 @@ public class Rug {
 //            for testing
 //            throw new Exception(String.valueOf(colourChar));
         }
-        int id;
         String idString = inputString.substring(1, 3);
-        id = Integer.parseInt(idString);
-        return (new Rug(colour, id));
+        return (new Rug(colour, idString));
     }
 
 //    /**

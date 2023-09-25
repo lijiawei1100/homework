@@ -11,4 +11,16 @@ public class Square {
         this.position = position;
         this.occupiedRug = occupiedRug;
     }
+
+    public Boolean isSquareValid(Square square){
+        if(square.position.getKey() ==0 | square.position.getKey()==6 |square.position.getValue()==0|square.position.getValue()==6){
+            if(square.isEdge.equals(true)) return true;
+        }
+        return false;
+
+    }
+
+    public Boolean getIsEdge(){
+        return isEdge;
+    }
 }

@@ -26,7 +26,7 @@ collaboration:
 # you want to just submit classes):
 method:
    - stringToBoard
-   - https://gitlab.cecs.anu.edu.au/u7471333/comp1110-ass2/-/blob/main/src/comp1110/ass2/Board.java#L23-37
+   - https://gitlab.cecs.anu.edu.au/u7471333/comp1110-ass2/-/blob/main/src/comp1110/ass2/Board.java#L47-61
 
 # sign *your* name and uid here
 name: JiaweiLi
