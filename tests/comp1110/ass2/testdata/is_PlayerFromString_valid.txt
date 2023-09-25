@@ -1,0 +1,4 @@
+Pc03212i@Cyan@32@12@true@Expected Player String Pc03212i to have colour Cyan@Expected Player String Pc03212i to have dihrams Cyan@Expected Player String Pc03212i to have colour Cyan@Expected Player String Pc03212i to have colour Cyan
+Py04009i@Yellow@40@9@true@Expected Player String Py04009i to be invalid because l is not the colour of a player in the game
+Pp00207o@Purple@2@7@false@Expected Player String Pp00207o to be invalid because l is not the colour of a player in the game
+Pr02703o@Red@27@3@false@Expected Player String Pr02703o to be invalid because l is not the colour of a player in the game

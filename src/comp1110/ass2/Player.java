@@ -34,6 +34,8 @@ public class Player{
         return this.rugsNumber;
     }
 
+    public Boolean getIsPlaying() { return this.isPlaying; }
+
     public static Player stringToPlayer(String inputString) throws Exception {
         Color colour;
         char colourChar = inputString.charAt(1);
