@@ -22,8 +22,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
-import javafx.scene.shape.Shape;
-import javafx.util.Pair;
 
 
 import java.lang.reflect.Array;
@@ -49,33 +47,9 @@ public class   Viewer extends Application {
     void displayState(String state) throws Exception {
         // FIXME Task 5: implement the simple state viewer
 
-        //get players (colour, money, rugs) using stringToPlayer
-        Player[] players = new Player[4];
-        int b = 0;
-        for(int i =0; i<state.length();i++){
-            if(state.charAt(i) == 'P'){
-                players[b] = Player.stringToPlayer(state.substring(i, i + 8));
-                b++;
-            }
-        }
-
-        //get Assam (location, orientation) using stringToAssam
-        String assamString =null;
-        for(int i=0;i<state.length();i++){
-            if(state.charAt(i) == 'A'){
-                assamString = state.substring(i,i+4);
-            }
-        }
-        Assam assam = Assam.stringToAssam(assamString);
-
-        //get board (squares - pos, rug) using stringToBoard
-        String boardString = null;
-        for(int i=0;i< state.length();i++){
-            if(state.charAt(i) == 'B'){
-                boardString = state.substring(i,i+148);
-            }
-        }
-        Board board = Board.stringToBoard(boardString);
+        Player[] players = createPlayer(state);
+        Assam assam = createAssam(state);
+        Board board = createBoard(state);
 
         //create state viewer Player info
         VBox playerInfo = new VBox();
@@ -137,6 +111,43 @@ public class   Viewer extends Application {
         controls.getChildren().add(gridPane);
         controls.getChildren().add(playerInfo);
         controls.getChildren().add(assamPane);
+    }
+
+    Player[] createPlayer(String state) throws Exception {
+        //get players (colour, money, rugs) using stringToPlayer
+        Player[] players = new Player[4];
+        int b = 0;
+        for(int i =0; i<state.length();i++){
+            if(state.charAt(i) == 'P'){
+                players[b] = Player.stringToPlayer(state.substring(i, i + 8));
+                b++;
+            }
+        }
+        return players;
+    }
+
+    Assam createAssam(String state) throws Exception {
+        //get Assam (location, orientation) using stringToAssam
+        String assamString = null;
+        for(int i=0;i<state.length();i++){
+            if(state.charAt(i) == 'A'){
+                assamString = state.substring(i,i+4);
+            }
+        }
+        Assam assam = Assam.stringToAssam(assamString);
+        return assam;
+    }
+
+    Board createBoard(String state) throws Exception {
+        //get board (squares - pos, rug) using stringToBoard
+        String boardString = null;
+        for(int i=0;i< state.length();i++){
+            if(state.charAt(i) == 'B'){
+                boardString = state.substring(i,i+148);
+            }
+        }
+        Board board = Board.stringToBoard(boardString);
+        return board;
     }
 
     /**

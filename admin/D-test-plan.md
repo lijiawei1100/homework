@@ -34,6 +34,9 @@ a int, same as the getAssamY(assam).
 
 After calling stringToAbbreviatedRug(), we can create a new square for testing,
 ### 6.Viewer
-* displayState
+* displayState - JavaFX - won't test
+* createPlayer - create a Player from a game string
+* createAssam - create an Assam from a game string
+* createBoard - create a Board from a game string
 
   
