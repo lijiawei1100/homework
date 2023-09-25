@@ -19,6 +19,7 @@ public class Rug {
     public Color getColour() {
         return this.colour;
     }
+    public int getId() { return this.id; }
 
     public static Rug stringToAbbreviatedRug(String inputString) throws Exception {
         Color colour;
@@ -39,7 +40,7 @@ public class Rug {
 //            throw new Exception(String.valueOf(colourChar));
         }
         String idString = inputString.substring(1, 3);
-        return (new Rug(colour, idString));
+        return (new Rug(colour, Integer.parseInt(idString)));
     }
 
 //    /**
