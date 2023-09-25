@@ -11,13 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SquareTest {
     @Test
-    public  void checkSquareState() throws Exception{
+    public  void checkSquareValid() throws Exception{
         Rug occupiedRug = Rug.stringToAbbreviatedRug("r01");
         Square square = new Square(true, new Pair<>(0,5),occupiedRug);
-        assertTrue(square.getIsEdge(),"is not on a edge");
-        assertTrue(square.position.getKey() == 0,"xPosition is wrong" );
-        assertTrue(square.position.getValue() == 5,"yPosition is wrong" );
-
-
+        assertTrue(square.isSquareValid(square),"is not on a edge");
     }
 }
