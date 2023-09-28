@@ -80,7 +80,6 @@ public class Player{
             return "Purple";
         }
          else {
-            // 如果找不到匹配的颜色，可以返回一个默认值或null
             return "Unknown";
         }}
 

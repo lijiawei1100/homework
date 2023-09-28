@@ -1,8 +1,13 @@
 package comp1110.ass2;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.List;
+import comp1110.ass2.gui.Game;
+import gittest.A;
+import gittest.B;
+
+import java.util.*;
+
+import static comp1110.ass2.Player.getColorName;
+import static comp1110.ass2.Rug.*;
 
 public class Marrakech {
     public final static int NUMBER_OF_PLAYERS = 4;
@@ -114,6 +119,20 @@ public class Marrakech {
      */
     public static boolean isGameOver(String currentGame) {
         // FIXME: Task 8
+        Game game = Game.stringToGame(currentGame);
+        int count=0;
+        int countNull=0;
+        for (Player i : game.getPlayers()){
+            if (i==null) countNull+=1;
+        }
+        if (countNull==4) return true;
+        for (Player i : game.getPlayers()){
+            if(i!=null){
+                if (i.getIsPlaying() == false & i.getRugsNumber() == 0) return true;
+                else if (i.getIsPlaying() == true & i.getRugsNumber() == 0) count += 1;
+            }
+        }
+        if (count == game.getPlayers().length-countNull) return true;
         return false;
     }
 
@@ -132,7 +151,22 @@ public class Marrakech {
      */
     public static String rotateAssam(String currentAssam, int rotation) {
         // FIXME: Task 9
-        return "";
+       ArrayList<Integer> angle = new ArrayList<Integer>();
+       angle.add(0);
+       angle.add(90);
+       angle.add(180);
+       angle.add(270);
+       int currentAngle = 0;
+       Assam assam = Assam.stringToAssam(currentAssam);
+       if(!angle.contains(rotation)|rotation==180) return currentAssam;
+       currentAngle = (assam.getAngle()+rotation)%360 ;
+       switch (currentAngle){
+           case 0 :return (currentAssam.substring(0,3)+"N");
+           case 90 :return (currentAssam.substring(0,3)+"E");
+           case 180 :return (currentAssam.substring(0,3)+"S");
+           case 270 :return (currentAssam.substring(0,3)+"W");
+       }
+       return null;
     }
 
     /**
@@ -148,9 +182,29 @@ public class Marrakech {
      */
     public static boolean isPlacementValid(String gameState, String rug) {
         // FIXME: Task 10
-        return false;
+        Game game = Game.stringToGame(gameState);
+        Assam assam =game.getAssam();
+        Board board = game.getBoard();
+        boolean positionBoolean = false;
+        boolean rugBoolean = true;
+        Rug.RugWithPosition rugWithPosition = RugWithPosition.stringToRugWithPosition(rug);
+        if((Math.abs(rugWithPosition.firstPosition.getKey()-assam.getAssamX())==1 & rugWithPosition.firstPosition.getValue() == assam.getAssamY())
+                |(Math.abs(rugWithPosition.firstPosition.getValue()-assam.getAssamY())==1 & rugWithPosition.firstPosition.getKey() == assam.getAssamX())
+                |(Math.abs(rugWithPosition.secondPosition.getKey()-assam.getAssamX())==1 & rugWithPosition.secondPosition.getValue() == assam.getAssamY())
+                | (Math.abs(rugWithPosition.secondPosition.getValue()-assam.getAssamY())==1 & rugWithPosition.secondPosition.getKey() == assam.getAssamX())){
+            positionBoolean = true;
+        }
+        if(board.getBoardMatrix()[rugWithPosition.firstPosition.getKey()][rugWithPosition.firstPosition.getValue()].occupiedRug!=null
+            & board.getBoardMatrix()[rugWithPosition.secondPosition.getKey()][rugWithPosition.secondPosition.getValue()].occupiedRug!=null) {
+            if ((board.getBoardMatrix()[rugWithPosition.firstPosition.getKey()][rugWithPosition.firstPosition.getValue()].occupiedRug.getColour() ==
+                    board.getBoardMatrix()[rugWithPosition.secondPosition.getKey()][rugWithPosition.secondPosition.getValue()].occupiedRug.getColour())
+                    & (board.getBoardMatrix()[rugWithPosition.firstPosition.getKey()][rugWithPosition.firstPosition.getValue()].occupiedRug.getId() ==
+                    board.getBoardMatrix()[rugWithPosition.secondPosition.getKey()][rugWithPosition.secondPosition.getValue()].occupiedRug.getId())) {
+                rugBoolean = false;
+            }
+        }
+        return (positionBoolean & rugBoolean);
     }
-
     /**
      * Determine the amount of payment required should another player land on a square.
      * For this method, you may assume that Assam has just landed on the square he is currently placed on, and that
@@ -162,6 +216,24 @@ public class Marrakech {
      * @return The amount of payment due, as an integer.
      */
     public static int getPaymentAmount(String gameString) {
+        //some attempts for this task,for temporary
+
+        Game game = Game.stringToGame(gameString);
+        Board board = game.getBoard();
+        Assam assam = game.getAssam();
+//        boolean[] sameColor = new boolean[9];
+//        int i = 0;
+//        for (int dX = -1; dX <= 1; dX++) {
+//            for (int dY = -1; dY <= 1; dY++) {
+//                int neighbourX = assam.getAssamX() + dX ;
+//                int neighbourY = assam.getAssamY() + dY ;
+//                if (board.getBoardMatrix()[neighbourX][neighbourY].occupiedRug.getColour() ==null) {
+//
+//                }
+//                }
+//            }
+
+
         // FIXME: Task 11
         return -1;
     }
@@ -182,7 +254,107 @@ public class Marrakech {
      */
     public static char getWinner(String gameState) {
         // FIXME: Task 12
-        return '\0';
+        /**
+         * wrote for temporary
+         */
+        Game game = Game.stringToGame(gameState);
+        Board board = game.getBoard();
+        Player[] players = game.getPlayers();
+        //use map to match totalScore and players
+        Map mapTotalScore = new HashMap();
+        //use map to match rugScore and players
+        Map mapDirhamsScore = new HashMap();
+        //use arrayList to sort the map according to the score
+        ArrayList<Map.Entry<String, Integer>> listTotalScore = null;
+        ArrayList<Map.Entry<String, Integer>> listDirhamsScore = null;
+        ArrayList<Integer> remainingListDirhamsScoreIndex = new ArrayList<>();
+        ArrayList<Integer> listTotalScoreIndex = new ArrayList<>();
+        //check the gamestate,if it's over,then compare the score
+        ArrayList<Map.Entry<String, Integer>> remainingListDirhamsScore = null;
+        if (isGameOver(gameState)) {
+            //for each existing players, use for loop to calculate their rugs on board and store it in rugsScore
+            for (Player player : players) {
+                if(player !=null){
+                    int rugsOnBoardNumber = 0;
+                    int dirhams;
+                    for (int i = 0; i < 7; i++) {
+                        for (int j = 0; j < 7; j++) {
+                            if (board.getBoardMatrix()[i][j].occupiedRug != null) {
+                                if (board.getBoardMatrix()[i][j].occupiedRug.getColour() == player.getColour())
+                                    rugsOnBoardNumber += 1;
+                            }
+                        }
+                    }
+                    dirhams = player.getMoney();
+                    // match players and the score using map
+                    mapTotalScore.put(getColorName(player.getColour()), (rugsOnBoardNumber + dirhams));
+                    mapDirhamsScore.put(getColorName(player.getColour()), dirhams);
+                }
+            }
+            //a map is hard to sort, so turn it into an arraylist
+            listTotalScore = new ArrayList<>(mapTotalScore.entrySet());
+            listDirhamsScore = new ArrayList<>(mapDirhamsScore.entrySet());
+
+            //sort list
+            Collections.sort(listTotalScore, new Comparator<Map.Entry<String, Integer>>() {
+                @Override
+                public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                    return o1.getValue() - o2.getValue();
+                }
+            });
+
+
+            //traverse from the last one to the first one, since the largest number is at the end.
+            for (int i = mapTotalScore.size() - 1; i >= 0; i--) {
+                if (i != 0) {
+                    //to compare numbers: if they are equal, then add the index and continue.if not,add the index and then break.
+                    if (!listTotalScore.get(i - 1).getValue().equals(listTotalScore.get(i).getValue())) {
+                        listTotalScoreIndex.add(i);
+                        break;
+                    } else listTotalScoreIndex.add(i);
+                    //when the i==0,it means all numbers are equal,so we need to add all indexes.
+                } else if (i == 0) {
+                    listTotalScoreIndex.add(i);
+                }
+            }
+
+            //to see if there is only one index for the largest number.if there exists more than two indexes,we should compare the rugScore.
+            if (listTotalScoreIndex.size() != 1) {
+                //store those remaining players who have the same largest totalScore.
+                remainingListDirhamsScore = new ArrayList();
+                for (int e : listTotalScoreIndex) {
+                    for (int k = 0; k < listDirhamsScore.size(); k++) {
+                        if (listTotalScore.get(e).getKey() == listDirhamsScore.get(k).getKey()) {
+                            remainingListDirhamsScore.add(listDirhamsScore.get(k));
+                        }
+                    }
+                }
+
+                //sort the remaining list here.
+                Collections.sort(remainingListDirhamsScore, new Comparator<Map.Entry<String, Integer>>() {
+                    @Override
+                    public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                        return o1.getValue() - o2.getValue();
+                    }
+                });
+
+                //use the same way to compare the rugScore
+                for (int i = remainingListDirhamsScore.size() - 1; i >= 0; i--) {
+                    if (i != 0) {
+                        if (!remainingListDirhamsScore.get(i - 1).getValue().equals(remainingListDirhamsScore.get(i).getValue())) {
+                            remainingListDirhamsScoreIndex.add(i);
+                            break;
+                        } else remainingListDirhamsScoreIndex.add(i);
+                    } else if (i == 0) {
+                        remainingListDirhamsScoreIndex.add(i);
+                    }
+                }
+                if (remainingListDirhamsScoreIndex.size() == 1)
+                    return Character.toLowerCase(remainingListDirhamsScore.get(remainingListDirhamsScoreIndex.get(0)).getKey().charAt(0));
+                else  return  't';
+            } else
+                return (Character.toLowerCase(listTotalScore.get(listTotalScoreIndex.get(0)).getKey().charAt(0)));
+        } else return 'n';
     }
 
     /**
@@ -198,7 +370,44 @@ public class Marrakech {
      */
     public static String moveAssam(String currentAssam, int dieResult){
         // FIXME: Task 13
-        return "";
+        //some attempts for this task,for temporary
+
+//        int xPosition = Integer.parseInt(currentAssam.substring(1,2));
+//        int yPosition = Integer.parseInt(currentAssam.substring(2,3));
+//        String currentDirecton = currentAssam.substring(3,4);
+//        for(int i=0;i<dieResult;i++) {
+//            if ((xPosition < 6 & xPosition > 0 & yPosition < 6 & yPosition >0)
+//                    |(!(yPosition==6 & currentDirecton=="S")&!(xPosition==6 & currentDirecton=="E")&!(xPosition==0 & currentDirecton=="W")&!(yPosition==0 & currentDirecton=="N"))
+//            )
+//                    {
+//                switch (currentDirecton) {
+//                    case "N":
+//                        yPosition -= 1;
+//                    case "E":
+//                        xPosition += 1;
+//                    case "S":
+//                        yPosition += 1;
+//                    case "W":
+//                        xPosition -= 1;
+//                }
+//            }
+//            else{
+//                if(yPosition==6 & xPosition!=0 & xPosition%2==1 & currentDirecton=="S" ){ xPosition+=1; currentDirecton="N";}
+//                else if(yPosition==6 & xPosition!=0 & xPosition%2==0 & currentDirecton=="S") {xPosition-=1; currentDirecton="N";}
+//                else if(xPosition==6 & yPosition!=0 & xPosition%2==1 & currentDirecton=="E") {yPosition+=1; currentDirecton="W";}
+//                else if(xPosition==6 & yPosition!=0 & xPosition%2==0 & currentDirecton=="E") {yPosition-=1; currentDirecton="W";}
+//                else if(xPosition!=6 & yPosition==0 & xPosition%2==1 & currentDirecton=="N") {xPosition-=1; currentDirecton="S";}
+//                else if(xPosition!=6 & yPosition==0 & xPosition%2==0 & currentDirecton=="N") {xPosition+=1; currentDirecton="S";}
+//                else if(xPosition==0 & yPosition!=6 & yPosition%2==1 & currentDirecton=="W") {yPosition-=1; currentDirecton="E";}
+//                else if(xPosition==0 & yPosition!=6 & yPosition%2==0 & currentDirecton=="W") {yPosition+=1; currentDirecton="E";}
+//                else if(xPosition==0 & yPosition==6 & currentDirecton =="S"){currentDirecton ="E";}
+//                else if(xPosition==0 & yPosition==6 & currentDirecton =="W"){currentDirecton ="N";}
+//                else if(xPosition==6 & yPosition==0 & currentDirecton =="E"){currentDirecton ="S";}
+//                else if(xPosition==6 & yPosition==0 & currentDirecton =="N"){currentDirecton ="W";}
+//                }
+//            }
+//        return "A"+String.valueOf(xPosition)+String.valueOf(yPosition)+currentDirecton;
+        return null;
     }
 
     /**

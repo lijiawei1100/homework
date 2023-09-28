@@ -25,7 +25,7 @@ public class Board {
         return null;
     }
 
-    public static Board stringToBoard(String inputString) throws Exception {
+    public static Board stringToBoard(String inputString)  {
         Square[][] boardMatrix = new Square[7][7];
         int squareIndex = 1;
         for (int x = 0;x<BOARD_WIDTH;x++){
@@ -41,7 +41,7 @@ public class Board {
         return (new Board(boardMatrix));
     }
 
-    public static Rug getRug(int n, String inputString) throws Exception {
+    public static Rug getRug(int n, String inputString){
         String rugString;
         rugString = inputString.substring((1 + 3*(n-1)),(4 + 3*(n-1)));
         return stringToAbbreviatedRug(rugString);

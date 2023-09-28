@@ -26,11 +26,10 @@ class AssamTest {
                 angle = "S";
             } else if(assam.getAngle() == 270) {
                 angle = "W";
-            assertTrue(angle.equals(subString),"orientation is "+subString+" now is " +angle);
-
-
+                assertTrue(angle.equals(subString),"orientation is "+subString+" now is " +angle);
+            }
         }
-    }}
+    }
     @Test
     public  void checkAssamPosition() throws Exception{
         String[] inputString = {"A25W","A13N","A24E"};

@@ -35,8 +35,8 @@ public class Assam {
         return this.angle;
     }
 
-    public static Assam stringToAssam(String inputString) throws Exception {
-        int angle;
+    public static Assam stringToAssam(String inputString) {
+        int angle = 0;
         char angleChar = inputString.charAt(3);
         if (angleChar == 'N') {
             angle = 0;
@@ -46,9 +46,10 @@ public class Assam {
             angle = 180;
         } else if(angleChar == 'W') {
             angle = 270;
-        } else {
-            throw new Exception("direction is not a valid character");
         }
+//            else {
+//            throw new Exception("direction is not a valid character");
+//        }
         Pair<Integer,Integer> location;
         char charX = inputString.charAt(1);
         char charY = inputString.charAt(2);

@@ -51,6 +51,10 @@ class BoardTest {
                     idString = String.valueOf(board.getBoardMatrix()[i][j].occupiedRug.getId());
                 }
                 String subString = inputString.substring(1+3*j+21*i,4+3*j+21*i);
+                if(idString.length()==1){
+                    idString = "0" + idString;
+                }
+
                 assertTrue(((colourChar+idString).equals(subString)),"substring is "+subString+" test string is "+colourChar+idString);
 
     }}}
