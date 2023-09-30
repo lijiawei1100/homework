@@ -28,6 +28,7 @@ public class Assam {
     public Integer getAssamY() {
         return this.position.getValue();
     }
+    public Pair<Integer,Integer> getAssamPosition(){return this.position;}
 
 
     /**to return Assam's direction*/

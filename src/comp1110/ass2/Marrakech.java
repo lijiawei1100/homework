@@ -188,11 +188,13 @@ public class Marrakech {
         boolean positionBoolean = false;
         boolean rugBoolean = true;
         Rug.RugWithPosition rugWithPosition = RugWithPosition.stringToRugWithPosition(rug);
-        if((Math.abs(rugWithPosition.firstPosition.getKey()-assam.getAssamX())==1 & rugWithPosition.firstPosition.getValue() == assam.getAssamY())
-                |(Math.abs(rugWithPosition.firstPosition.getValue()-assam.getAssamY())==1 & rugWithPosition.firstPosition.getKey() == assam.getAssamX())
-                |(Math.abs(rugWithPosition.secondPosition.getKey()-assam.getAssamX())==1 & rugWithPosition.secondPosition.getValue() == assam.getAssamY())
-                | (Math.abs(rugWithPosition.secondPosition.getValue()-assam.getAssamY())==1 & rugWithPosition.secondPosition.getKey() == assam.getAssamX())){
-            positionBoolean = true;
+        if(!rugWithPosition.firstPosition.equals(assam.getAssamPosition()) & !rugWithPosition.secondPosition.equals(assam.getAssamPosition())){
+            if((Math.abs(rugWithPosition.firstPosition.getKey()-assam.getAssamX())==1 & rugWithPosition.firstPosition.getValue() == assam.getAssamY())
+                    |(Math.abs(rugWithPosition.firstPosition.getValue()-assam.getAssamY())==1 & rugWithPosition.firstPosition.getKey() == assam.getAssamX())
+                    |(Math.abs(rugWithPosition.secondPosition.getKey()-assam.getAssamX())==1 & rugWithPosition.secondPosition.getValue() == assam.getAssamY())
+                    | (Math.abs(rugWithPosition.secondPosition.getValue()-assam.getAssamY())==1 & rugWithPosition.secondPosition.getKey() == assam.getAssamX())){
+                positionBoolean = true;
+            }
         }
         if(board.getBoardMatrix()[rugWithPosition.firstPosition.getKey()][rugWithPosition.firstPosition.getValue()].occupiedRug!=null
             & board.getBoardMatrix()[rugWithPosition.secondPosition.getKey()][rugWithPosition.secondPosition.getValue()].occupiedRug!=null) {
