@@ -36,8 +36,6 @@ public class Game extends Application {
         this.assam=assam;
     }
 
-    public Game(){};
-
     /**
      * created stringToGame, so we can converge those creating methods which are in the viewer
      * @param gameString
@@ -95,10 +93,16 @@ public class Game extends Application {
     public Board getBoard(){return board;}
 
 
+    //TODO: change initial game string based on chosen number of players
+    public String game = "Py04706iPp00406iPr02806iA33NBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08";
 
     @Override
     public void start(Stage stage) throws Exception {
         // FIXME Task 7 and 15
+        Game newgame = stringToGame(game);
+
+
+
         Viewer viewer = new Viewer();
         this.root = viewer.getRoot();
         Scene scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
