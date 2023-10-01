@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import javax.swing.text.View;
 import java.sql.SQLOutput;
 import java.util.*;
 
@@ -25,6 +26,8 @@ public class Game extends Application {
     Player[] players;
     Board board;
     Assam assam;
+
+    public Game() {};
 
     public Game(Player[] players,Board board,Assam assam){
         this.players=players;
@@ -97,7 +100,4 @@ public class Game extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
-
-
 }
