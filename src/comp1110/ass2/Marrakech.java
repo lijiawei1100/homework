@@ -203,44 +203,10 @@ public class Marrakech {
                     board.getBoardMatrix()[rugWithPosition.secondPosition.getKey()][rugWithPosition.secondPosition.getValue()].occupiedRug.getId())) {
                 rugBoolean = false;
             }
-        } //2. A new rug must not completely cover another rug. It is legal to partially cover an already placed rug, but
-        // the new rug must not cover the entirety of another rug that's already on the board.
+        }
+
         return (positionBoolean & rugBoolean);
     }
-
-
-
-    public ArrayList<Pair<Integer,Integer>> getAdjacentRug(Assam assam, Set used, ArrayList<Pair<Integer,Integer>> adjacentRugsPosition,Board board){
-        ArrayList<Integer> listIndex = new ArrayList<>();
-        listIndex.add(-1);
-        listIndex.add(1);
-        ArrayList<Pair<Integer,Integer>> newAdjacenRugsPosition = new ArrayList<>();
-        for(Pair<Integer,Integer> i: adjacentRugsPosition){
-            for(int index:listIndex){
-                if(board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour()!=null & board.getBoardMatrix()[i.getKey()+index][i.getValue()].occupiedRug.getColour()!=null)
-                    if(board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour() == board.getBoardMatrix()[i.getKey()+index][i.getValue()].occupiedRug.getColour()){used.add(new Pair(i.getKey()+index,i.getValue()));newAdjacenRugsPosition.add(new Pair(i.getKey()+index,i.getValue())); }
-                if(board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour()!=null & board.getBoardMatrix()[i.getKey()][i.getValue()+index].occupiedRug.getColour()!=null)
-                    if(board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour() == board.getBoardMatrix()[i.getKey()][i.getValue()+index].occupiedRug.getColour()){used.add(new Pair(i.getKey(),i.getValue()+index));newAdjacenRugsPosition.add(new Pair(i.getKey(),i.getValue()+index)); }
-            }
-
-
-//            if(board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour()!=null)
-//                if(board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour() == board.getBoardMatrix()[i.getKey()-1][i.getValue()].occupiedRug.getColour()) used.add()
-//
-//                        |board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour() == board.getBoardMatrix()[i.getKey()+1][i.getValue()].occupiedRug.getColour()
-//                        |board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour() == board.getBoardMatrix()[i.getKey()][i.getValue()-1].occupiedRug.getColour()
-//                        |board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour() == board.getBoardMatrix()[i.getKey()][i.getValue()+1].occupiedRug.getColour()
-
-
-        }
-        return null;
-    }
-
-
-    //cases to check thru in (2):
-    // if both rug positions match a rug with the same id
-    // chec
-
     /**
      * Determine the amount of payment required should another player land on a square.
      * For this method, you may assume that Assam has just landed on the square he is currently placed on, and that
@@ -459,22 +425,7 @@ public class Marrakech {
      */
     public static String makePlacement(String currentGame, String rug) {
         // FIXME: Task 14
-       Game game = Game.stringToGame(currentGame);
-       Board board = game.getBoard();
-       RugWithPosition rugWithPosition = RugWithPosition.stringToRugWithPosition(rug);
-       if(isPlacementValid(currentGame,rug)==true){
-           for(int i=0;i<currentGame.length();i++){
-               if(currentGame.charAt(i) =='B'){
-                   currentGame = currentGame.substring(0,i+1+3*(7*rugWithPosition.firstPosition.getKey()+rugWithPosition.firstPosition.getValue()))
-                           +rug.substring(0,1)+rug.substring(3,5)+currentGame.substring(i+1+3*(7*rugWithPosition.firstPosition.getKey()+rugWithPosition.firstPosition.getValue()+1));
-
-                   currentGame = currentGame.substring(0,i+1+3*(7*rugWithPosition.secondPosition.getKey()+rugWithPosition.secondPosition.getValue()))
-                           +rug.substring(0,1) +rug.substring(5,7)+currentGame.substring(i+1+3*(7*rugWithPosition.secondPosition.getKey()+rugWithPosition.secondPosition.getValue()+1));
-               }
-           }
-           return currentGame;
-       }
-       else return currentGame;
+        return "";
     }
 
 }

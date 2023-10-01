@@ -36,6 +36,13 @@ public class   Viewer extends Application {
     private TextField boardTextField;
 
 
+    public javafx.scene.Group getRoot() {
+        return root;
+    }
+    public Group getControls(){
+        return controls;
+    }
+
     /**
      * Draw a placement in the window, removing any previously drawn placements
      *
@@ -153,7 +160,7 @@ public class   Viewer extends Application {
     /**
      * Create a basic text field for input and a refresh button.
      */
-    private void makeControls() {
+    public void makeControls() {
         Label boardLabel = new Label("Game State:");
         boardTextField = new TextField();
         boardTextField.setPrefWidth(800);

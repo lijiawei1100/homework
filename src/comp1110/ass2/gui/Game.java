@@ -15,10 +15,11 @@ import java.util.*;
 
 import static comp1110.ass2.Marrakech.isGameOver;
 import static comp1110.ass2.Player.getColorName;
+import static javafx.stage.Stage.*;
 
 public class Game extends Application {
 
-    private final Group root = new Group();
+    private Group root = new Group();
     private static final int WINDOW_WIDTH = 1200;
     private static final int WINDOW_HEIGHT = 700;
 
@@ -31,6 +32,8 @@ public class Game extends Application {
         this.board=board;
         this.assam=assam;
     }
+
+    public Game(){};
 
     /**
      * created stringToGame, so we can converge those creating methods which are in the viewer
@@ -93,7 +96,11 @@ public class Game extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // FIXME Task 7 and 15
+        Viewer viewer = new Viewer();
+        this.root = viewer.getRoot();
         Scene scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        root.getChildren().add(viewer.getControls());
+        viewer.makeControls();
         stage.setScene(scene);
         stage.show();
     }
