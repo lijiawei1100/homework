@@ -1,8 +1,7 @@
 package comp1110.ass2;
 
 import comp1110.ass2.gui.Game;
-import gittest.A;
-import gittest.B;
+import javafx.util.Pair;
 
 import java.util.*;
 
@@ -207,6 +206,36 @@ public class Marrakech {
         }
         return (positionBoolean & rugBoolean);
     }
+
+
+
+    public ArrayList<Pair<Integer,Integer>> getAdjacentRug(Assam assam, Set used, ArrayList<Pair<Integer,Integer>> adjacentRugsPosition,Board board){
+        ArrayList<Integer> listIndex = new ArrayList<>();
+        listIndex.add(-1);
+        listIndex.add(1);
+        ArrayList<Pair<Integer,Integer>> newAdjacenRugsPosition = new ArrayList<>();
+        for(Pair<Integer,Integer> i: adjacentRugsPosition){
+            for(int index:listIndex){
+                if(board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour()!=null & board.getBoardMatrix()[i.getKey()+index][i.getValue()].occupiedRug.getColour()!=null)
+                    if(board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour() == board.getBoardMatrix()[i.getKey()+index][i.getValue()].occupiedRug.getColour()){used.add(new Pair(i.getKey()+index,i.getValue()));newAdjacenRugsPosition.add(new Pair(i.getKey()+index,i.getValue())); }
+                if(board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour()!=null & board.getBoardMatrix()[i.getKey()][i.getValue()+index].occupiedRug.getColour()!=null)
+                    if(board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour() == board.getBoardMatrix()[i.getKey()][i.getValue()+index].occupiedRug.getColour()){used.add(new Pair(i.getKey(),i.getValue()+index));newAdjacenRugsPosition.add(new Pair(i.getKey(),i.getValue()+index)); }
+            }
+
+
+//            if(board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour()!=null)
+//                if(board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour() == board.getBoardMatrix()[i.getKey()-1][i.getValue()].occupiedRug.getColour()) used.add()
+//
+//                        |board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour() == board.getBoardMatrix()[i.getKey()+1][i.getValue()].occupiedRug.getColour()
+//                        |board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour() == board.getBoardMatrix()[i.getKey()][i.getValue()-1].occupiedRug.getColour()
+//                        |board.getBoardMatrix()[i.getKey()][i.getValue()].occupiedRug.getColour() == board.getBoardMatrix()[i.getKey()][i.getValue()+1].occupiedRug.getColour()
+
+
+        }
+        return null;
+    }
+
+
     /**
      * Determine the amount of payment required should another player land on a square.
      * For this method, you may assume that Assam has just landed on the square he is currently placed on, and that
@@ -217,12 +246,18 @@ public class Marrakech {
      * @param gameString A String representation of the current state of the game.
      * @return The amount of payment due, as an integer.
      */
+
     public static int getPaymentAmount(String gameString) {
         //some attempts for this task,for temporary
 
         Game game = Game.stringToGame(gameString);
         Board board = game.getBoard();
         Assam assam = game.getAssam();
+
+
+
+
+
 //        boolean[] sameColor = new boolean[9];
 //        int i = 0;
 //        for (int dX = -1; dX <= 1; dX++) {
@@ -376,7 +411,12 @@ public class Marrakech {
 
 //        int xPosition = Integer.parseInt(currentAssam.substring(1,2));
 //        int yPosition = Integer.parseInt(currentAssam.substring(2,3));
-//        String currentDirecton = currentAssam.substring(3,4);
+//        String currentDirecton = currentAssam.substri
+//        ++
+//
+//        ng(3,4);
+
+
 //        for(int i=0;i<dieResult;i++) {
 //            if ((xPosition < 6 & xPosition > 0 & yPosition < 6 & yPosition >0)
 //                    |(!(yPosition==6 & currentDirecton=="S")&!(xPosition==6 & currentDirecton=="E")&!(xPosition==0 & currentDirecton=="W")&!(yPosition==0 & currentDirecton=="N"))
@@ -425,7 +465,23 @@ public class Marrakech {
      */
     public static String makePlacement(String currentGame, String rug) {
         // FIXME: Task 14
-        return "";
+       Game game = Game.stringToGame(currentGame);
+       Board board = game.getBoard();
+       RugWithPosition rugWithPosition = RugWithPosition.stringToRugWithPosition(rug);
+       if(isPlacementValid(currentGame,rug)==true){
+           for(int i=0;i<currentGame.length();i++){
+               if(currentGame.charAt(i) =='B'){
+                   currentGame = currentGame.substring(0,i+1+3*(7*rugWithPosition.firstPosition.getKey()+rugWithPosition.firstPosition.getValue()))
+                           +rug.substring(0,1)+rug.substring(3,5)+currentGame.substring(i+1+3*(7*rugWithPosition.firstPosition.getKey()+rugWithPosition.firstPosition.getValue()+1));
+
+                   currentGame = currentGame.substring(0,i+1+3*(7*rugWithPosition.secondPosition.getKey()+rugWithPosition.secondPosition.getValue()))
+                           +rug.substring(0,1) +rug.substring(5,7)+currentGame.substring(i+1+3*(7*rugWithPosition.secondPosition.getKey()+rugWithPosition.secondPosition.getValue()+1));
+               }
+           }
+           return currentGame;
+       }
+       else return currentGame;
     }
+
 
 }
