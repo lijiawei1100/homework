@@ -195,7 +195,7 @@ public class Marrakech {
                     | (Math.abs(rugWithPosition.secondPosition.getValue()-assam.getAssamY())==1 & rugWithPosition.secondPosition.getKey() == assam.getAssamX())){
                 positionBoolean = true;
             }
-        }
+        } // returns condition 1. A new rug must have one edge adjacent to Assam (not counting diagonals)
         if(board.getBoardMatrix()[rugWithPosition.firstPosition.getKey()][rugWithPosition.firstPosition.getValue()].occupiedRug!=null
             & board.getBoardMatrix()[rugWithPosition.secondPosition.getKey()][rugWithPosition.secondPosition.getValue()].occupiedRug!=null) {
             if ((board.getBoardMatrix()[rugWithPosition.firstPosition.getKey()][rugWithPosition.firstPosition.getValue()].occupiedRug.getColour() ==
@@ -204,9 +204,14 @@ public class Marrakech {
                     board.getBoardMatrix()[rugWithPosition.secondPosition.getKey()][rugWithPosition.secondPosition.getValue()].occupiedRug.getId())) {
                 rugBoolean = false;
             }
-        }
+        } //2. A new rug must not completely cover another rug. It is legal to partially cover an already placed rug, but
+        // the new rug must not cover the entirety of another rug that's already on the board.
         return (positionBoolean & rugBoolean);
     }
+    //cases to check thru in (2):
+    // if both rug positions match a rug with the same id
+    // chec
+
     /**
      * Determine the amount of payment required should another player land on a square.
      * For this method, you may assume that Assam has just landed on the square he is currently placed on, and that
