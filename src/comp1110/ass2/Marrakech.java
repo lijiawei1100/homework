@@ -194,7 +194,7 @@ public class Marrakech {
                     | (Math.abs(rugWithPosition.secondPosition.getValue()-assam.getAssamY())==1 & rugWithPosition.secondPosition.getKey() == assam.getAssamX())){
                 positionBoolean = true;
             }
-        }
+        } // returns condition 1. A new rug must have one edge adjacent to Assam (not counting diagonals)
         if(board.getBoardMatrix()[rugWithPosition.firstPosition.getKey()][rugWithPosition.firstPosition.getValue()].occupiedRug!=null
             & board.getBoardMatrix()[rugWithPosition.secondPosition.getKey()][rugWithPosition.secondPosition.getValue()].occupiedRug!=null) {
             if ((board.getBoardMatrix()[rugWithPosition.firstPosition.getKey()][rugWithPosition.firstPosition.getValue()].occupiedRug.getColour() ==
@@ -203,7 +203,8 @@ public class Marrakech {
                     board.getBoardMatrix()[rugWithPosition.secondPosition.getKey()][rugWithPosition.secondPosition.getValue()].occupiedRug.getId())) {
                 rugBoolean = false;
             }
-        }
+        } //2. A new rug must not completely cover another rug. It is legal to partially cover an already placed rug, but
+        // the new rug must not cover the entirety of another rug that's already on the board.
         return (positionBoolean & rugBoolean);
     }
 
@@ -236,6 +237,10 @@ public class Marrakech {
     }
 
 
+    //cases to check thru in (2):
+    // if both rug positions match a rug with the same id
+    // chec
+
     /**
      * Determine the amount of payment required should another player land on a square.
      * For this method, you may assume that Assam has just landed on the square he is currently placed on, and that
@@ -246,18 +251,12 @@ public class Marrakech {
      * @param gameString A String representation of the current state of the game.
      * @return The amount of payment due, as an integer.
      */
-
     public static int getPaymentAmount(String gameString) {
         //some attempts for this task,for temporary
 
         Game game = Game.stringToGame(gameString);
         Board board = game.getBoard();
         Assam assam = game.getAssam();
-
-
-
-
-
 //        boolean[] sameColor = new boolean[9];
 //        int i = 0;
 //        for (int dX = -1; dX <= 1; dX++) {
@@ -411,12 +410,7 @@ public class Marrakech {
 
 //        int xPosition = Integer.parseInt(currentAssam.substring(1,2));
 //        int yPosition = Integer.parseInt(currentAssam.substring(2,3));
-//        String currentDirecton = currentAssam.substri
-//        ++
-//
-//        ng(3,4);
-
-
+//        String currentDirecton = currentAssam.substring(3,4);
 //        for(int i=0;i<dieResult;i++) {
 //            if ((xPosition < 6 & xPosition > 0 & yPosition < 6 & yPosition >0)
 //                    |(!(yPosition==6 & currentDirecton=="S")&!(xPosition==6 & currentDirecton=="E")&!(xPosition==0 & currentDirecton=="W")&!(yPosition==0 & currentDirecton=="N"))
@@ -482,6 +476,5 @@ public class Marrakech {
        }
        else return currentGame;
     }
-
 
 }
