@@ -204,9 +204,9 @@ public class Marrakech {
                 rugBoolean = false;
             }
         }
-
         return (positionBoolean & rugBoolean);
     }
+
     /**
      * Determine the amount of payment required should another player land on a square.
      * For this method, you may assume that Assam has just landed on the square he is currently placed on, and that

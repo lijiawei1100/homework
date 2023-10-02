@@ -25,10 +25,20 @@ Everyone: Meeting 9-11am Friday 1 September
 
 ## Week 8
 
-
+to do for Game class:
+- change viewer text box input to take input from game class
+- start implementing buttons for a workable game (in viewer class?)
 
 ## Week 9
 
+Everyone: meeting 1-5pm Sunday
+
 ## Week 10
 
+Everyone: meeting 1-5pm Sunday
+
+Everyone: meeting 1-5pm Thursday
+
 ## Week 11
+
+Everyone: meeting 9-1am Sunday for demo
