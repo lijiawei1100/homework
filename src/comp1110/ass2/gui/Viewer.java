@@ -111,8 +111,9 @@ public class Viewer extends Application {
         arrow.getTransforms().add(rotation);
         VBox assamPane = new VBox();
         assamPane.getChildren().add(arrow);
-        assamPane.setLayoutY(35 + 86 * (assam.getAssamX()));
-        assamPane.setLayoutX(35 + 86 * (assam.getAssamY()));
+        //the initial position should be 36 == 20+1+15
+        assamPane.setLayoutY(36 + 86 * (assam.getAssamX()));
+        assamPane.setLayoutX(36 + 86 * (assam.getAssamY()));
 
         //add state viewers to controls
         controls.getChildren().add(gridPane);
@@ -188,11 +189,8 @@ public class Viewer extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Marrakech Viewer");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
-
         root.getChildren().add(controls);
-
         makeControls();
-
         primaryStage.setScene(scene);
         primaryStage.show();
     }

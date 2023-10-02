@@ -28,8 +28,6 @@ public class Game extends Application {
     Board board;
     Assam assam;
 
-    public Game() {};
-
     public Game(Player[] players,Board board,Assam assam){
         this.players=players;
         this.board=board;
@@ -99,6 +97,10 @@ public class Game extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // FIXME Task 7 and 15
+
+
+
+
         Viewer viewer = new Viewer();
         this.root = viewer.getRoot();
         Scene scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
