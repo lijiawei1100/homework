@@ -201,6 +201,7 @@ public class Marrakech {
         //create the rugWithPosition
         Rug.RugWithPosition rugWithPosition = RugWithPosition.stringToRugWithPosition(rug);
 
+
         //each position of rug should not equal to assam's positon
         //only one of the rug's positions is next to the assam. like (1,1) next to (1,2) or (2,1) next to (1,1);
         //as long as it satisfies the condition, will return true.
