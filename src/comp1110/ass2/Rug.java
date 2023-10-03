@@ -25,11 +25,9 @@ public class Rug {
             this.p2 =secondPosition;
         }
         public static RugWithPosition stringToRugWithPosition(String rugString){
-            Color colour = null;
+            Color colour;
             char colourChar = rugString.charAt(0);
-            if (colourChar == 'n') {
-                return null;
-            } else if (colourChar == 'c') {
+            if (colourChar == 'c') {
                 colour = Color.CYAN;
             } else if (colourChar == 'y') {
                 colour = Color.YELLOW;
@@ -37,7 +35,8 @@ public class Rug {
                 colour = Color.RED;
             } else if (colourChar == 'p') {
                 colour = Color.PURPLE;
-            }
+            } else return null;
+
             String idString = rugString.substring(1, 3);
             Pair<Integer,Integer> firstPosition = new Pair<Integer,Integer>(Integer.parseInt(rugString.substring(3,4)),Integer.parseInt(rugString.substring(4,5)));
             Pair<Integer,Integer> secondPosition = new Pair<Integer,Integer>(Integer.parseInt(rugString.substring(5,6)),Integer.parseInt(rugString.substring(6,7)));
@@ -90,6 +89,7 @@ public class Rug {
 //        System.out.println("Rug2 colour: " + rug2.colour.toString());
 //        System.out.println("Rug2 id: " + rug2.id);
 //    }
+
 }
 
 

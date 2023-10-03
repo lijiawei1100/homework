@@ -36,7 +36,7 @@ public class Marrakech {
          //1.to see if the string is 7 characters long
         if(rug.length()!=7) return false;
         //2.to see if the first character in the String corresponds to the color in the game
-        //TODO Since the player will lose the game, the list should be changeable
+        //TODO Since the player will lose the game, the list could be changeable
         List list = new ArrayList();
         list.add('r');
         list.add('y');
@@ -201,6 +201,15 @@ public class Marrakech {
         //create the rugWithPosition
         Rug.RugWithPosition rugWithPosition = RugWithPosition.stringToRugWithPosition(rug);
 
+        if(rugWithPosition == null)  return false;
+//        else if(occupiedRug1!=null){
+//            if( occupiedRug1.getColour() == rugWithPosition.getColour()) return false;
+//        } else if (occupiedRug2!=null) {
+//            if (occupiedRug2.getColour()==rugWithPosition.getColour())return false;
+//        }
+        else if(rugWithPosition != null){
+            if(rugWithPosition.p1.getKey()>6|rugWithPosition.p1.getValue()>6|rugWithPosition.p2.getKey()>6|rugWithPosition.p2.getValue()>6) return false;
+        }
 
 
         //each position of rug should not equal to assam's positon
@@ -219,12 +228,11 @@ public class Marrakech {
 
         //check if the position we want to place is not null;
         //when it's not null,compare whether two places have same color and ID, which represent it is an entire rug. if there is not an entire rug, then return true
-        if(board.getBoardMatrix()[rugWithPosition.p1.getKey()][rugWithPosition.p1.getValue()].occupiedRug!=null
-            & board.getBoardMatrix()[rugWithPosition.p2.getKey()][rugWithPosition.p2.getValue()].occupiedRug!=null) {
-            if ((board.getBoardMatrix()[rugWithPosition.p1.getKey()][rugWithPosition.p1.getValue()].occupiedRug.getColour() ==
-                    board.getBoardMatrix()[rugWithPosition.p2.getKey()][rugWithPosition.p2.getValue()].occupiedRug.getColour())
-                    & (board.getBoardMatrix()[rugWithPosition.p1.getKey()][rugWithPosition.p1.getValue()].occupiedRug.getId() ==
-                    board.getBoardMatrix()[rugWithPosition.p2.getKey()][rugWithPosition.p2.getValue()].occupiedRug.getId())) {
+        if(board.getBoardMatrix()[rugWithPosition.p1.getKey()][rugWithPosition.p1.getValue()].occupiedRug !=null &
+                board.getBoardMatrix()[rugWithPosition.p2.getKey()][rugWithPosition.p2.getValue()].occupiedRug !=null) {
+            Rug occupiedRug1 = board.getBoardMatrix()[rugWithPosition.p1.getKey()][rugWithPosition.p1.getValue()].occupiedRug;
+            Rug occupiedRug2 = board.getBoardMatrix()[rugWithPosition.p2.getKey()][rugWithPosition.p2.getValue()].occupiedRug;
+            if ((occupiedRug1.getColour() == occupiedRug2.getColour())& (occupiedRug1.getId() == occupiedRug2.getId())) {
                 rugBoolean = false;
             }
         }
@@ -447,13 +455,34 @@ public class Marrakech {
      * @return A new game string representing the game following the successful placement of this rug if it is valid,
      * or the input currentGame unchanged otherwise.
      */
-    public static String makePlacement(String currentGame, String rug) {
+    public static String makePlacement(String currentGame, String rug)  {
         // FIXME: Task 14
-//        Game game = Game.stringToGame(currentGame);
 
-//        if(isPlacementValid(currentGame,rug))
-
-        return "";
+        Game game = Game.stringToGame(currentGame);
+        RugWithPosition entireRug = RugWithPosition.stringToRugWithPosition(rug);
+        //check if the placement and the rug are valid
+        if(isPlacementValid(currentGame,rug) & isRugValid(currentGame,rug)){
+           for(int i=0;i<currentGame.length();i++){
+               if((currentGame.substring(i,i+1).equals("P")) & (currentGame.substring(i+1,i+2).equals(rug.substring(0,1)))){
+                   String newRugsNumber = "";
+                   Integer currentRugsnumber = Integer.parseInt(currentGame.substring(i+5,i+7))-1;
+                   //transfer Integer to String, if it's less than 10 ,then add a "0" before the string.
+                   if(Integer.parseInt(currentGame.substring(i+5,i+7))-1>=10){
+                       newRugsNumber = String.valueOf(currentRugsnumber);
+                   }
+                   else newRugsNumber = "0"+String.valueOf(currentRugsnumber);
+                   currentGame = currentGame.substring(0,i+5) + newRugsNumber +currentGame.substring(i+7);
+               }
+               //change the currentGame after place a rug
+               if(currentGame.charAt(i) == 'B'){
+                   currentGame= currentGame.substring(0,i+3*(7*entireRug.p1.getKey() +entireRug.p1.getValue())+1)+ rug.substring(0,3)+currentGame.substring(i+3*(7*entireRug.p1.getKey() +entireRug.p1.getValue())+4);
+                   currentGame= currentGame.substring(0,i+3*(7*entireRug.p2.getKey() +entireRug.p2.getValue())+1)+ rug.substring(0,3)+currentGame.substring(i+3*(7*entireRug.p2.getKey() +entireRug.p2.getValue())+4);
+                   break;
+               }
+           }return currentGame;
+        }
+        //if rug is not valid or placement is not valid,return the unchanged gameString.
+        else return currentGame;
     }
 
 }
