@@ -119,12 +119,17 @@ public class Marrakech {
     public static boolean isGameOver(String currentGame) {
         // FIXME: Task 8
         Game game = Game.stringToGame(currentGame);
+
         int count=0;
         int countNull=0;
+        //since the stringToGame method only create the players who are still existing, we can count the remaining players to see if game is over.
         for (Player i : game.getPlayers()){
             if (i==null) countNull+=1;
         }
-        if (countNull==4) return true;
+        if (countNull==4) return true;//if all the players are not existing,obviously game is over.
+        //otherwise, check remaining players.
+        //if one of the players is out of game,and the rugsNumber is 0,then game is over. the string is like "Pr12000o"
+        //count the people who have no rug and is still in the game. the string is like"Pr12000i". we need all players have same ending substring like "00i"
         for (Player i : game.getPlayers()){
             if(i!=null){
                 if (i.getIsPlaying() == false & i.getRugsNumber() == 0) return true;
@@ -150,22 +155,26 @@ public class Marrakech {
      */
     public static String rotateAssam(String currentAssam, int rotation) {
         // FIXME: Task 9
-       ArrayList<Integer> angle = new ArrayList<Integer>();
-       angle.add(0);
-       angle.add(90);
-       angle.add(180);
-       angle.add(270);
-       int currentAngle = 0;
-       Assam assam = Assam.stringToAssam(currentAssam);
-       if(!angle.contains(rotation)|rotation==180) return currentAssam;
-       currentAngle = (assam.getAngle()+rotation)%360 ;
-       switch (currentAngle){
-           case 0 :return (currentAssam.substring(0,3)+"N");
-           case 90 :return (currentAssam.substring(0,3)+"E");
-           case 180 :return (currentAssam.substring(0,3)+"S");
-           case 270 :return (currentAssam.substring(0,3)+"W");
-       }
-       return null;
+        // created a new arraylist consisting of 4 valid angle for assam's rotation
+        ArrayList<Integer> angle = new ArrayList<Integer>();
+        angle.add(0);
+        angle.add(90);
+        angle.add(180);
+        angle.add(270);
+        int currentAngle = 0;
+        Assam assam = Assam.stringToAssam(currentAssam);
+        //if angle not in the list and the rotation is 180,then return the original string.
+        if(!angle.contains(rotation)|rotation==180) return currentAssam;
+        //calculate the angle
+        currentAngle = (assam.getAngle()+rotation)%360 ;
+        //check the angle and return a string with orientation
+        switch (currentAngle){
+            case 0 :return (currentAssam.substring(0,3)+"N");
+            case 90 :return (currentAssam.substring(0,3)+"E");
+            case 180 :return (currentAssam.substring(0,3)+"S");
+            case 270 :return (currentAssam.substring(0,3)+"W");
+        }
+        return null;
     }
 
     /**
@@ -181,12 +190,21 @@ public class Marrakech {
      */
     public static boolean isPlacementValid(String gameState, String rug) {
         // FIXME: Task 10
+        //create game object using string
         Game game = Game.stringToGame(gameState);
         Assam assam =game.getAssam();
         Board board = game.getBoard();
+        //need two Boolean to judge the final state.
+        // First one is for the position, to check whether the rug has a proper position
+        //the second one is for the rug, you can not place a rug on a entire rug.
         boolean positionBoolean = false;
         boolean rugBoolean = true;
+        //create the rugWithPosition
         Rug.RugWithPosition rugWithPosition = RugWithPosition.stringToRugWithPosition(rug);
+
+        //each position of rug should not equal to assam's positon
+        //only one of the rug's positions is next to the assam. like (1,1) next to (1,2) or (2,1) next to (1,1);
+        //as long as it satisfies the condition, will return true.
         if(!rugWithPosition.firstPosition.equals(assam.getAssamPosition()) & !rugWithPosition.secondPosition.equals(assam.getAssamPosition())){
             if((Math.abs(rugWithPosition.firstPosition.getKey()-assam.getAssamX())==1 & rugWithPosition.firstPosition.getValue() == assam.getAssamY())
                     |(Math.abs(rugWithPosition.firstPosition.getValue()-assam.getAssamY())==1 & rugWithPosition.firstPosition.getKey() == assam.getAssamX())
@@ -194,7 +212,11 @@ public class Marrakech {
                     | (Math.abs(rugWithPosition.secondPosition.getValue()-assam.getAssamY())==1 & rugWithPosition.secondPosition.getKey() == assam.getAssamX())){
                 positionBoolean = true;
             }
-        } // returns condition 1. A new rug must have one edge adjacent to Assam (not counting diagonals)
+        }
+        // returns condition 1. A new rug must have one edge adjacent to Assam (not counting diagonals)
+
+        //check if the position we want to place is not null;
+        //when it's not null,compare whether two places have same color and ID, which represent it is an entire rug. if there is not an entire rug, then return true
         if(board.getBoardMatrix()[rugWithPosition.firstPosition.getKey()][rugWithPosition.firstPosition.getValue()].occupiedRug!=null
             & board.getBoardMatrix()[rugWithPosition.secondPosition.getKey()][rugWithPosition.secondPosition.getValue()].occupiedRug!=null) {
             if ((board.getBoardMatrix()[rugWithPosition.firstPosition.getKey()][rugWithPosition.firstPosition.getValue()].occupiedRug.getColour() ==
@@ -204,6 +226,7 @@ public class Marrakech {
                 rugBoolean = false;
             }
         }
+        //return the combination of two situation
         return (positionBoolean & rugBoolean);
     }
 
@@ -339,7 +362,6 @@ public class Marrakech {
                         return o1.getValue() - o2.getValue();
                     }
                 });
-
                 //use the same way to compare the rugScore
                 for (int i = remainingListDirhamsScore.size() - 1; i >= 0; i--) {
                     if (i != 0) {
