@@ -214,6 +214,7 @@ public class Marrakech {
                 positionBoolean = true;
             }
         }
+
         // returns condition 1. A new rug must have one edge adjacent to Assam (not counting diagonals)
 
         //check if the position we want to place is not null;
