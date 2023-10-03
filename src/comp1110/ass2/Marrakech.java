@@ -11,7 +11,6 @@ import static comp1110.ass2.Rug.*;
 public class Marrakech {
     public final static int NUMBER_OF_PLAYERS = 4;
 
-
     /**
      * Determine whether a rug String is valid.
      * For this method, you need to determine whether the rug String is valid, but do not need to determine whether it
@@ -205,11 +204,11 @@ public class Marrakech {
         //each position of rug should not equal to assam's positon
         //only one of the rug's positions is next to the assam. like (1,1) next to (1,2) or (2,1) next to (1,1);
         //as long as it satisfies the condition, will return true.
-        if(!rugWithPosition.firstPosition.equals(assam.getAssamPosition()) & !rugWithPosition.secondPosition.equals(assam.getAssamPosition())){
-            if((Math.abs(rugWithPosition.firstPosition.getKey()-assam.getAssamX())==1 & rugWithPosition.firstPosition.getValue() == assam.getAssamY())
-                    |(Math.abs(rugWithPosition.firstPosition.getValue()-assam.getAssamY())==1 & rugWithPosition.firstPosition.getKey() == assam.getAssamX())
-                    |(Math.abs(rugWithPosition.secondPosition.getKey()-assam.getAssamX())==1 & rugWithPosition.secondPosition.getValue() == assam.getAssamY())
-                    | (Math.abs(rugWithPosition.secondPosition.getValue()-assam.getAssamY())==1 & rugWithPosition.secondPosition.getKey() == assam.getAssamX())){
+        if(!rugWithPosition.p1.equals(assam.getAssamPosition()) & !rugWithPosition.p2.equals(assam.getAssamPosition())){
+            if((Math.abs(rugWithPosition.p1.getKey()-assam.getAssamX())==1 & rugWithPosition.p1.getValue() == assam.getAssamY())
+                    |(Math.abs(rugWithPosition.p1.getValue()-assam.getAssamY())==1 & rugWithPosition.p1.getKey() == assam.getAssamX())
+                    |(Math.abs(rugWithPosition.p2.getKey()-assam.getAssamX())==1 & rugWithPosition.p2.getValue() == assam.getAssamY())
+                    | (Math.abs(rugWithPosition.p2.getValue()-assam.getAssamY())==1 & rugWithPosition.p2.getKey() == assam.getAssamX())){
                 positionBoolean = true;
             }
         }
@@ -217,12 +216,12 @@ public class Marrakech {
 
         //check if the position we want to place is not null;
         //when it's not null,compare whether two places have same color and ID, which represent it is an entire rug. if there is not an entire rug, then return true
-        if(board.getBoardMatrix()[rugWithPosition.firstPosition.getKey()][rugWithPosition.firstPosition.getValue()].occupiedRug!=null
-            & board.getBoardMatrix()[rugWithPosition.secondPosition.getKey()][rugWithPosition.secondPosition.getValue()].occupiedRug!=null) {
-            if ((board.getBoardMatrix()[rugWithPosition.firstPosition.getKey()][rugWithPosition.firstPosition.getValue()].occupiedRug.getColour() ==
-                    board.getBoardMatrix()[rugWithPosition.secondPosition.getKey()][rugWithPosition.secondPosition.getValue()].occupiedRug.getColour())
-                    & (board.getBoardMatrix()[rugWithPosition.firstPosition.getKey()][rugWithPosition.firstPosition.getValue()].occupiedRug.getId() ==
-                    board.getBoardMatrix()[rugWithPosition.secondPosition.getKey()][rugWithPosition.secondPosition.getValue()].occupiedRug.getId())) {
+        if(board.getBoardMatrix()[rugWithPosition.p1.getKey()][rugWithPosition.p1.getValue()].occupiedRug!=null
+            & board.getBoardMatrix()[rugWithPosition.p2.getKey()][rugWithPosition.p2.getValue()].occupiedRug!=null) {
+            if ((board.getBoardMatrix()[rugWithPosition.p1.getKey()][rugWithPosition.p1.getValue()].occupiedRug.getColour() ==
+                    board.getBoardMatrix()[rugWithPosition.p2.getKey()][rugWithPosition.p2.getValue()].occupiedRug.getColour())
+                    & (board.getBoardMatrix()[rugWithPosition.p1.getKey()][rugWithPosition.p1.getValue()].occupiedRug.getId() ==
+                    board.getBoardMatrix()[rugWithPosition.p2.getKey()][rugWithPosition.p2.getValue()].occupiedRug.getId())) {
                 rugBoolean = false;
             }
         }
@@ -447,6 +446,10 @@ public class Marrakech {
      */
     public static String makePlacement(String currentGame, String rug) {
         // FIXME: Task 14
+//        Game game = Game.stringToGame(currentGame);
+
+//        if(isPlacementValid(currentGame,rug))
+
         return "";
     }
 

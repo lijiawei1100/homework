@@ -17,12 +17,12 @@ public class Rug {
 
     //created rugwithposition class to help complete the task10
     static class RugWithPosition extends Rug{
-        Pair<Integer,Integer> firstPosition;
-        Pair<Integer,Integer> secondPosition;
+        Pair<Integer,Integer> p1;
+        Pair<Integer,Integer> p2;
         RugWithPosition(Color colour, int id,Pair<Integer,Integer> firstPosition,Pair<Integer,Integer>secondPosition) {
             super(colour, id);
-            this.firstPosition = firstPosition;
-            this.secondPosition=secondPosition;
+            this.p1 = firstPosition;
+            this.p2 =secondPosition;
         }
         public static RugWithPosition stringToRugWithPosition(String rugString){
             Color colour = null;
