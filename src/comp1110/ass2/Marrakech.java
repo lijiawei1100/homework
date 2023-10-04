@@ -201,17 +201,6 @@ public class Marrakech {
         //create the rugWithPosition
         Rug.RugWithPosition rugWithPosition = RugWithPosition.stringToRugWithPosition(rug);
 
-        if(rugWithPosition == null)  return false;
-//        else if(occupiedRug1!=null){
-//            if( occupiedRug1.getColour() == rugWithPosition.getColour()) return false;
-//        } else if (occupiedRug2!=null) {
-//            if (occupiedRug2.getColour()==rugWithPosition.getColour())return false;
-//        }
-        else if(rugWithPosition != null){
-            if(rugWithPosition.p1.getKey()>6|rugWithPosition.p1.getValue()>6|rugWithPosition.p2.getKey()>6|rugWithPosition.p2.getValue()>6) return false;
-        }
-
-
         //each position of rug should not equal to assam's positon
         //only one of the rug's positions is next to the assam. like (1,1) next to (1,2) or (2,1) next to (1,1);
         //as long as it satisfies the condition, will return true.
@@ -404,44 +393,48 @@ public class Marrakech {
      */
     public static String moveAssam(String currentAssam, int dieResult){
         // FIXME: Task 13
-        //some attempts for this task,for temporary
+        //get assam's positions and direction
+        int xPosition = Integer.parseInt(currentAssam.substring(1,2));
+        int yPosition = Integer.parseInt(currentAssam.substring(2,3));
+        String currentDirecton = currentAssam.substring(3,4);
 
-//        int xPosition = Integer.parseInt(currentAssam.substring(1,2));
-//        int yPosition = Integer.parseInt(currentAssam.substring(2,3));
-//        String currentDirecton = currentAssam.substring(3,4);
-//        for(int i=0;i<dieResult;i++) {
-//            if ((xPosition < 6 & xPosition > 0 & yPosition < 6 & yPosition >0)
-//                    |(!(yPosition==6 & currentDirecton=="S")&!(xPosition==6 & currentDirecton=="E")&!(xPosition==0 & currentDirecton=="W")&!(yPosition==0 & currentDirecton=="N"))
-//            )
-//                    {
-//                switch (currentDirecton) {
-//                    case "N":
-//                        yPosition -= 1;
-//                    case "E":
-//                        xPosition += 1;
-//                    case "S":
-//                        yPosition += 1;
-//                    case "W":
-//                        xPosition -= 1;
-//                }
-//            }
-//            else{
-//                if(yPosition==6 & xPosition!=0 & xPosition%2==1 & currentDirecton=="S" ){ xPosition+=1; currentDirecton="N";}
-//                else if(yPosition==6 & xPosition!=0 & xPosition%2==0 & currentDirecton=="S") {xPosition-=1; currentDirecton="N";}
-//                else if(xPosition==6 & yPosition!=0 & xPosition%2==1 & currentDirecton=="E") {yPosition+=1; currentDirecton="W";}
-//                else if(xPosition==6 & yPosition!=0 & xPosition%2==0 & currentDirecton=="E") {yPosition-=1; currentDirecton="W";}
-//                else if(xPosition!=6 & yPosition==0 & xPosition%2==1 & currentDirecton=="N") {xPosition-=1; currentDirecton="S";}
-//                else if(xPosition!=6 & yPosition==0 & xPosition%2==0 & currentDirecton=="N") {xPosition+=1; currentDirecton="S";}
-//                else if(xPosition==0 & yPosition!=6 & yPosition%2==1 & currentDirecton=="W") {yPosition-=1; currentDirecton="E";}
-//                else if(xPosition==0 & yPosition!=6 & yPosition%2==0 & currentDirecton=="W") {yPosition+=1; currentDirecton="E";}
-//                else if(xPosition==0 & yPosition==6 & currentDirecton =="S"){currentDirecton ="E";}
-//                else if(xPosition==0 & yPosition==6 & currentDirecton =="W"){currentDirecton ="N";}
-//                else if(xPosition==6 & yPosition==0 & currentDirecton =="E"){currentDirecton ="S";}
-//                else if(xPosition==6 & yPosition==0 & currentDirecton =="N"){currentDirecton ="W";}
-//                }
-//            }
-//        return "A"+String.valueOf(xPosition)+String.valueOf(yPosition)+currentDirecton;
-        return null;
+        for(int i=0;i<dieResult;i++) {
+            //when assam is not on the edge and not facing out, use the normal way to move assam
+            if (((xPosition < 6) & (xPosition > 0) & (yPosition < 6) & (yPosition >0))
+                    | (!(yPosition==6 & currentDirecton.equals("S")))&(!(xPosition==6 & currentDirecton.equals("E")))&(!(xPosition==0 & currentDirecton.equals("W")))&(!(yPosition==0 & currentDirecton.equals("N"))))
+            {
+                switch (currentDirecton) {
+                    case "N":
+                        yPosition -= 1;
+                        break;
+                    case "E":
+                        xPosition += 1;
+                        break;
+                    case "S":
+                        yPosition += 1;
+                        break;
+                    case "W":
+                        xPosition -= 1;
+                        break;
+                }
+            }
+            //otherwise, when it's on the edge, we need to move assam according to his position
+            else{
+                if(yPosition==6 & xPosition!=0 & xPosition%2==1 & currentDirecton.equals("S")){ xPosition+=1; currentDirecton="N";}
+                else if(yPosition==6 & xPosition!=0 & xPosition%2==0 & currentDirecton.equals("S")) {xPosition-=1; currentDirecton="N";}
+                else if(xPosition==6 & yPosition!=0 & yPosition%2==1 & currentDirecton.equals("E")) {yPosition+=1; currentDirecton="W";}
+                else if(xPosition==6 & yPosition!=0 & yPosition%2==0 & currentDirecton.equals("E")) {yPosition-=1; currentDirecton="W";}
+                else if(xPosition!=6 & yPosition==0 & xPosition%2==1 & currentDirecton.equals("N")) {xPosition-=1; currentDirecton="S";}
+                else if(xPosition!=6 & yPosition==0 & xPosition%2==0 & currentDirecton.equals("N")) {xPosition+=1; currentDirecton="S";}
+                else if(xPosition==0 & yPosition!=6 & yPosition%2==1 & currentDirecton.equals("W")) {yPosition-=1; currentDirecton="E";}
+                else if(xPosition==0 & yPosition!=6 & yPosition%2==0 & currentDirecton.equals("W")) {yPosition+=1; currentDirecton="E";}
+                else if(xPosition==0 & yPosition==6 & currentDirecton.equals("S")){currentDirecton ="E";}
+                else if(xPosition==0 & yPosition==6 & currentDirecton.equals("W")){currentDirecton ="N";}
+                else if(xPosition==6 & yPosition==0 & currentDirecton.equals("E")){currentDirecton ="S";}
+                else if(xPosition==6 & yPosition==0 & currentDirecton.equals("N")){currentDirecton ="W";}
+                }
+            }
+        return "A"+ xPosition + yPosition +currentDirecton;
     }
 
     /**
@@ -455,34 +448,36 @@ public class Marrakech {
      * @return A new game string representing the game following the successful placement of this rug if it is valid,
      * or the input currentGame unchanged otherwise.
      */
-    public static String makePlacement(String currentGame, String rug)  {
+    public static String makePlacement(String currentGame, String rug) {
         // FIXME: Task 14
 
         Game game = Game.stringToGame(currentGame);
         RugWithPosition entireRug = RugWithPosition.stringToRugWithPosition(rug);
         //check if the placement and the rug are valid
-        if(isPlacementValid(currentGame,rug) & isRugValid(currentGame,rug)){
-           for(int i=0;i<currentGame.length();i++){
-               if((currentGame.substring(i,i+1).equals("P")) & (currentGame.substring(i+1,i+2).equals(rug.substring(0,1)))){
-                   String newRugsNumber = "";
-                   Integer currentRugsnumber = Integer.parseInt(currentGame.substring(i+5,i+7))-1;
-                   //transfer Integer to String, if it's less than 10 ,then add a "0" before the string.
-                   if(Integer.parseInt(currentGame.substring(i+5,i+7))-1>=10){
-                       newRugsNumber = String.valueOf(currentRugsnumber);
-                   }
-                   else newRugsNumber = "0"+String.valueOf(currentRugsnumber);
-                   currentGame = currentGame.substring(0,i+5) + newRugsNumber +currentGame.substring(i+7);
-               }
-               //change the currentGame after place a rug
-               if(currentGame.charAt(i) == 'B'){
-                   currentGame= currentGame.substring(0,i+3*(7*entireRug.p1.getKey() +entireRug.p1.getValue())+1)+ rug.substring(0,3)+currentGame.substring(i+3*(7*entireRug.p1.getKey() +entireRug.p1.getValue())+4);
-                   currentGame= currentGame.substring(0,i+3*(7*entireRug.p2.getKey() +entireRug.p2.getValue())+1)+ rug.substring(0,3)+currentGame.substring(i+3*(7*entireRug.p2.getKey() +entireRug.p2.getValue())+4);
-                   break;
-               }
-           }return currentGame;
+        if (isRugValid(currentGame, rug)) {
+            if (isPlacementValid(currentGame, rug)) {
+                for (int i = 0; i < currentGame.length(); i++) {
+                    if ((currentGame.substring(i, i + 1).equals("P")) & (currentGame.substring(i + 1, i + 2).equals(rug.substring(0, 1)))) {
+                        String newRugsNumber = "";
+                        Integer currentRugsnumber = Integer.parseInt(currentGame.substring(i + 5, i + 7)) - 1;
+                        //transfer Integer to String, if it's less than 10 ,then add a "0" before the string.
+                        if (Integer.parseInt(currentGame.substring(i + 5, i + 7)) - 1 >= 10) {
+                            newRugsNumber = String.valueOf(currentRugsnumber);
+                        } else newRugsNumber = "0" + String.valueOf(currentRugsnumber);
+                        currentGame = currentGame.substring(0, i + 5) + newRugsNumber + currentGame.substring(i + 7);
+                    }
+                    //change the currentGame after place a rug
+                    if (currentGame.charAt(i) == 'B') {
+                        currentGame = currentGame.substring(0, i + 3 * (7 * entireRug.p1.getKey() + entireRug.p1.getValue()) + 1) + rug.substring(0, 3) + currentGame.substring(i + 3 * (7 * entireRug.p1.getKey() + entireRug.p1.getValue()) + 4);
+                        currentGame = currentGame.substring(0, i + 3 * (7 * entireRug.p2.getKey() + entireRug.p2.getValue()) + 1) + rug.substring(0, 3) + currentGame.substring(i + 3 * (7 * entireRug.p2.getKey() + entireRug.p2.getValue()) + 4);
+                        break;
+                    }
+                }
+                return currentGame;
+            }
+            //if rug is not valid or placement is not valid,return the unchanged gameString.
         }
-        //if rug is not valid or placement is not valid,return the unchanged gameString.
-        else return currentGame;
+        return currentGame;
     }
 
 }
