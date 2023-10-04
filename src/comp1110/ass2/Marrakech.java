@@ -1,6 +1,7 @@
 package comp1110.ass2;
 
 import comp1110.ass2.gui.Game;
+import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
 import java.util.*;
@@ -229,6 +230,73 @@ public class Marrakech {
         return (positionBoolean & rugBoolean);
     }
 
+
+
+
+//created for task 11
+   public static List<Square> getAdjacentSquares (String gameString, Square currentSquare){
+        Game game = Game.stringToGame(gameString);
+        Board board = game.getBoard();
+        List<Square> squaresList = new ArrayList<>();
+        int x = currentSquare.position.getKey();
+        int y = currentSquare.position.getValue();
+        Square[][] boardMatrix = board.getBoardMatrix();
+        //to find the neighbour according to the square's position
+        if(x<6 & x>0 & y<6 & y>0){
+             squaresList.add(boardMatrix[x-1][y]);
+             squaresList.add(boardMatrix[x+1][y]);
+             squaresList.add(boardMatrix[x][y-1]);
+             squaresList.add(boardMatrix[x][y+1]);
+        }
+        else if (x==0){
+            squaresList.add(boardMatrix[x+1][y]);
+            if(y==0) {squaresList.add(boardMatrix[x][y+1]);}
+            else if (y==6)  {squaresList.add(boardMatrix[x][y-1]);}
+            else {squaresList.add(boardMatrix[x][y+1]);squaresList.add(boardMatrix[x][y-1]);}
+        }
+        else if (x==6) {
+            squaresList.add(boardMatrix[x-1][y]);
+            if(y==0){squaresList.add(boardMatrix[x][y+1]);}
+            else if (y==6) {squaresList.add(boardMatrix[x][y-1]);}
+            else {squaresList.add(boardMatrix[x][y+1]);squaresList.add(boardMatrix[x][y-1]);}
+        }
+        else if (y==0){
+            squaresList.add(boardMatrix[x][y+1]);
+            if(x==0){squaresList.add(boardMatrix[x+1][y]);}
+            else if (x==6) {squaresList.add(boardMatrix[x-1][y]);}
+            else {squaresList.add(boardMatrix[x+1][y]);squaresList.add(boardMatrix[x-1][y]);}
+        }
+        else if(y==6){
+            squaresList.add(boardMatrix[x][y-1]);
+            if(x==0){squaresList.add(boardMatrix[x+1][y]);}
+            else if (x==6) {squaresList.add(boardMatrix[x-1][y]);}
+            else {squaresList.add(boardMatrix[x+1][y]);squaresList.add(boardMatrix[x-1][y]);}
+        }
+       return squaresList;
+    }
+
+    public static int getPayment(String gameString,Square square,boolean[][] visited,int connectedCount){
+        Game game = Game.stringToGame(gameString);
+        Assam assam = game.getAssam();
+        Board board = game.getBoard();
+        Color payColor = board.getBoardMatrix()[assam.getAssamX()][assam.getAssamY()].occupiedRug.getColour();
+        int x = square.position.getKey();
+        int y = square.position.getValue();
+        //if the square has been visited, then stop and return
+        if(visited[x][y]) return connectedCount;
+        //if not, mark that it has been visited
+        visited[x][y] = true;
+        //if the square has the same color as the assam, increase the connectedCount;
+        if(square.occupiedRug!=null && square.occupiedRug.getColour()==payColor){
+            connectedCount++;
+        }else return connectedCount;
+        //use recursion here to travel through all it's neighbour
+        for (Square neighbor: getAdjacentSquares(gameString,square)){
+            connectedCount =getPayment(gameString,neighbor,visited,connectedCount);
+        }
+        return connectedCount;
+    }
+
     /**
      * Determine the amount of payment required should another player land on a square.
      * For this method, you may assume that Assam has just landed on the square he is currently placed on, and that
@@ -241,25 +309,15 @@ public class Marrakech {
      */
     public static int getPaymentAmount(String gameString) {
         //some attempts for this task,for temporary
-
+        boolean[][] visited =new boolean[7][7];
+        int connectedCount = 0;
         Game game = Game.stringToGame(gameString);
-        Board board = game.getBoard();
         Assam assam = game.getAssam();
-//        boolean[] sameColor = new boolean[9];
-//        int i = 0;
-//        for (int dX = -1; dX <= 1; dX++) {
-//            for (int dY = -1; dY <= 1; dY++) {
-//                int neighbourX = assam.getAssamX() + dX ;
-//                int neighbourY = assam.getAssamY() + dY ;
-//                if (board.getBoardMatrix()[neighbourX][neighbourY].occupiedRug.getColour() ==null) {
-//
-//                }
-//                }
-//            }
-
-
+        Board board = game.getBoard();
+        Square square = board.getBoardMatrix()[assam.getAssamX()][assam.getAssamY()];
+        connectedCount = getPayment(gameString,square,visited,connectedCount);
+        return connectedCount;
         // FIXME: Task 11
-        return -1;
     }
 
     /**
