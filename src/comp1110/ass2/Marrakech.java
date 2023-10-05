@@ -234,9 +234,7 @@ public class Marrakech {
 
 
 //created for task 11
-   public static List<Square> getAdjacentSquares (String gameString, Square currentSquare){
-        Game game = Game.stringToGame(gameString);
-        Board board = game.getBoard();
+   public static List<Square> getAdjacentSquares (Board board, Square currentSquare){
         List<Square> squaresList = new ArrayList<>();
         int x = currentSquare.position.getKey();
         int y = currentSquare.position.getValue();
@@ -275,10 +273,7 @@ public class Marrakech {
        return squaresList;
     }
 
-    public static int getPayment(String gameString,Square square,boolean[][] visited,int connectedCount){
-        Game game = Game.stringToGame(gameString);
-        Assam assam = game.getAssam();
-        Board board = game.getBoard();
+    public static int getPayment(Assam assam,Board board,Square square,boolean[][] visited,int connectedCount){
         Color payColor = board.getBoardMatrix()[assam.getAssamX()][assam.getAssamY()].occupiedRug.getColour();
         int x = square.position.getKey();
         int y = square.position.getValue();
@@ -291,8 +286,8 @@ public class Marrakech {
             connectedCount++;
         }else return connectedCount;
         //use recursion here to travel through all it's neighbour
-        for (Square neighbor: getAdjacentSquares(gameString,square)){
-            connectedCount =getPayment(gameString,neighbor,visited,connectedCount);
+        for (Square neighbor: getAdjacentSquares(board,square)){
+            connectedCount =getPayment(assam,board,neighbor,visited,connectedCount);
         }
         return connectedCount;
     }
@@ -315,7 +310,7 @@ public class Marrakech {
         Assam assam = game.getAssam();
         Board board = game.getBoard();
         Square square = board.getBoardMatrix()[assam.getAssamX()][assam.getAssamY()];
-        connectedCount = getPayment(gameString,square,visited,connectedCount);
+        connectedCount = getPayment(assam,board,square,visited,connectedCount);
         return connectedCount;
         // FIXME: Task 11
     }
