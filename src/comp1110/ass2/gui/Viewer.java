@@ -140,14 +140,18 @@ public class Viewer extends Application {
         left.setOnAction(event -> {
             thisGame.assam = Assam.stringToAssam(rotateAssam(Assam.assamToString(thisGame.assam), 270));
             thisGame.moveToNextPhase();
+            controls.getChildren().clear();
             makeControls();
         });
         right.setOnAction(event -> {
             thisGame.assam = Assam.stringToAssam(rotateAssam(Assam.assamToString(thisGame.assam), 90));
+            controls.getChildren().clear();
+            makeControls();
             thisGame.moveToNextPhase();
             makeControls();
         });
         stay.setOnAction(event -> {
+            controls.getChildren().clear();
             thisGame.moveToNextPhase();
             makeControls();
         });
