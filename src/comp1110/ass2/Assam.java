@@ -69,7 +69,7 @@ public class Assam {
             case 180 : direction ="S";break;
             case 270 : direction ="W";break;
         }
-        assamString = "A" + assam.getAssamX().toString()+assam.getAssamY().toString()+ direction;
+        assamString = "A" + assam.getAssamX().toString() + assam.getAssamY().toString() + direction;
         return assamString;
     }
 

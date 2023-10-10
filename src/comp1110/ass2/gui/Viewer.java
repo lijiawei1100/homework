@@ -1,9 +1,6 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.Assam;
-import comp1110.ass2.Board;
-import comp1110.ass2.Player;
-import comp1110.ass2.Square;
+import comp1110.ass2.*;
 import gittest.B;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -36,9 +33,9 @@ public class Viewer extends Application {
     private final Group root = new Group();
     private final Group controls = new Group();
     private TextField boardTextField;
-    private Game thisGame = Game.stringToGame("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
+    private Game thisGame = Game.stringToGame("Py03015iPp03015iPr03015iPc03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00");
 
-
+// other string: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
     public javafx.scene.Group getRoot() {
         return root;
     }
@@ -117,8 +114,8 @@ public class Viewer extends Application {
         VBox assamPane = new VBox();
         assamPane.getChildren().add(arrow);
         //the initial position should be 36 == 20+1+15
-        assamPane.setLayoutY(36 + 86 * (assam.getAssamX()));
-        assamPane.setLayoutX(36 + 86 * (assam.getAssamY()));
+        assamPane.setLayoutX(36 + 86 * (assam.getAssamX()));
+        assamPane.setLayoutY(36 + 86 * (assam.getAssamY()));
 
         //add state viewers to controls
         controls.getChildren().add(gridPane);
@@ -146,7 +143,6 @@ public class Viewer extends Application {
         right.setOnAction(event -> {
             thisGame.assam = Assam.stringToAssam(rotateAssam(Assam.assamToString(thisGame.assam), 90));
             controls.getChildren().clear();
-            makeControls();
             thisGame.moveToNextPhase();
             makeControls();
         });
@@ -185,26 +181,47 @@ public class Viewer extends Application {
     //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
 
     public void createPhase2(){
-        //todo: make phase 2 unclickable until phase 1 is completed
-        Text rollNumber = new Text("Your number: ");
-        //todo: hide below text and reveal if Assam landed... (Get Assam landing square)
-        String paymentText = "Player " + (thisGame.currentPlayerIndex+1) + " pays " + 0 + "\ndirhams to Player___";
-        Text payment = new Text(paymentText);
+        Text rollNumber = new Text("Your number: " + thisGame.currentDiceRoll);
+        //todo: hide below text and reveal if Assam landed... (Get Assam landing square)...GET DONE SOON
+        Text payment = new Text();
+        if (thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug == null) {
+            String paymentText1 = "Player " + (thisGame.currentPlayerIndex+1) + " pays no one";
+            payment = new Text(paymentText1);
+        } else {
+            String paymentText2 = "Player " + (thisGame.currentPlayerIndex+1) + " pays " + 0 + "\ndirhams to Player___";
+            payment = new Text(paymentText2);
+        } //todo move this to event when moveAssam is clicked
+
         payment.setFont(Font.font(25));
         rollNumber.setFont(Font.font(25));
         Text phase2 = new Text("Phase 2: ");
         phase2.setFont(Font.font(25));
         Button roll = new Button("Roll");
         roll.setOnAction(event -> {
-            rollNumber.setText("Your number: "+rollDie());
-            //todo make the button unclickable until next turn
+            thisGame.currentDiceRoll = rollDie();
+            rollNumber.setText("Your number: " + thisGame.currentDiceRoll);
+            roll.setDisable(true);
         });
         Button moveAssam = new Button("moveAssam");
         moveAssam.setOnAction(event -> {
-            //todo use moveAssam(string, number) - change just the game's assam
+            //move assam using the dice roll
+            thisGame.assam = Assam.stringToAssam(Marrakech.moveAssam(Assam.assamToString(thisGame.assam), thisGame.currentDiceRoll));
             //todo after this change the payment string
-//            paymentText = "";
+
+            thisGame.moveToNextPhase();
+            controls.getChildren().clear();
+            makeControls();
         });
+
+        //make the buttons clickable depending on the game phase
+        if (thisGame.gamePhase == 1) {
+            roll.setDisable(false);
+            moveAssam.setDisable(false);
+        } else {
+            roll.setDisable(true);
+            moveAssam.setDisable(true);
+        }
+
         VBox vBox = new VBox();
         vBox.getChildren().add((phase2));
         vBox.getChildren().add(roll);
