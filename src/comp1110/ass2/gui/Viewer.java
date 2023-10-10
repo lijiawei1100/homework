@@ -127,31 +127,45 @@ public class Viewer extends Application {
     }
 
     public void createPhase1(){
-        Text playerTurn = new Text("Player " + (thisGame.currentPlayerIndex+1) + "'s turn");
+        Text playerTurn = new Text("Player " + (thisGame.currentPlayerIndex + 1) + "'s turn");
         playerTurn.setFont(Font.font(25));
         Text phase1 = new Text("Phase 1: ");
         phase1.setFont(Font.font(25));
+        //make buttons
         Button left = new Button("rotate left");
-        //rotate assam left
+        Button right  = new Button("rotate right");
+        Button stay = new Button("stay");
+
+        //add button functions
         left.setOnAction(event -> {
             thisGame.assam = Assam.stringToAssam(rotateAssam(Assam.assamToString(thisGame.assam), 270));
+            thisGame.moveToNextPhase();
             controls.getChildren().clear();
             makeControls();
-            thisGame.moveToNextPhase();
         });
-        Button right  = new Button("rotate right");
-        //rotate assam right
         right.setOnAction(event -> {
             thisGame.assam = Assam.stringToAssam(rotateAssam(Assam.assamToString(thisGame.assam), 90));
             controls.getChildren().clear();
             makeControls();
             thisGame.moveToNextPhase();
+            makeControls();
         });
-        Button stay = new Button("stay");
         stay.setOnAction(event -> {
             controls.getChildren().clear();
             thisGame.moveToNextPhase();
+            makeControls();
         });
+
+        //make the buttons clickable depending on the game phase
+        if (thisGame.gamePhase == 0) {
+            left.setDisable(false);
+            right.setDisable(false);
+            stay.setDisable(false);
+        } else {
+            left.setDisable(true);
+            right.setDisable(true);
+            stay.setDisable(true);
+        }
 
         VBox vBox = new VBox();
         HBox hBox = new HBox();
@@ -256,7 +270,6 @@ public class Viewer extends Application {
 //        }
 //        return n;
 //    }
-
 
 
 
