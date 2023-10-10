@@ -135,6 +135,7 @@ public class Viewer extends Application {
         //rotate assam left
         left.setOnAction(event -> {
             thisGame.assam = Assam.stringToAssam(rotateAssam(Assam.assamToString(thisGame.assam), 270));
+            controls.getChildren().clear();
             makeControls();
             thisGame.moveToNextPhase();
         });
@@ -142,11 +143,13 @@ public class Viewer extends Application {
         //rotate assam right
         right.setOnAction(event -> {
             thisGame.assam = Assam.stringToAssam(rotateAssam(Assam.assamToString(thisGame.assam), 90));
+            controls.getChildren().clear();
             makeControls();
             thisGame.moveToNextPhase();
         });
         Button stay = new Button("stay");
         stay.setOnAction(event -> {
+            controls.getChildren().clear();
             thisGame.moveToNextPhase();
         });
 
@@ -253,6 +256,7 @@ public class Viewer extends Application {
 //        }
 //        return n;
 //    }
+
 
 
 
