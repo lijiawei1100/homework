@@ -30,15 +30,27 @@ public class Game extends Application {
     Player[] players;
     Board board;
     Assam assam;
+    Player currentPlayer;
+    int currentPlayerIndex;
+    int gamePhase;
 
     public Game() {};
 
     public Game(Player[] players,Board board,Assam assam){
         this.players=players;
+        this.currentPlayer = players[0];
+        this.currentPlayerIndex = 0;
+        this.gamePhase = 0;
         this.board=board;
         this.assam=assam;
     }
 
+    public void moveToNextPlayer() {
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+    }
+    public void moveToNextPhase() {
+        gamePhase = (gamePhase + 1) % 3;
+    }
     public String gameToString (Game game){
         String gameString = "";
         Player[] players = game.players;
@@ -119,6 +131,7 @@ public class Game extends Application {
         // FIXME Task 7 and 15
 
         Game newgame = stringToGame(game);
+
 
         Viewer viewer = new Viewer();
         this.root = viewer.getRoot();
