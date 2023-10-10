@@ -83,6 +83,29 @@ public class Player{
             return "Unknown";
         }}
 
+
+    public static String plyaerToString(Player player){
+        String moneyString ="";
+        String rugsNumberString ="";
+        String isPlayingString = "";
+        String playerString="";
+        if(player.rugsNumber<10){
+            rugsNumberString = "0" + String.valueOf(player.rugsNumber);
+        }else{
+            rugsNumberString = String.valueOf(player.getRugsNumber());
+        }
+        if (player.money<100){
+            moneyString = "0"+String.valueOf(player.money);
+        }else{
+            moneyString = String.valueOf(player.money);
+        }
+        if(player.isPlaying == true){isPlayingString = "i";}
+        else{isPlayingString = "o";}
+        playerString = "P" + getColorName(player.colour).toLowerCase().charAt(0)+moneyString+rugsNumberString+isPlayingString;
+        return playerString;
+    }
+
+
 //    /**
 //     * testing code here.
 //     * @param args
@@ -103,5 +126,7 @@ public class Player{
 //        System.out.println("Player2 money: " + player2.money);
 //        System.out.println("Player2 rugs: " + player2.rugsNumber);
 //        System.out.println("Player2 is playing: " + player2.isPlaying);
+//        System.out.println(plyaerToString(player2));
 //    }
+
 }

@@ -14,8 +14,11 @@ import javax.swing.text.View;
 import java.sql.SQLOutput;
 import java.util.*;
 
+import static comp1110.ass2.Assam.assamToString;
+import static comp1110.ass2.Board.boardToString;
 import static comp1110.ass2.Marrakech.isGameOver;
 import static comp1110.ass2.Player.getColorName;
+import static comp1110.ass2.Player.plyaerToString;
 import static javafx.stage.Stage.*;
 
 public class Game extends Application {
@@ -36,6 +39,19 @@ public class Game extends Application {
         this.assam=assam;
     }
 
+    public String gameToString (Game game){
+        String gameString = "";
+        Player[] players = game.players;
+        Board board = game.board;
+        Assam assam = game.assam;
+        for(Player i:players){
+            if(i !=null){
+            gameString+=plyaerToString(i);}
+        }
+        gameString += assamToString(assam);
+        gameString += boardToString(board);
+        return gameString;
+    }
 
     /**
      * created stringToGame, so we can converge those creating methods which are in the viewer
@@ -103,7 +119,6 @@ public class Game extends Application {
         // FIXME Task 7 and 15
 
         Game newgame = stringToGame(game);
-
 
         Viewer viewer = new Viewer();
         this.root = viewer.getRoot();

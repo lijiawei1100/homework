@@ -60,11 +60,24 @@ public class Assam {
         return (new Assam(angle,location));
     }
 
-//    /**
-//     * testing code here
-//      * @param args
-//     * @throws Exception
-//     */
+    public static String assamToString(Assam assam){
+        String direction ="";
+        String assamString = "";
+        switch (assam.getAngle()){
+            case 0 :direction="N";break;
+            case 90 : direction = "E";break;
+            case 180 : direction ="S";break;
+            case 270 : direction ="W";break;
+        }
+        assamString = "A" + assam.getAssamX().toString()+assam.getAssamY().toString()+ direction;
+        return assamString;
+    }
+
+    /**
+     * testing code here
+      * @param args
+     * @throws Exception
+     */
 //    public static void main(String[] args) throws Exception {
 //        String input1 = "A04E";
 //        String input2 = "A53S";
@@ -76,5 +89,6 @@ public class Assam {
 //        System.out.println("String 2: " + input2);
 //        System.out.println("Assam2 direction: " + assam2.angle);
 //        System.out.println("Assam2 position: " + assam2.position);
+//        System.out.println(assamToString(assam2));
 //    }
 }

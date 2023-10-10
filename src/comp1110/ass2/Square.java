@@ -28,6 +28,7 @@ public class Square {
 
     }
 
+
     public Boolean getIsEdge(){
         return isEdge;
     }
