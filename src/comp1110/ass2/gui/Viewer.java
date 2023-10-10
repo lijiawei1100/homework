@@ -36,6 +36,7 @@ public class Viewer extends Application {
     private final Group root = new Group();
     private final Group controls = new Group();
     private TextField boardTextField;
+    private Game thisGame = Game.stringToGame("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
 
 
     public javafx.scene.Group getRoot() {
@@ -123,12 +124,12 @@ public class Viewer extends Application {
         controls.getChildren().add(gridPane);
         controls.getChildren().add(playerInfo);
         controls.getChildren().add(assamPane);
-        createPhrase1();
-        createPhrase2();
-        createPhrase3();
+        createPhase1();
+        createPhase2();
+        createPhase3();
     }
 
-    public void createPhrase1(){
+    public void createPhase1(){
         Text playerTurn = new Text("Player"+"____"+"'s turn");
         playerTurn.setFont(Font.font(25));
         Label phase1 = new Label("Phase 1: ");
@@ -163,7 +164,7 @@ public class Viewer extends Application {
     }
     //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
 
-    public void createPhrase2(){
+    public void createPhase2(){
         Text rollNumber = new Text("Your number: ");
         Text payment = new Text("Player__ "+"pays ____ "+"\ndirhams to Player__");
         payment.setFont(Font.font(25));
@@ -185,7 +186,7 @@ public class Viewer extends Application {
         controls.getChildren().add(vBox);
     }
 
-    public void createPhrase3(){
+    public void createPhase3(){
         Label phase3 = new Label("Phase 3: ");
         phase3.setFont(Font.font(25));
         VBox vBox = new VBox();
