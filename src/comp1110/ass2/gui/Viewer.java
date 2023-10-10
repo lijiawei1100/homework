@@ -4,18 +4,17 @@ import comp1110.ass2.Assam;
 import comp1110.ass2.Board;
 import comp1110.ass2.Player;
 import comp1110.ass2.Square;
+import gittest.B;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Polygon;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -25,6 +24,9 @@ import javafx.stage.Stage;
 
 
 import java.lang.reflect.Array;
+
+import static comp1110.ass2.Marrakech.rollDie;
+import static comp1110.ass2.Marrakech.rotateAssam;
 
 public class Viewer extends Application {
 
@@ -51,13 +53,16 @@ public class Viewer extends Application {
 
     //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08@2
 
+
+
+
     void displayState(String state) throws Exception {
         // FIXME Task 5: implement the simple state viewer
 
-        Player[] players = createPlayer(state);
-        Assam assam = createAssam(state);
-        Board board = createBoard(state);
-
+        Game game = Game.stringToGame(state);
+        Player[] players =game.getPlayers();
+        Assam assam = game.getAssam();
+        Board board = game.getBoard();
         //create state viewer Player info
         VBox playerInfo = new VBox();
         playerInfo.setLayoutX(650);
@@ -69,11 +74,10 @@ public class Viewer extends Application {
                 String money = String.valueOf(ithPlayer.getMoney());
                 String rugs = String.valueOf(ithPlayer.getRugsNumber());
                 Text playerInfoText = new Text("Player "+i+": " + colour + "\nRemaining Dirhams: " + money + "\nRemaining Rugs: " + rugs + "\n");
-                playerInfoText.setFont(Font.font(30));
+                playerInfoText.setFont(Font.font(25));
                 playerInfo.getChildren().add(playerInfoText);
             }
         }
-
         //create state viewer for Board
         GridPane gridPane = new GridPane();
         gridPane.setLayoutX(20);
@@ -119,43 +123,76 @@ public class Viewer extends Application {
         controls.getChildren().add(gridPane);
         controls.getChildren().add(playerInfo);
         controls.getChildren().add(assamPane);
+        createPhrase1();
+        createPhrase2();
+        createPhrase3();
     }
 
-    Player[] createPlayer(String state) throws Exception {
-        //get players (colour, money, rugs) using stringToPlayer
-        Player[] players = new Player[4];
-        int b = 0;
-        for(int i =0; i<state.length();i++){
-            if(state.charAt(i) == 'P'){
-                players[b] = Player.stringToPlayer(state.substring(i, i + 8));
-                b++;
-            }
-        }
-        return players;
+    public void createPhrase1(){
+        Text playerTurn = new Text("Player"+"____"+"'s turn");
+        playerTurn.setFont(Font.font(25));
+        Label phase1 = new Label("Phase 1: ");
+        phase1.setFont(Font.font(25));
+        Button left = new Button("rotate left");
+        Button right  = new Button("rotate right");
+        Button stay = new Button("stay");
+//        left.setOnAction(event -> {
+//            try {
+//                for(int i=0;i<boardTextField.getText().length();i++){
+//                    if()
+//                    displayState(rotateAssam(boardTextField.getText(),270));
+//                }
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+
+        VBox vBox = new VBox();
+        HBox hBox = new HBox();
+
+        vBox.getChildren().add((phase1));
+        vBox.getChildren().add(playerTurn);
+        vBox.getChildren().add(hBox);
+        vBox.setLayoutX(950);
+        vBox.setLayoutY(20);
+
+        hBox.getChildren().addAll(left,stay,right);
+        hBox.setSpacing(5);
+
+        controls.getChildren().add(vBox);
+    }
+    //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
+
+    public void createPhrase2(){
+        Text rollNumber = new Text("Your number: ");
+        Text payment = new Text("Player__ "+"pays ____ "+"\ndirhams to Player__");
+        payment.setFont(Font.font(25));
+        rollNumber.setFont(Font.font(25));
+        Label phase2 = new Label("Phase 2: ");
+        phase2.setFont(Font.font(25));
+        Button roll = new Button("Roll");
+        roll.setOnAction(event -> rollNumber.setText("Your number: "+rollDie()));
+        Button moveAssam = new Button("moveAssam");
+
+        VBox vBox = new VBox();
+        vBox.getChildren().add((phase2));
+        vBox.getChildren().add(roll);
+        vBox.getChildren().add(rollNumber);
+        vBox.getChildren().add(moveAssam);
+        vBox.getChildren().add(payment);
+        vBox.setLayoutX(950);
+        vBox.setLayoutY(150);
+        controls.getChildren().add(vBox);
     }
 
-    Assam createAssam(String state) throws Exception {
-        //get Assam (location, orientation) using stringToAssam
-        String assamString = null;
-        for(int i=0;i<state.length();i++){
-            if(state.charAt(i) == 'A'){
-                assamString = state.substring(i,i+4);
-            }
-        }
-        Assam assam = Assam.stringToAssam(assamString);
-        return assam;
-    }
-
-    Board createBoard(String state) throws Exception {
-        //get board (squares - pos, rug) using stringToBoard
-        String boardString = null;
-        for(int i=0;i< state.length();i++){
-            if(state.charAt(i) == 'B'){
-                boardString = state.substring(i,i+148);
-            }
-        }
-        Board board = Board.stringToBoard(boardString);
-        return board;
+    public void createPhrase3(){
+        Label phase3 = new Label("Phase 3: ");
+        phase3.setFont(Font.font(25));
+        VBox vBox = new VBox();
+        vBox.getChildren().add((phase3));
+        vBox.setLayoutX(950);
+        vBox.setLayoutY(350);
+        controls.getChildren().add(vBox);
     }
 
     /**
@@ -184,6 +221,16 @@ public class Viewer extends Application {
         hb.setLayoutY(VIEWER_HEIGHT - 50);
         controls.getChildren().add(hb);
     }
+
+//    public String assamToString(String state,String assam){
+//        for(int i=0;i<state.length();i++){
+//            if(state.charAt(i)=='A'){
+//                String newString = state.substring(0,i) + assam + state.substring(i+4);
+//            }
+//        }
+//        return n;
+//    }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
