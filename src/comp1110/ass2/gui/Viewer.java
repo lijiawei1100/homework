@@ -124,29 +124,19 @@ public class Viewer extends Application {
         controls.getChildren().add(gridPane);
         controls.getChildren().add(playerInfo);
         controls.getChildren().add(assamPane);
-        createPhase1();
-        createPhase2();
-        createPhase3();
     }
 
     public void createPhase1(){
-        Text playerTurn = new Text("Player"+"____"+"'s turn");
+        Text playerTurn = new Text("Player " + (thisGame.currentPlayerIndex+1) + "'s turn");
         playerTurn.setFont(Font.font(25));
         Label phase1 = new Label("Phase 1: ");
         phase1.setFont(Font.font(25));
         Button left = new Button("rotate left");
+        left.setOnAction(event -> {
+            //todo use moveAssam(string, number) - change just the game's assam
+        });
         Button right  = new Button("rotate right");
         Button stay = new Button("stay");
-//        left.setOnAction(event -> {
-//            try {
-//                for(int i=0;i<boardTextField.getText().length();i++){
-//                    if()
-//                    displayState(rotateAssam(boardTextField.getText(),270));
-//                }
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
 
         VBox vBox = new VBox();
         HBox hBox = new HBox();
@@ -165,16 +155,23 @@ public class Viewer extends Application {
     //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
 
     public void createPhase2(){
+        //todo: make phase 2 unclickable until phase 1 is completed
         Text rollNumber = new Text("Your number: ");
-        Text payment = new Text("Player__ "+"pays ____ "+"\ndirhams to Player__");
+        //todo: hide below text and reveal if Assam landed... (Get Assam landing square)
+        Text payment = new Text("Player " + (thisGame.currentPlayerIndex+1) + " pays " + 0 + "\ndirhams to Player___");
         payment.setFont(Font.font(25));
         rollNumber.setFont(Font.font(25));
         Label phase2 = new Label("Phase 2: ");
         phase2.setFont(Font.font(25));
         Button roll = new Button("Roll");
-        roll.setOnAction(event -> rollNumber.setText("Your number: "+rollDie()));
+        roll.setOnAction(event -> {
+            rollNumber.setText("Your number: "+rollDie());
+            //todo make the button unclickable until next turn
+        });
         Button moveAssam = new Button("moveAssam");
-
+        moveAssam.setOnAction(event -> {
+            //todo use moveAssam(string, number) - change just the game's assam
+        });
         VBox vBox = new VBox();
         vBox.getChildren().add((phase2));
         vBox.getChildren().add(roll);
@@ -200,27 +197,35 @@ public class Viewer extends Application {
      * Create a basic text field for input and a refresh button.
      */
     public void makeControls() {
-        Label boardLabel = new Label("Game State:");
-        boardTextField = new TextField();
-        boardTextField.setPrefWidth(800);
-        Button button = new Button("Refresh");
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                try {
-                    displayState(boardTextField.getText());
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
-        HBox hb = new HBox();
-        hb.getChildren().addAll(boardLabel,
-                boardTextField, button);
-        hb.setSpacing(10);
-        hb.setLayoutX(50);
-        hb.setLayoutY(VIEWER_HEIGHT - 50);
-        controls.getChildren().add(hb);
+        try {
+            displayState("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+        createPhase1();
+        createPhase2();
+        createPhase3();
+        //        Label boardLabel = new Label("Game State:");
+//        boardTextField = new TextField();
+//        boardTextField.setPrefWidth(800);
+//        Button button = new Button("Refresh");
+//        button.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent e) {
+//                try {
+//                    displayState(boardTextField.getText());
+//                } catch (Exception ex) {
+//                    throw new RuntimeException(ex);
+//                }
+//            }
+//        });
+//        HBox hb = new HBox();
+//        hb.getChildren().addAll(boardLabel,
+//                boardTextField, button);
+//        hb.setSpacing(10);
+//        hb.setLayoutX(50);
+//        hb.setLayoutY(VIEWER_HEIGHT - 50);
+//        controls.getChildren().add(hb);
     }
 
 //    public String assamToString(String state,String assam){
