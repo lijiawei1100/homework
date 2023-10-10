@@ -94,11 +94,13 @@ public class Player{
         }else{
             rugsNumberString = String.valueOf(player.getRugsNumber());
         }
-        if (player.money<100){
+        if (player.money<100 & player.money>=10){
             moneyString = "0"+String.valueOf(player.money);
-        }else{
+        } else if(player.money<10){moneyString ="00" +String.valueOf(player.money);
+        } else{
             moneyString = String.valueOf(player.money);
         }
+
         if(player.isPlaying == true){isPlayingString = "i";}
         else{isPlayingString = "o";}
         playerString = "P" + getColorName(player.colour).toLowerCase().charAt(0)+moneyString+rugsNumberString+isPlayingString;
