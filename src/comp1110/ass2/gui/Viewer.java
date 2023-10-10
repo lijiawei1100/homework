@@ -129,14 +129,26 @@ public class Viewer extends Application {
     public void createPhase1(){
         Text playerTurn = new Text("Player " + (thisGame.currentPlayerIndex+1) + "'s turn");
         playerTurn.setFont(Font.font(25));
-        Label phase1 = new Label("Phase 1: ");
+        Text phase1 = new Text("Phase 1: ");
         phase1.setFont(Font.font(25));
         Button left = new Button("rotate left");
+        //rotate assam left
         left.setOnAction(event -> {
-            //todo use moveAssam(string, number) - change just the game's assam
+            thisGame.assam = Assam.stringToAssam(rotateAssam(Assam.assamToString(thisGame.assam), 270));
+            makeControls();
+            thisGame.moveToNextPhase();
         });
         Button right  = new Button("rotate right");
+        //rotate assam right
+        right.setOnAction(event -> {
+            thisGame.assam = Assam.stringToAssam(rotateAssam(Assam.assamToString(thisGame.assam), 90));
+            makeControls();
+            thisGame.moveToNextPhase();
+        });
         Button stay = new Button("stay");
+        stay.setOnAction(event -> {
+            thisGame.moveToNextPhase();
+        });
 
         VBox vBox = new VBox();
         HBox hBox = new HBox();
@@ -146,6 +158,7 @@ public class Viewer extends Application {
         vBox.getChildren().add(hBox);
         vBox.setLayoutX(950);
         vBox.setLayoutY(20);
+        vBox.setSpacing(5);
 
         hBox.getChildren().addAll(left,stay,right);
         hBox.setSpacing(5);
@@ -158,10 +171,11 @@ public class Viewer extends Application {
         //todo: make phase 2 unclickable until phase 1 is completed
         Text rollNumber = new Text("Your number: ");
         //todo: hide below text and reveal if Assam landed... (Get Assam landing square)
-        Text payment = new Text("Player " + (thisGame.currentPlayerIndex+1) + " pays " + 0 + "\ndirhams to Player___");
+        String paymentText = "Player " + (thisGame.currentPlayerIndex+1) + " pays " + 0 + "\ndirhams to Player___";
+        Text payment = new Text(paymentText);
         payment.setFont(Font.font(25));
         rollNumber.setFont(Font.font(25));
-        Label phase2 = new Label("Phase 2: ");
+        Text phase2 = new Text("Phase 2: ");
         phase2.setFont(Font.font(25));
         Button roll = new Button("Roll");
         roll.setOnAction(event -> {
@@ -171,6 +185,8 @@ public class Viewer extends Application {
         Button moveAssam = new Button("moveAssam");
         moveAssam.setOnAction(event -> {
             //todo use moveAssam(string, number) - change just the game's assam
+            //todo after this change the payment string
+//            paymentText = "";
         });
         VBox vBox = new VBox();
         vBox.getChildren().add((phase2));
@@ -180,16 +196,17 @@ public class Viewer extends Application {
         vBox.getChildren().add(payment);
         vBox.setLayoutX(950);
         vBox.setLayoutY(150);
+        vBox.setSpacing(5);
         controls.getChildren().add(vBox);
     }
 
     public void createPhase3(){
-        Label phase3 = new Label("Phase 3: ");
+        Text phase3 = new Text("Phase 3: ");
         phase3.setFont(Font.font(25));
         VBox vBox = new VBox();
         vBox.getChildren().add((phase3));
         vBox.setLayoutX(950);
-        vBox.setLayoutY(350);
+        vBox.setLayoutY(370);
         controls.getChildren().add(vBox);
     }
 
@@ -198,7 +215,7 @@ public class Viewer extends Application {
      */
     public void makeControls() {
         try {
-            displayState("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
+            displayState(thisGame.gameToString());
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

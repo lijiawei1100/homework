@@ -51,11 +51,11 @@ public class Game extends Application {
     public void moveToNextPhase() {
         gamePhase = (gamePhase + 1) % 3;
     }
-    public String gameToString (Game game){
+    public String gameToString (){
         String gameString = "";
-        Player[] players = game.players;
-        Board board = game.board;
-        Assam assam = game.assam;
+        Player[] players = this.players;
+        Board board = this.board;
+        Assam assam = this.assam;
         for(Player i:players){
             if(i !=null){
             gameString+=plyaerToString(i);}
