@@ -82,7 +82,7 @@ public class Board {
      */
     public static void main(String[] args) throws Exception{
         System.out.println("stringToBoard test:");
-        String input1 = "Bn00p02c04r00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
+        String input1 = "Bn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
         String input2 = "Bn00p02c04r00n00";
         String input3 = "Py04706iPp00406iPr02806iA33NBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08";
         Game game = Game.stringToGame(input3);
