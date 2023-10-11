@@ -280,6 +280,6 @@ public class Viewer extends Application {
         root.getChildren().add(controls);
         makeControls();
         primaryStage.setScene(scene);
-        primaryStage.show();
+        primaryStage.show();;
     }
 }
