@@ -43,6 +43,7 @@ public class Viewer extends Application {
             //= Game.stringToGame("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
 //TODO FIX THIS - THIS IS WHERE GAME is found
 // other string: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
+    Viewer(Game thisGame) {this.thisGame = thisGame;}
     public javafx.scene.Group getRoot() {
         return root;
     }
@@ -50,47 +51,12 @@ public class Viewer extends Application {
         return controls;
     }
 
-    // SelectionWindow to choose number of players
-    void playerSelectionWindow(){
-        ChoiceBox<String> playerSelectionBox = new ChoiceBox<>();
-        playerSelectionBox.getItems().addAll( "2 Players", "3 Players", "4 Players");
-        playerSelectionBox.setValue("2 Player");
-        // Create a button to start the game
-        Button startButton = new Button("Start Game");
-        startButton.setOnAction(e -> {
-            String initialGameString = "";
-            String selectedOption = playerSelectionBox.getValue();
-            switch (selectedOption){
-                case "2 Player" : initialGameString ="Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
-                case "3 Players" : initialGameString = "Py03015iPp03015iPr03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
-                case "4 Players" : initialGameString = "Py03015iPp03015iPr03015iPc03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
-            }
-            controls.getChildren().clear();
-            try {
-                thisGame = Game.stringToGame(initialGameString);
-                makeControls();
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-
-        // Create a layout for the window
-        VBox layout = new VBox(10);
-        layout.setLayoutX(550);
-        layout.setLayoutY(300);
-        layout.getChildren().addAll(playerSelectionBox, startButton);
-        controls.getChildren().add(layout);
-    }
-
     /**
      * Draw a placement in the window, removing any previously drawn placements
      *
      * @param state an array of two strings, representing the current game state
      */
-
     //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08@2
-
-
     void displayState(String state) throws Exception {
         // FIXME Task 5: implement the simple state viewer
 //        javafx.scene.image.ImageView boardImageView = new ImageView(new Image("assets\\Board Image.png"));
@@ -347,7 +313,6 @@ public class Viewer extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
           primaryStage.setTitle("Marrakech Viewer");
-          playerSelectionWindow();
           Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
           root.getChildren().add(controls);
           primaryStage.setScene(scene);
