@@ -54,45 +54,6 @@ public class Game extends Application {
         this.board=board;
         this.assam=assam;
     }
-    // SelectionWindow to choose number of players
-    public void playerSelectionWindow(){
-        ChoiceBox<String> playerSelectionBox = new ChoiceBox<>();
-        playerSelectionBox.getItems().addAll( "2 Players", "3 Players", "4 Players");
-        playerSelectionBox.setValue("2 Player");
-        // Create a button to start the game
-        Button startButton = new Button("Start Game");
-        startButton.setOnAction(e -> {
-            String initialGameString = "";
-            String selectedOption = playerSelectionBox.getValue();
-            switch (selectedOption){
-                case "2 Player" : initialGameString ="Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
-                case "3 Players" : initialGameString = "Py03015iPp03015iPr03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
-                case "4 Players" : initialGameString = "Py03015iPp03015iPr03015iPc03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
-            }
-            controls.getChildren().clear();
-            try {
-                //create new game based on the selected players' number
-                thisGame = Game.stringToGame(initialGameString);
-                //build a new viewer
-                Viewer viewer = new Viewer(thisGame);
-                //let the controls in Game class as the same as the controls in the viewer which help we to restart the game
-                controls = viewer.getControls();
-                this.root.getChildren().add(controls);
-                viewer.makeControls();
-                restart();
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-
-
-        // Create a layout for the window
-        VBox layout = new VBox(10);
-        layout.setLayoutX(550);
-        layout.setLayoutY(300);
-        layout.getChildren().addAll(playerSelectionBox, startButton);
-        controls.getChildren().add(layout);
-    }
 
     public void moveToNextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
@@ -193,33 +154,19 @@ public class Game extends Application {
 
     public String game = "Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
 // example board Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
-    void restart(){
-        VBox vBox = new VBox();
-        Button restartGame = new Button("Restart");
-        restartGame.setOnAction(event -> {
-            this.controls.getChildren().clear();
-            playerSelectionWindow();
 
-    //            thisGame.playerSelectionWindow();
-    //            root.getChildren().add(controls);
-        });
-        vBox.getChildren().add(restartGame);
-        vBox.setLayoutX(950);
-        vBox.setLayoutY(500);
-        controls.getChildren().add(vBox);
-}
 
     @Override
     public void start(Stage stage) throws Exception {
         // FIXME Task 7 and 15
         //Game newgame = stringToGame("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
         //Game newgame = stringToGame(game);
-        stage.setTitle("Marrakech Viewer");
-        playerSelectionWindow();
-        root.getChildren().add(controls);
-        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Viewer viewer = new Viewer();
+        this.root = viewer.getRoot();
+        Scene scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        viewer.playerSelectionWindow();
+        root.getChildren().add(viewer.getControls());
         stage.setScene(scene);
         stage.show();
-
     }
 }

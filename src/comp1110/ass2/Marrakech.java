@@ -71,9 +71,13 @@ public class Marrakech {
 
         //5. to see if the same rug is on the board
         List list_1 = new ArrayList();
-        for (int i=0;i<49 ;i++){
-            list_1.add(gameString.substring(i*3+37,i*3+40));
-            if (list_1.contains(rug.substring(0,3)) == true) return false;
+        for(int j =0;j<gameString.length();j++) {
+            if(gameString.charAt(j) == 'B') {
+                for (int i=0;i<49 ;i++){
+                    list_1.add(gameString.substring(i * 3 + j+1, i * 3 + j+4));
+                    if (list_1.contains(rug.substring(0, 3)) == true) return false;
+                }
+            }
         }
         return true;
     }

@@ -17,6 +17,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
@@ -29,6 +31,7 @@ import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
 
 import static comp1110.ass2.Marrakech.*;
+import static comp1110.ass2.Player.getColorName;
 
 public class Viewer extends Application {
 
@@ -43,7 +46,7 @@ public class Viewer extends Application {
             //= Game.stringToGame("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
 //TODO FIX THIS - THIS IS WHERE GAME is found
 // other string: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
-    Viewer(Game thisGame) {this.thisGame = thisGame;}
+
     public javafx.scene.Group getRoot() {
         return root;
     }
@@ -52,7 +55,7 @@ public class Viewer extends Application {
     }
 
     // SelectionWindow to choose number of players
-    void playerSelectionWindow(){
+    public void playerSelectionWindow(){
         ChoiceBox<String> playerSelectionBox = new ChoiceBox<>();
         playerSelectionBox.getItems().addAll( "2 Players", "3 Players", "4 Players");
         playerSelectionBox.setValue("2 Players");
@@ -65,17 +68,18 @@ public class Viewer extends Application {
                 case "2 Players" : initialGameString ="Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
                 case "3 Players" : initialGameString = "Py03015iPp03015iPr03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
                 case "4 Players" : initialGameString = "Py03015iPp03015iPr03015iPc03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
-                //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
             }
-            controls.getChildren().clear();
+            this.controls.getChildren().clear();
             try {
+                //create new game based on the selected players' number
                 thisGame = Game.stringToGame(initialGameString);
+                //build a new viewer
                 makeControls();
+                restart();
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
         });
-
         // Create a layout for the window
         VBox layout = new VBox(10);
         layout.setLayoutX(550);
@@ -83,6 +87,22 @@ public class Viewer extends Application {
         layout.getChildren().addAll(playerSelectionBox, startButton);
         controls.getChildren().add(layout);
     }
+
+    void restart(){
+        VBox vBox = new VBox();
+        Button restartGame = new Button("Restart");
+        restartGame.setOnAction(event -> {
+            this.controls.getChildren().clear();
+            playerSelectionWindow();
+            //            thisGame.playerSelectionWindow();
+            //            root.getChildren().add(controls);
+        });
+        vBox.getChildren().add(restartGame);
+        vBox.setLayoutX(950);
+        vBox.setLayoutY(560);
+        controls.getChildren().add(vBox);
+    }
+
 
     /**
      * Draw a placement in the window, removing any previously drawn placements
@@ -105,7 +125,7 @@ public class Viewer extends Application {
         for (int i=1; i<5; i++) {
             Player ithPlayer = (Player) Array.get(players, i-1);
             if (ithPlayer != null) {
-                String colour = Player.getColorName(ithPlayer.getColour());
+                String colour = getColorName(ithPlayer.getColour());
                 String money = String.valueOf(ithPlayer.getMoney());
                 String rugs = String.valueOf(ithPlayer.getRugsNumber());
                 Text playerInfoText = new Text("Player "+i+": " + colour + "\nRemaining Dirhams: " + money + "\nRemaining Rugs: " + rugs + "\n");
@@ -215,6 +235,7 @@ public class Viewer extends Application {
 
         controls.getChildren().add(vBox);
     }
+    //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
 
     public void createPhase2(){
         Text rollNumber = new Text("Your number: " + thisGame.currentDiceRoll);
@@ -261,6 +282,11 @@ public class Viewer extends Application {
             makeControls();
         });
         //make the buttons clickable depending on the game phase
+        if (thisGame.gamePhase == 1) {
+            roll.setDisable(false);
+        } else {
+            roll.setDisable(true);
+        }
         if (thisGame.gamePhase == 2) {
             moveAssam.setDisable(false);
         } else {
@@ -321,8 +347,17 @@ public class Viewer extends Application {
             verticalRug.setDisable(true);
         }
 
+        Label messageLabel = new Label(" Hover over a square to see a message");
+        root.setOnMouseMoved(event -> {
+            double mouseX = event.getSceneX();
+            double mouseY = event.getSceneY();
+            String message = getMessageBasedOnMousePosition(mouseX, mouseY);
+            messageLabel.setText(message);
+        });
+
         VBox vBox = new VBox();
         vBox.getChildren().add(phase3);
+        vBox.getChildren().add(messageLabel);
         vBox.getChildren().add(rugDirection);
         vBox.getChildren().add(horizontalRug);
         vBox.getChildren().add(verticalRug);
@@ -333,6 +368,23 @@ public class Viewer extends Application {
     }
 
 
+    private String getMessageBasedOnMousePosition(double mouseX, double mouseY) {
+        // Example: Determine the message based on the mouse position
+        int x = ((int) mouseX - 20) / 86;
+        int y = ((int) mouseY - 20) / 86;
+        String rugId;
+        int rugsNumber = thisGame.currentPlayer.getRugsNumber();
+        if(15-rugsNumber<10) {rugId = "0"+ String.valueOf(15-rugsNumber);}
+        else{ rugId = String.valueOf(15-rugsNumber);}
+
+        String rugString = getColorName(thisGame.currentPlayer.getColour()).toLowerCase().charAt(0) + rugId + String.valueOf(x) + String.valueOf(y) + String.valueOf(x) + String.valueOf(y + 1);
+        if (x < 7 & y < 7) {
+            if (isRugValid(thisGame.gameToString(), rugString) & isPlacementValid(thisGame.gameToString(),rugString)) {
+                return "You can place the rug in this square." + rugString;
+            } else return "You can not place the rug in this square." + rugString;
+        }
+        return rugString;
+    }
 
 
     /**
@@ -347,6 +399,10 @@ public class Viewer extends Application {
         createPhase1();
         createPhase2();
         createPhase3();
+        restart();
+
+
+
         //        Label boardLabel = new Label("Game State:");
 //        boardTextField = new TextField();
 //        boardTextField.setPrefWidth(800);
@@ -369,8 +425,6 @@ public class Viewer extends Application {
 //        hb.setLayoutY(VIEWER_HEIGHT - 50);
 //        controls.getChildren().add(hb);
     }
-
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {
