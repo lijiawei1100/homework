@@ -352,11 +352,6 @@ public class Viewer extends Application {
             verticalRug.setDisable(true);
         }
 
-        //todo add mouse click functionality when in stage 3. when clicked, check if position is valid and then:
-        // - place rug and end turn
-        // - or add error message "invalid placement"
-        // after this add hover functionality and only show when placement is valid!
-
         //create invisible GridPane for squares
         if (thisGame.gamePhase == 3) {
             GridPane invisibleGrid = new GridPane();
@@ -427,7 +422,6 @@ public class Viewer extends Application {
                                         thisGame.board.getBoardMatrix()[potentialRug.getP2().getKey()][potentialRug.getP2().getValue()].occupiedRug= potentialRug;
                                         //remove one rug from player rug count
                                         thisGame.currentPlayer.minusRug();
-                                        thisGame.moveToNextPlayer(); //move to next player
                                         thisGame.moveToNextPhase(); //move back to phase 1
                                         controls.getChildren().clear();
                                         makeControls();
@@ -466,7 +460,7 @@ public class Viewer extends Application {
         vBox.getChildren().add(rugDirection);
         vBox.getChildren().add(verticalRug);
         vBox.getChildren().add(horizontalRug);
-        vBox.getChildren().add(thisGame.rugHbox);
+//        vBox.getChildren().add(thisGame.rugHbox);
         vBox.setLayoutX(950);
         vBox.setLayoutY(370);
         vBox.setSpacing(10);

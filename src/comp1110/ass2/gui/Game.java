@@ -58,10 +58,23 @@ public class Game extends Application {
     }
 
     public void moveToNextPlayer() {
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+        int nPlayers = 0;
+        for(Player i:players) {
+            //skip the null and generate the rest players
+            if (i != null) {
+                nPlayers++;
+            }
+        }
+        currentPlayerIndex = (currentPlayerIndex + 1) % nPlayers;
+        currentPlayer = players[currentPlayerIndex];
     }
     public void moveToNextPhase() {
         gamePhase = (gamePhase + 1) % 4;
+        if (gamePhase==0) {
+            moveToNextPlayer(); //move to next player
+            currentDiceRoll = 0;
+            currentPaymentAmount = 0;
+        }
     }
     public String gameToString (){
         String gameString = "";
