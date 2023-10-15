@@ -91,6 +91,10 @@ public class Player{
         money = money + payment;
     }
 
+    public void minusRug() {
+        rugsNumber = rugsNumber - 1;
+    }
+
     public static String plyaerToString(Player player){
         String moneyString;
         String rugsNumberString;

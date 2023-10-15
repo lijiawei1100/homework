@@ -44,7 +44,12 @@ public class Rug {
             Pair<Integer,Integer> secondPosition = new Pair<Integer,Integer>(Integer.parseInt(rugString.substring(5,6)),Integer.parseInt(rugString.substring(6,7)));
             return new RugWithPosition(colour,Integer.parseInt(idString),firstPosition,secondPosition);
         }
-
+        public Pair<Integer,Integer> getP1() {
+            return this.p1;
+        }
+        public Pair<Integer,Integer> getP2() {
+            return this.p2;
+        }
     }
 
     public Color getColour() {
@@ -113,6 +118,7 @@ public class Rug {
         position2 = String.valueOf((rug.p2.getKey())) + String.valueOf((rug.p2.getValue()));
         return (colourString+idString+position1+position2);
     }
+
 
 
 //    /**
