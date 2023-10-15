@@ -8,6 +8,7 @@ import static comp1110.ass2.Marrakech.getAdjacentSquares;
 import static comp1110.ass2.Marrakech.getPaymentAmount;
 import static comp1110.ass2.Player.getColorName;
 
+
 public class Square {
     private final Boolean isEdge;
 

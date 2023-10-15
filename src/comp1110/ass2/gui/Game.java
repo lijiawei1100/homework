@@ -58,6 +58,7 @@ public class Game extends Application {
         Board board = this.board;
         Assam assam = this.assam;
         for(Player i:players){
+            //skip the null and generate the rest players
             if(i !=null){
             gameString+=plyaerToString(i);}
         }
@@ -74,8 +75,10 @@ public class Game extends Application {
     public static Game stringToGame(String gameString) {
         Player[] players = new Player[4];
         int b = 0;
+        //the maximum index for the playerString is 32
         for (int i = 0; i < 32; i++) {
             if (gameString.charAt(i) == 'P') {
+                // when the string is Pr00012o,he is out of game, since the money become 0;
                 if (!(gameString.substring(i+2, i + 5).equals("000") & gameString.substring(i+7,i+8).equals("o"))) {
                     Color color =null;
                     int money;
@@ -98,7 +101,7 @@ public class Game extends Application {
                     }
                 }
             }
-
+        // get assam
         String assamString = null;
         for(int i=0;i<gameString.length();i++){
             if(gameString.charAt(i) == 'A'){
@@ -144,7 +147,6 @@ public class Game extends Application {
 
         Game newgame = stringToGame("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
         //Game newgame = stringToGame(game);
-
 
         Viewer viewer = new Viewer();
         this.root = viewer.getRoot();

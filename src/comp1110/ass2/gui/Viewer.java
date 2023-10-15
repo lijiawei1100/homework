@@ -5,8 +5,10 @@ import gittest.B;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Polygon;
 import javafx.scene.control.Button;
@@ -20,10 +22,12 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
 
-import static comp1110.ass2.Marrakech.rollDie;
-import static comp1110.ass2.Marrakech.rotateAssam;
+import static comp1110.ass2.Marrakech.*;
 
 public class Viewer extends Application {
 
@@ -33,7 +37,9 @@ public class Viewer extends Application {
     private final Group root = new Group();
     private final Group controls = new Group();
     private TextField boardTextField;
-    private Game thisGame = Game.stringToGame("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
+
+    private Game thisGame;
+            //= Game.stringToGame("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
 //TODO FIX THIS - THIS IS WHERE GAME is found
 // other string: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
     public javafx.scene.Group getRoot() {
@@ -43,6 +49,38 @@ public class Viewer extends Application {
         return controls;
     }
 
+    // SelectionWindow to choose number of players
+    void playerSelectionWindow(){
+        ChoiceBox<String> playerSelectionBox = new ChoiceBox<>();
+        playerSelectionBox.getItems().addAll( "2 Players", "3 Players", "4 Players");
+        playerSelectionBox.setValue("2 Player");
+        // Create a button to start the game
+        Button startButton = new Button("Start Game");
+        startButton.setOnAction(e -> {
+            String initialGameString = "";
+            String selectedOption = playerSelectionBox.getValue();
+            switch (selectedOption){
+                case "2 Player" : initialGameString ="Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
+                case "3 Players" : initialGameString = "Py03015iPp03015iPr03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
+                case "4 Players" : initialGameString = "Py03015iPp03015iPr03015iPc03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
+            }
+            controls.getChildren().clear();
+            try {
+                thisGame = Game.stringToGame(initialGameString);
+                makeControls();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        // Create a layout for the window
+        VBox layout = new VBox(10);
+        layout.setLayoutX(550);
+        layout.setLayoutY(300);
+        layout.getChildren().addAll(playerSelectionBox, startButton);
+        controls.getChildren().add(layout);
+    }
+
     /**
      * Draw a placement in the window, removing any previously drawn placements
      *
@@ -50,8 +88,6 @@ public class Viewer extends Application {
      */
 
     //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08@2
-
-
 
 
     void displayState(String state) throws Exception {
@@ -136,18 +172,18 @@ public class Viewer extends Application {
         //add button functions
         left.setOnAction(event -> {
             thisGame.assam = Assam.stringToAssam(rotateAssam(Assam.assamToString(thisGame.assam), 270));
+            controls.getChildren().clear();//avoid duplicate displays
             thisGame.moveToNextPhase(); //move to phase 1
-            controls.getChildren().clear();
             makeControls();
         });
         right.setOnAction(event -> {
             thisGame.assam = Assam.stringToAssam(rotateAssam(Assam.assamToString(thisGame.assam), 90));
-            controls.getChildren().clear();
+            controls.getChildren().clear();////avoid duplicate displays
             thisGame.moveToNextPhase(); //move to phase 1
             makeControls();
         });
         stay.setOnAction(event -> {
-            controls.getChildren().clear();
+            controls.getChildren().clear();////avoid duplicate displays
             thisGame.moveToNextPhase(); //move to phase 1
             makeControls();
         });
@@ -207,13 +243,16 @@ public class Viewer extends Application {
 
         Text payment = new Text();
         if (thisGame.gamePhase == 3){
+            Integer playerToPayIndex = thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug.getPlayerIndex();
+            Player playerToPay = thisGame.players[playerToPayIndex];
+            int pays = getPaymentAmount(thisGame.gameToString());
             System.out.println("aaaaaaaaaaaaaaaaa");
             if (thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug == null) {
                 payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex+1) + " pays no one");
+            } else if (thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug.getColour() == playerToPay.getColour()) {
+                payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex+1) + " pays no one");
             } else {
-                Integer playerToPayIndex = thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug.getPlayerIndex();
-                Player playerToPay = thisGame.players[playerToPayIndex];
-                payment = new Text("Player " + (thisGame.currentPlayerIndex+1) + " pays " + 0 +
+                payment = new Text("Player " + (thisGame.currentPlayerIndex+1) + " pays " + pays +
                         "\ndirhams to Player " + (playerToPayIndex+1));
             } //todo move this to event when moveAssam is clicked
         }
@@ -288,24 +327,15 @@ public class Viewer extends Application {
 //        controls.getChildren().add(hb);
     }
 
-//    public String assamToString(String state,String assam){
-//        for(int i=0;i<state.length();i++){
-//            if(state.charAt(i)=='A'){
-//                String newString = state.substring(0,i) + assam + state.substring(i+4);
-//            }
-//        }
-//        return n;
-//    }
-
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Marrakech Viewer");
-        Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
-        root.getChildren().add(controls);
-        makeControls();
-        primaryStage.setScene(scene);
-        primaryStage.show();;
+          primaryStage.setTitle("Marrakech Viewer");
+          playerSelectionWindow();
+          Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
+          root.getChildren().add(controls);
+          primaryStage.setScene(scene);
+          primaryStage.show();
     }
 }
