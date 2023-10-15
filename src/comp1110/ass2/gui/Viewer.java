@@ -312,6 +312,9 @@ public class Viewer extends Application {
         controls.getChildren().add(vBox);
     }
 
+
+
+
     /**
      * Create a basic text field for input and a refresh button.
      */
