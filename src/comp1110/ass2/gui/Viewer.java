@@ -54,16 +54,18 @@ public class Viewer extends Application {
     void playerSelectionWindow(){
         ChoiceBox<String> playerSelectionBox = new ChoiceBox<>();
         playerSelectionBox.getItems().addAll( "2 Players", "3 Players", "4 Players");
-        playerSelectionBox.setValue("2 Player");
+        playerSelectionBox.setValue("Number of players...");
         // Create a button to start the game
         Button startButton = new Button("Start Game");
         startButton.setOnAction(e -> {
             String initialGameString = "";
             String selectedOption = playerSelectionBox.getValue();
             switch (selectedOption){
-                case "2 Player" : initialGameString ="Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
+                case "2 Players" : initialGameString ="Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
+//                case "2 Players" : initialGameString ="Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08";break;
                 case "3 Players" : initialGameString = "Py03015iPp03015iPr03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
                 case "4 Players" : initialGameString = "Py03015iPp03015iPr03015iPc03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
+                //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
             }
             controls.getChildren().clear();
             try {
@@ -216,7 +218,6 @@ public class Viewer extends Application {
 
         controls.getChildren().add(vBox);
     }
-    //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
 
     public void createPhase2(){
         Text rollNumber = new Text("Your number: " + thisGame.currentDiceRoll);
@@ -232,47 +233,53 @@ public class Viewer extends Application {
             thisGame.moveToNextPhase(); //move to phase 2
             makeControls();
         });
-        Button moveAssam = new Button("moveAssam");
-        moveAssam.setOnAction(event -> {
-            //move assam using the dice roll
-            thisGame.assam = Assam.stringToAssam(Marrakech.moveAssam(Assam.assamToString(thisGame.assam), thisGame.currentDiceRoll));
-            //todo after this change the payment string
-            controls.getChildren().clear();
-            thisGame.moveToNextPhase(); //move to phase 3
-            makeControls();
-        });
-
-        Text payment = new Text();
-        if (thisGame.gamePhase == 3) {
-            Rug occupiedRug = thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug;
-            if (occupiedRug != null) {
-                Integer playerToPayIndex = occupiedRug.getPlayerIndex();
-                Player playerToPay = thisGame.players[playerToPayIndex];
-                if (playerToPay != null) {
-                    int pays = getPaymentAmount(thisGame.gameToString());
-                    System.out.println("aaaaaaaaaaaaaaaaa");
-                    if (thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug.getColour() == playerToPay.getColour()) {
-                        payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");
-                    } else {
-                        payment = new Text("Player " + (thisGame.currentPlayerIndex + 1) + " pays " + pays +
-                                "\ndirhams to Player " + (playerToPayIndex + 1));
-                    } //todo move this to event when moveAssam is clicked
-                }
-                else  {payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");}
-            }
-            else  {payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");}
-        }
         //make the buttons clickable depending on the game phase
         if (thisGame.gamePhase == 1) {
             roll.setDisable(false);
         } else {
             roll.setDisable(true);
         }
+
+        Button moveAssam = new Button("moveAssam");
+        moveAssam.setOnAction(event -> {
+            //move assam using the dice roll
+            thisGame.assam = Assam.stringToAssam(Marrakech.moveAssam(Assam.assamToString(thisGame.assam), thisGame.currentDiceRoll));
+            //payment process:
+            //1.get the occupied rug
+            Rug occupiedRug = thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug;
+            if (occupiedRug != null) {
+                //if occupied rug exists pay that player
+                thisGame.playerPaidIndex = occupiedRug.getPlayerIndex();
+                Player playerToPay = thisGame.players[thisGame.playerPaidIndex];
+                thisGame.currentPaymentAmount = getPaymentAmount(thisGame.gameToString());
+                if (thisGame.currentPlayer == playerToPay) {
+                    thisGame.currentPaymentAmount = 0; //a player does not need to play themselves
+                } else {
+                    thisGame.currentPlayer.playerPays(thisGame.currentPaymentAmount);
+                    playerToPay.playerIsPaid(thisGame.currentPaymentAmount);
+                }
+            } //else thisGame.currentPaymentAmount = 0;
+            thisGame.moveToNextPhase(); //move to phase 3
+            controls.getChildren().clear();
+            makeControls();
+        });
+        //make the buttons clickable depending on the game phase
         if (thisGame.gamePhase == 2) {
             moveAssam.setDisable(false);
         } else {
             moveAssam.setDisable(true);
         }
+
+        Text payment = new Text();
+        if (thisGame.gamePhase>=3){
+            if (thisGame.currentPaymentAmount == 0) {
+                payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");
+            } else {
+                payment = new Text("Player " + (thisGame.currentPlayerIndex + 1) + " pays " + thisGame.currentPaymentAmount +
+                        "\ndirhams to Player " + (thisGame.playerPaidIndex + 1));
+            }
+        }
+
 
         payment.setFont(Font.font(25));
         VBox vBox = new VBox();
