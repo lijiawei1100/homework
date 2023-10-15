@@ -495,12 +495,10 @@ public class Viewer extends Application {
 
     //designed three state for choosing the rug
     static HBox buildImage(int a){
-        Image image =new javafx.scene.image.Image(Viewer.class.getResource("\\assets\\rug0.png").toExternalForm());
-        Image image1 =new javafx.scene.image.Image(Viewer.class.getResource("\\comp1110-ass2\\assets\\rug1.png").toExternalForm());
-        Image image2 =new javafx.scene.image.Image(Viewer.class.getResource("\\comp1110-ass2\\assets\\rug2.png").toExternalForm());
-        Image image3 =new javafx.scene.image.Image(Viewer.class.getResource("\\comp1110-ass2\\assets\\rug3.png").toExternalForm());
-//        Image image2 =new javafx.scene.image.Image("C:\\Users\\Lenovo\\IdeaProjects\\comp1110-ass2\\assets\\rug2.png");
-//        Image image3 =new javafx.scene.image.Image("C:\\Users\\Lenovo\\IdeaProjects\\comp1110-ass2\\assets\\rug3.png");
+        Image image =new javafx.scene.image.Image("file:./assets/rug0.png");
+        Image image1 =new javafx.scene.image.Image("file:./assets/rug1.png");
+        Image image2 =new javafx.scene.image.Image("file:./assets/rug2.png");
+        Image image3 =new javafx.scene.image.Image("file:./assets/rug3.png");
         ImageView imageView = new ImageView(image);
         ImageView imageView1 = new ImageView(image1);
         ImageView imageView2 = new ImageView(image2);
