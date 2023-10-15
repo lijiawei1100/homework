@@ -20,6 +20,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
+import javafx.util.Pair;
 
 
 import javax.swing.*;
@@ -343,6 +345,57 @@ public class Viewer extends Application {
             horizontalRug.setDisable(true);
             verticalRug.setDisable(true);
         }
+
+        //todo add mouse click functionality when in stage 3. when clicked, check if position is valid and then:
+        // - place rug and end turn
+        // - or add error message "invalid placement"
+        // after this add hover functionality and only show when placement is valid!
+
+        //create invisible GridPane for squares
+        if (thisGame.gamePhase == 3) {
+            GridPane invisibleGrid = new GridPane();
+            invisibleGrid.setLayoutX(20);
+            invisibleGrid.setLayoutY(20);
+            for (int x=0; x<7; x++){
+                for (int y=0; y<7 ; y++){
+                    //get square at that position
+                    Square thisSquare = thisGame.board.getBoardMatrix()[x][y];
+                    //create rectangle with square rug colour
+                    Rectangle squareImage = new Rectangle(85,85);
+                    squareImage.setFill(Color.web("0x0000FF",0.0));
+                    squareImage.setStroke(Color.LIGHTBLUE);
+                    invisibleGrid.add(squareImage, x, y, 1, 1);
+
+                    int finalX = x;
+                    int finalY = y;
+                    squareImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            System.out.println("Mouse clicked inside rectangle with index: "+ finalX + finalY);
+                            System.out.println(thisSquare);
+                            //make two positions - one for first, one for second spot - conditional on button
+                            Pair<Integer, Integer> firstPosition = new Pair<>(finalX,finalY);
+                            Pair<Integer, Integer> secondPosition;
+                            if (thisGame.rugPlaceIsHorizontal) {
+                                secondPosition = new Pair<>(finalX + 1,finalY);
+                            } else {
+                                secondPosition = new Pair<>(finalX,finalY + 1);
+                            }
+                            System.out.println("potential rug placement: "+firstPosition.getKey()+firstPosition.getValue()+" "+secondPosition.getKey()+secondPosition.getValue());
+                            Rug.RugWithPosition potentialRug = new Rug.RugWithPosition(thisGame.currentPlayer.getColour(), (15 - thisGame.currentPlayer.getRugsNumber()),firstPosition,secondPosition);
+                            //check if potential rug is valid
+//                            if (isRugValid(thisGame.gameToString(), potentialRug.))
+                            //check if potential rug placement is valid
+                            //remove one rug from player rug count
+                        }
+                    });
+                }
+            }
+            controls.getChildren().add(invisibleGrid);
+        }
+
+
+
 
         VBox vBox = new VBox();
         vBox.getChildren().add(phase3);
