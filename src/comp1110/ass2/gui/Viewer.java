@@ -369,28 +369,70 @@ public class Viewer extends Application {
                     //create rectangle with square rug colour
                     Rectangle squareImage = new Rectangle(85,85);
                     squareImage.setFill(Color.web("0x0000FF",0.0));
-                    squareImage.setStroke(Color.LIGHTBLUE);
+                    squareImage.setStroke(Color.BLACK);
                     invisibleGrid.add(squareImage, x, y, 1, 1);
+
 
                     int finalX = x;
                     int finalY = y;
+
+                    //make two positions - one for first, one for second spot - conditional on button
+                    Pair<Integer, Integer> firstPosition = new Pair<>(finalX,finalY);
+                    Pair<Integer, Integer> secondPosition;
+                    if (thisGame.rugPlaceIsHorizontal) {
+                        if (finalX != 6) {
+                            secondPosition = new Pair<>(finalX + 1,finalY);
+                            Square square2 = thisGame.board.getBoardMatrix()[x+1][y];
+                        } else secondPosition = null;
+                    } else {
+                        if (finalY != 6) {
+                            secondPosition = new Pair<>(finalX,finalY + 1);
+                            Square square2 = thisGame.board.getBoardMatrix()[x][y+1];
+                        } else secondPosition = null;
+                    }
+                    Rug.RugWithPosition potentialRug = new Rug.RugWithPosition(thisGame.currentPlayer.getColour(), (15 - thisGame.currentPlayer.getRugsNumber()),firstPosition,secondPosition);
+
+                    squareImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+//                            System.out.println("Moved inside rectangle with index: "+ finalX + finalY);
+//                            System.out.println(thisSquare);
+//                            System.out.println(potentialRug);
+//                            System.out.println("potential rug placement: "+firstPosition.getKey()+firstPosition.getValue()+" "+secondPosition.getKey()+secondPosition.getValue());
+                            //if potential rug placement is valid then outline the square with the right colour, if not then outline white
+                            if (isRugValid(thisGame.gameToString(),Rug.RugWithPosition.rugWithPositionToString(potentialRug))) {
+                                if (isPlacementValid(thisGame.gameToString(),Rug.RugWithPosition.rugWithPositionToString(potentialRug))) {
+                                    squareImage.setStroke(potentialRug.getColour());
+                                }
+                                else squareImage.setStroke(Color.WHITE);
+                            }
+                        }
+                    });
+                    squareImage.setOnMouseExited(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            squareImage.setStroke(Color.BLACK);
+                            }
+                    });
+
                     squareImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            System.out.println("Mouse clicked inside rectangle with index: "+ finalX + finalY);
-                            System.out.println(thisSquare);
-                            //make two positions - one for first, one for second spot - conditional on button
-                            Pair<Integer, Integer> firstPosition = new Pair<>(finalX,finalY);
-                            Pair<Integer, Integer> secondPosition;
-                            if (thisGame.rugPlaceIsHorizontal) {
-                                secondPosition = new Pair<>(finalX + 1,finalY);
-                            } else {
-                                secondPosition = new Pair<>(finalX,finalY + 1);
-                            }
-                            System.out.println("potential rug placement: "+firstPosition.getKey()+firstPosition.getValue()+" "+secondPosition.getKey()+secondPosition.getValue());
-                            Rug.RugWithPosition potentialRug = new Rug.RugWithPosition(thisGame.currentPlayer.getColour(), (15 - thisGame.currentPlayer.getRugsNumber()),firstPosition,secondPosition);
+//                            System.out.println("Mouse clicked inside rectangle with index: "+ finalX + finalY);
+//                            System.out.println(thisSquare);
+//                            System.out.println("potential rug placement: "+firstPosition.getKey()+firstPosition.getValue()+" "+secondPosition.getKey()+secondPosition.getValue());
                             //check if potential rug is valid
 //                            if (isRugValid(thisGame.gameToString(), potentialRug.))
+                            if (isRugValid(thisGame.gameToString(),Rug.RugWithPosition.rugWithPositionToString(potentialRug))) {
+                                if (isPlacementValid(thisGame.gameToString(),Rug.RugWithPosition.rugWithPositionToString(potentialRug))) {
+                                    thisSquare.setOccupiedRug(potentialRug);
+
+
+                                    thisGame.moveToNextPhase(); //move back to phase 1
+                                    controls.getChildren().clear();
+                                    makeControls();
+                                }
+                            }
                             //check if potential rug placement is valid
                             //remove one rug from player rug count
                         }
