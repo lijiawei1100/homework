@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Polygon;
 import javafx.scene.control.Button;
@@ -22,12 +23,14 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
+import javafx.scene.image.Image;
 
 
 import javax.swing.*;
-import javax.swing.text.html.ImageView;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
 import java.lang.reflect.Array;
 
 import static comp1110.ass2.Marrakech.*;
@@ -99,7 +102,7 @@ public class Viewer extends Application {
         });
         vBox.getChildren().add(restartGame);
         vBox.setLayoutX(950);
-        vBox.setLayoutY(560);
+        vBox.setLayoutY(620);
         controls.getChildren().add(vBox);
     }
 
@@ -330,11 +333,13 @@ public class Viewer extends Application {
         Button horizontalRug = new Button("Place a horizontal rug:");
         Button verticalRug  = new Button("Place a vertical rug:");
         horizontalRug.setOnAction(event -> {
+            thisGame.rugHbox = buildImage(2);
             thisGame.rugPlaceIsHorizontal = Boolean.TRUE;
             controls.getChildren().clear();
             makeControls();
         });
         verticalRug.setOnAction(event -> {
+            thisGame.rugHbox = buildImage(1);
             thisGame.rugPlaceIsHorizontal = Boolean.FALSE;
             controls.getChildren().clear();
             makeControls();
@@ -395,6 +400,7 @@ public class Viewer extends Application {
             controls.getChildren().add(invisibleGrid);
         }
 
+//        Image image1 = new Image("file:///C:/Users/user/Desktop/x.jpg");
 
 
 
@@ -406,19 +412,27 @@ public class Viewer extends Application {
             messageLabel.setText(message);
         });
 
+//
+//        imageView.setOnMouseClicked(event -> {
+//            if (event.getClickCount() == 1) {
+//                System.out.println("Image Clicked!");
+//            }
+//        });
         VBox vBox = new VBox();
         vBox.getChildren().add(phase3);
         vBox.getChildren().add(messageLabel);
         vBox.getChildren().add(rugDirection);
-        vBox.getChildren().add(horizontalRug);
         vBox.getChildren().add(verticalRug);
+        vBox.getChildren().add(horizontalRug);
+        vBox.getChildren().add(thisGame.rugHbox);
         vBox.setLayoutX(950);
         vBox.setLayoutY(370);
         vBox.setSpacing(10);
         controls.getChildren().add(vBox);
+
     }
 
-
+    //return a string by mouse over position,checking if the rug and placement are valid.
     private String getMessageBasedOnMousePosition(double mouseX, double mouseY) {
         // Example: Determine the message based on the mouse position
         int x = ((int) mouseX - 20) / 86;
@@ -429,13 +443,74 @@ public class Viewer extends Application {
         else{ rugId = String.valueOf(15-rugsNumber);}
 
         String rugString = getColorName(thisGame.currentPlayer.getColour()).toLowerCase().charAt(0) + rugId + String.valueOf(x) + String.valueOf(y) + String.valueOf(x) + String.valueOf(y + 1);
-        if (x < 7 & y < 7) {
+        if (x<7 & x>=0 & y<7 & y>=0) {
             if (isRugValid(thisGame.gameToString(), rugString) & isPlacementValid(thisGame.gameToString(),rugString)) {
                 return "You can place the rug in this square." + rugString;
             } else return "You can not place the rug in this square." + rugString;
         }
-        return rugString;
+        return null;
     }
+
+    //designed three state for choosing the rug
+    static HBox buildImage(int a){
+        Image image =new javafx.scene.image.Image("C:\\Users\\Lenovo\\IdeaProjects\\comp1110-ass2\\assets\\rug0.png");
+        Image image1 =new javafx.scene.image.Image("C:\\Users\\Lenovo\\IdeaProjects\\comp1110-ass2\\assets\\rug1.png");
+        Image image2 =new javafx.scene.image.Image("C:\\Users\\Lenovo\\IdeaProjects\\comp1110-ass2\\assets\\rug2.png");
+        Image image3 =new javafx.scene.image.Image("C:\\Users\\Lenovo\\IdeaProjects\\comp1110-ass2\\assets\\rug3.png");
+        ImageView imageView = new ImageView(image);
+        ImageView imageView1 = new ImageView(image1);
+        ImageView imageView2 = new ImageView(image2);
+        ImageView imageView3 = new ImageView(image3);
+        HBox hBox = new HBox();
+        hBox.setSpacing(30);
+        if(a==0){
+            imageView.setFitHeight(80);
+            imageView.setFitWidth(50);
+            imageView1.setFitHeight(50);
+            imageView1.setFitWidth(80);
+            hBox.getChildren().add(imageView);
+            hBox.getChildren().add(imageView1);
+        } else if (a==1) {
+            imageView2.setFitHeight(80);
+            imageView2.setFitWidth(50);
+            imageView1.setFitHeight(50);
+            imageView1.setFitWidth(80);
+            hBox.getChildren().add(imageView2);
+            hBox.getChildren().add(imageView1);
+        }else {
+            imageView.setFitHeight(80);
+            imageView.setFitWidth(50);
+            imageView3.setFitHeight(50);
+            imageView3.setFitWidth(80);
+            hBox.getChildren().add(imageView);
+            hBox.getChildren().add(imageView3);
+        }
+        return hBox;
+    }
+
+    void winner(){
+        char a = getWinner(thisGame.gameToString());
+        String message = new String();
+        if(a == 't'){
+            message = "It's a tile. Let's start over";
+        }
+        else if(a == 'r'){
+            message = "Player 3 won the game";
+        } else if (a=='c') {
+           message = "Player 4 won the game";
+        } else if (a == 'y') {
+            message = "Player 1 won the game";
+        } else if (a == 'p') {
+            message = "Player 2 won the game";
+        }
+        if(message!=null){
+            VBox vBox = new VBox();
+            Text winnerInfo = new Text(message);
+            vBox.getChildren().add(winnerInfo);
+            controls.getChildren().add(vBox);
+        }
+    }
+
 
 
     /**
@@ -450,6 +525,7 @@ public class Viewer extends Application {
         createPhase1();
         createPhase2();
         createPhase3();
+        winner();
         restart();
         //        Label boardLabel = new Label("Game State:");
 //        boardTextField = new TextField();
