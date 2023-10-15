@@ -43,6 +43,7 @@ public class Viewer extends Application {
             //= Game.stringToGame("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
 //TODO FIX THIS - THIS IS WHERE GAME is found
 // other string: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
+    Viewer(Game thisGame) {this.thisGame = thisGame;}
     public javafx.scene.Group getRoot() {
         return root;
     }
@@ -89,10 +90,7 @@ public class Viewer extends Application {
      *
      * @param state an array of two strings, representing the current game state
      */
-
     //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08@2
-
-
     void displayState(String state) throws Exception {
         // FIXME Task 5: implement the simple state viewer
 //        javafx.scene.image.ImageView boardImageView = new ImageView(new Image("assets\\Board Image.png"));
@@ -354,7 +352,6 @@ public class Viewer extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
           primaryStage.setTitle("Marrakech Viewer");
-          playerSelectionWindow();
           Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
           root.getChildren().add(controls);
           primaryStage.setScene(scene);
