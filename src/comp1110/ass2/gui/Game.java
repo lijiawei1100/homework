@@ -40,7 +40,7 @@ public class Game extends Application {
     int gamePhase;
     int currentDiceRoll;
     int currentPaymentAmount;
-    Boolean rugSetIsHorizontal;
+    Boolean rugPlaceIsHorizontal = Boolean.TRUE;
     private Group controls = new Group();
     private Game thisGame;
 

@@ -55,7 +55,7 @@ public class Viewer extends Application {
     void playerSelectionWindow(){
         ChoiceBox<String> playerSelectionBox = new ChoiceBox<>();
         playerSelectionBox.getItems().addAll( "2 Players", "3 Players", "4 Players");
-        playerSelectionBox.setValue("Number of players...");
+        playerSelectionBox.setValue("2 Players");
         // Create a button to start the game
         Button startButton = new Button("Start Game");
         startButton.setOnAction(e -> {
@@ -63,7 +63,6 @@ public class Viewer extends Application {
             String selectedOption = playerSelectionBox.getValue();
             switch (selectedOption){
                 case "2 Players" : initialGameString ="Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
-//                case "2 Players" : initialGameString ="Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08";break;
                 case "3 Players" : initialGameString = "Py03015iPp03015iPr03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
                 case "4 Players" : initialGameString = "Py03015iPp03015iPr03015iPc03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
                 //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
@@ -295,20 +294,41 @@ public class Viewer extends Application {
     public void createPhase3(){
         Text phase3 = new Text("Phase 3: ");
         phase3.setFont(Font.font(25));
+        String rugDirectionText;
+        if (thisGame.rugPlaceIsHorizontal) {
+            rugDirectionText = "horizontal";
+        } else {
+            rugDirectionText = "vertical";
+        }
+        Text rugDirection = new Text("You are placing a "+ rugDirectionText +" rug");
         Button horizontalRug = new Button("Place a horizontal rug:");
-        Button verticalRug  = new Button("Place a horizontal rug:");
-        Boolean isHorizontal;
+        Button verticalRug  = new Button("Place a vertical rug:");
         horizontalRug.setOnAction(event -> {
-            thisGame.rugSetIsHorizontal = Boolean.TRUE;
-            thisGame.moveToNextPhase(); //move to phase 4
+            thisGame.rugPlaceIsHorizontal = Boolean.TRUE;
             controls.getChildren().clear();
             makeControls();
         });
+        verticalRug.setOnAction(event -> {
+            thisGame.rugPlaceIsHorizontal = Boolean.FALSE;
+            controls.getChildren().clear();
+            makeControls();
+        });
+        if (thisGame.gamePhase == 3) {
+            horizontalRug.setDisable(false);
+            verticalRug.setDisable(false);
+        } else {
+            horizontalRug.setDisable(true);
+            verticalRug.setDisable(true);
+        }
 
         VBox vBox = new VBox();
-        vBox.getChildren().add((phase3));
+        vBox.getChildren().add(phase3);
+        vBox.getChildren().add(rugDirection);
+        vBox.getChildren().add(horizontalRug);
+        vBox.getChildren().add(verticalRug);
         vBox.setLayoutX(950);
         vBox.setLayoutY(370);
+        vBox.setSpacing(10);
         controls.getChildren().add(vBox);
     }
 
