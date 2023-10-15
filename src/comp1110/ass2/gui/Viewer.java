@@ -21,8 +21,8 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
-
 import javax.swing.*;
+import javax.swing.text.html.ImageView;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
@@ -92,6 +92,7 @@ public class Viewer extends Application {
 
     void displayState(String state) throws Exception {
         // FIXME Task 5: implement the simple state viewer
+//        javafx.scene.image.ImageView boardImageView = new ImageView(new Image("assets\\Board Image.png"));
 
         Game game = Game.stringToGame(state);
         Player[] players =game.getPlayers();
@@ -226,8 +227,8 @@ public class Viewer extends Application {
         Button roll = new Button("Roll");
         roll.setOnAction(event -> {
             thisGame.currentDiceRoll = rollDie();
-            thisGame.moveToNextPhase(); //move to phase 2
             controls.getChildren().clear();
+            thisGame.moveToNextPhase(); //move to phase 2
             makeControls();
         });
         Button moveAssam = new Button("moveAssam");
@@ -235,28 +236,31 @@ public class Viewer extends Application {
             //move assam using the dice roll
             thisGame.assam = Assam.stringToAssam(Marrakech.moveAssam(Assam.assamToString(thisGame.assam), thisGame.currentDiceRoll));
             //todo after this change the payment string
-
-            thisGame.moveToNextPhase(); //move to phase 3
             controls.getChildren().clear();
+            thisGame.moveToNextPhase(); //move to phase 3
             makeControls();
         });
 
         Text payment = new Text();
-        if (thisGame.gamePhase == 3){
-            Integer playerToPayIndex = thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug.getPlayerIndex();
-            Player playerToPay = thisGame.players[playerToPayIndex];
-            int pays = getPaymentAmount(thisGame.gameToString());
-            System.out.println("aaaaaaaaaaaaaaaaa");
-            if (thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug == null) {
-                payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex+1) + " pays no one");
-            } else if (thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug.getColour() == playerToPay.getColour()) {
-                payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex+1) + " pays no one");
-            } else {
-                payment = new Text("Player " + (thisGame.currentPlayerIndex+1) + " pays " + pays +
-                        "\ndirhams to Player " + (playerToPayIndex+1));
-            } //todo move this to event when moveAssam is clicked
+        if (thisGame.gamePhase == 3) {
+            Rug occupiedRug = thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug;
+            if (occupiedRug != null) {
+                Integer playerToPayIndex = occupiedRug.getPlayerIndex();
+                Player playerToPay = thisGame.players[playerToPayIndex];
+                if (playerToPay != null) {
+                    int pays = getPaymentAmount(thisGame.gameToString());
+                    System.out.println("aaaaaaaaaaaaaaaaa");
+                    if (thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug.getColour() == playerToPay.getColour()) {
+                        payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");
+                    } else {
+                        payment = new Text("Player " + (thisGame.currentPlayerIndex + 1) + " pays " + pays +
+                                "\ndirhams to Player " + (playerToPayIndex + 1));
+                    } //todo move this to event when moveAssam is clicked
+                }
+                else  {payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");}
+            }
+            else  {payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");}
         }
-
         //make the buttons clickable depending on the game phase
         if (thisGame.gamePhase == 1) {
             roll.setDisable(false);

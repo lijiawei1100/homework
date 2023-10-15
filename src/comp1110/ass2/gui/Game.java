@@ -96,8 +96,13 @@ public class Game extends Application {
                         case 'o': isPlaying = false;break;
                         case 'i': isPlaying = true;
                     }
+                    switch (gameString.charAt(i+1)){
+                        case 'y' : b=0;break;
+                        case 'p' : b=1;break;
+                        case 'r' : b=2;break;
+                        case 'c' : b=3;break;
+                    }
                     players[b] = new Player(color,money,rugsNumber,isPlaying);
-                    b++;
                     }
                 }
             }
