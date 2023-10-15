@@ -96,6 +96,7 @@ public class Player{
         String rugsNumberString ="";
         String isPlayingString = "";
         String playerString="";
+        //Since the rugsNumber's type is int, so we need add "0" in front of the int to generate a string
         if(player.rugsNumber<10){
             rugsNumberString = "0" + String.valueOf(player.rugsNumber);
         }else{

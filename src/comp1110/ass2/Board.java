@@ -51,12 +51,14 @@ public class Board {
         return stringToAbbreviatedRug(rugString);
     }
 
+
     public static String boardToString(Board board) {
         String boardString = "B";
         for (int x = 0; x < BOARD_WIDTH; x++) {
             for (int y = 0; y < BOARD_HEIGHT; y++) {
                 Square square = board.getBoardMatrix()[x][y];
                 String occupiedRugString = "";
+                //for each sqaure, if the occupiedRug is null, then return "n00", else return the abbreviated rug.
                 if (square.occupiedRug == null) {
                     occupiedRugString = "n00";
                 } else {
