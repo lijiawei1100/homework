@@ -9,6 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -41,6 +42,7 @@ public class Game extends Application {
     int currentDiceRoll;
     int currentPaymentAmount;
     Boolean rugPlaceIsHorizontal = Boolean.TRUE;
+    HBox rugHbox = Viewer.buildImage(0);
     private Group controls = new Group();
     private Game thisGame;
 

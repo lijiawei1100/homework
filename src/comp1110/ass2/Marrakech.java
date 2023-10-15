@@ -204,34 +204,37 @@ public class Marrakech {
         boolean positionBoolean = false;
         boolean rugBoolean = true;
         //create the rugWithPosition
-        Rug.RugWithPosition rugWithPosition = RugWithPosition.stringToRugWithPosition(rug);
+        if(isRugValid(gameState,rug)) {
+            Rug.RugWithPosition rugWithPosition = RugWithPosition.stringToRugWithPosition(rug);
 
-        //each position of rug should not equal to assam's positon
-        //only one of the rug's positions is next to the assam. like (1,1) next to (1,2) or (2,1) next to (1,1);
-        //as long as it satisfies the condition, will return true.
-        if(!rugWithPosition.p1.equals(assam.getAssamPosition()) & !rugWithPosition.p2.equals(assam.getAssamPosition())){
-            if((Math.abs(rugWithPosition.p1.getKey()-assam.getAssamX())==1 & rugWithPosition.p1.getValue() == assam.getAssamY())
-                    |(Math.abs(rugWithPosition.p1.getValue()-assam.getAssamY())==1 & rugWithPosition.p1.getKey() == assam.getAssamX())
-                    |(Math.abs(rugWithPosition.p2.getKey()-assam.getAssamX())==1 & rugWithPosition.p2.getValue() == assam.getAssamY())
-                    | (Math.abs(rugWithPosition.p2.getValue()-assam.getAssamY())==1 & rugWithPosition.p2.getKey() == assam.getAssamX())){
-                positionBoolean = true;
+            //each position of rug should not equal to assam's positon
+            //only one of the rug's positions is next to the assam. like (1,1) next to (1,2) or (2,1) next to (1,1);
+            //as long as it satisfies the condition, will return true.
+            if (!rugWithPosition.p1.equals(assam.getAssamPosition()) & !rugWithPosition.p2.equals(assam.getAssamPosition())) {
+                if ((Math.abs(rugWithPosition.p1.getKey() - assam.getAssamX()) == 1 & rugWithPosition.p1.getValue() == assam.getAssamY())
+                        | (Math.abs(rugWithPosition.p1.getValue() - assam.getAssamY()) == 1 & rugWithPosition.p1.getKey() == assam.getAssamX())
+                        | (Math.abs(rugWithPosition.p2.getKey() - assam.getAssamX()) == 1 & rugWithPosition.p2.getValue() == assam.getAssamY())
+                        | (Math.abs(rugWithPosition.p2.getValue() - assam.getAssamY()) == 1 & rugWithPosition.p2.getKey() == assam.getAssamX())) {
+                    positionBoolean = true;
+                }
             }
-        }
 
-        // returns condition 1. A new rug must have one edge adjacent to Assam (not counting diagonals)
+            // returns condition 1. A new rug must have one edge adjacent to Assam (not counting diagonals)
 
-        //check if the position we want to place is not null;
-        //when it's not null,compare whether two places have same color and ID, which represent it is an entire rug. if there is not an entire rug, then return true
-        if(board.getBoardMatrix()[rugWithPosition.p1.getKey()][rugWithPosition.p1.getValue()].occupiedRug !=null &
-                board.getBoardMatrix()[rugWithPosition.p2.getKey()][rugWithPosition.p2.getValue()].occupiedRug !=null) {
-            Rug occupiedRug1 = board.getBoardMatrix()[rugWithPosition.p1.getKey()][rugWithPosition.p1.getValue()].occupiedRug;
-            Rug occupiedRug2 = board.getBoardMatrix()[rugWithPosition.p2.getKey()][rugWithPosition.p2.getValue()].occupiedRug;
-            if ((occupiedRug1.getColour() == occupiedRug2.getColour())& (occupiedRug1.getId() == occupiedRug2.getId())) {
-                rugBoolean = false;
+            //check if the position we want to place is not null;
+            //when it's not null,compare whether two places have same color and ID, which represent it is an entire rug. if there is not an entire rug, then return true
+            if (board.getBoardMatrix()[rugWithPosition.p1.getKey()][rugWithPosition.p1.getValue()].occupiedRug != null &
+                    board.getBoardMatrix()[rugWithPosition.p2.getKey()][rugWithPosition.p2.getValue()].occupiedRug != null) {
+                Rug occupiedRug1 = board.getBoardMatrix()[rugWithPosition.p1.getKey()][rugWithPosition.p1.getValue()].occupiedRug;
+                Rug occupiedRug2 = board.getBoardMatrix()[rugWithPosition.p2.getKey()][rugWithPosition.p2.getValue()].occupiedRug;
+                if ((occupiedRug1.getColour() == occupiedRug2.getColour()) & (occupiedRug1.getId() == occupiedRug2.getId())) {
+                    rugBoolean = false;
+                }
             }
+            //return the combination of two situation
+            return (positionBoolean & rugBoolean);
         }
-        //return the combination of two situation
-        return (positionBoolean & rugBoolean);
+        return false;
     }
 
 
