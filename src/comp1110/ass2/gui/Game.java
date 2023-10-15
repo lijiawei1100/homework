@@ -50,7 +50,7 @@ public class Game extends Application {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
     }
     public void moveToNextPhase() {
-        gamePhase = (gamePhase + 1) % 3;
+        gamePhase = (gamePhase + 1) % 4;
     }
     public String gameToString (){
         String gameString = "";
@@ -126,19 +126,24 @@ public class Game extends Application {
     //TODO: change initial game string based on chosen number of players
     public String twoPlayerGame =
             "Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
+    //yellow, purple
     public String threePlayerGame =
             "Py03015iPp03015iPr03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
+    //yellow, purple, red
     public String fourPlayerGame =
             "Py03015iPp03015iPr03015iPc03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
+    //yellow, purple, red, cyan
+
 
     public String game = "Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
-
+// example board Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
 
     @Override
     public void start(Stage stage) throws Exception {
         // FIXME Task 7 and 15
 
-        Game newgame = stringToGame(game);
+        Game newgame = stringToGame("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
+        //Game newgame = stringToGame(game);
 
 
         Viewer viewer = new Viewer();
