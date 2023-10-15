@@ -248,36 +248,36 @@ public class Viewer extends Application {
             thisGame.moveToNextPhase(); //move to phase 2
             makeControls();
         });
+        //make the buttons clickable depending on the game phase
+        if (thisGame.gamePhase == 1) {
+            roll.setDisable(false);
+        } else {
+            roll.setDisable(true);
+        }
+
         Button moveAssam = new Button("moveAssam");
         moveAssam.setOnAction(event -> {
             //move assam using the dice roll
             thisGame.assam = Assam.stringToAssam(Marrakech.moveAssam(Assam.assamToString(thisGame.assam), thisGame.currentDiceRoll));
-            //todo after this change the payment string
-            controls.getChildren().clear();
-            thisGame.moveToNextPhase(); //move to phase 3
-            makeControls();
-        });
-
-        Text payment = new Text();
-        if (thisGame.gamePhase == 3) {
+            //payment process:
+            //1.get the occupied rug
             Rug occupiedRug = thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug;
             if (occupiedRug != null) {
-                Integer playerToPayIndex = occupiedRug.getPlayerIndex();
-                Player playerToPay = thisGame.players[playerToPayIndex];
-                if (playerToPay != null) {
-                    int pays = getPaymentAmount(thisGame.gameToString());
-                    System.out.println("aaaaaaaaaaaaaaaaa");
-                    if (thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug.getColour() == playerToPay.getColour()) {
-                        payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");
-                    } else {
-                        payment = new Text("Player " + (thisGame.currentPlayerIndex + 1) + " pays " + pays +
-                                "\ndirhams to Player " + (playerToPayIndex + 1));
-                    } //todo move this to event when moveAssam is clicked
+                //if occupied rug exists pay that player
+                thisGame.playerPaidIndex = occupiedRug.getPlayerIndex();
+                Player playerToPay = thisGame.players[thisGame.playerPaidIndex];
+                thisGame.currentPaymentAmount = getPaymentAmount(thisGame.gameToString());
+                if (thisGame.currentPlayer == playerToPay) {
+                    thisGame.currentPaymentAmount = 0; //a player does not need to play themselves
+                } else {
+                    thisGame.currentPlayer.playerPays(thisGame.currentPaymentAmount);
+                    playerToPay.playerIsPaid(thisGame.currentPaymentAmount);
                 }
-                else  {payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");}
-            }
-            else  {payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");}
-        }
+            } //else thisGame.currentPaymentAmount = 0;
+            thisGame.moveToNextPhase(); //move to phase 3
+            controls.getChildren().clear();
+            makeControls();
+        });
         //make the buttons clickable depending on the game phase
         if (thisGame.gamePhase == 1) {
             roll.setDisable(false);
@@ -289,6 +289,17 @@ public class Viewer extends Application {
         } else {
             moveAssam.setDisable(true);
         }
+
+        Text payment = new Text();
+        if (thisGame.gamePhase>=3){
+            if (thisGame.currentPaymentAmount == 0) {
+                payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");
+            } else {
+                payment = new Text("Player " + (thisGame.currentPlayerIndex + 1) + " pays " + thisGame.currentPaymentAmount +
+                        "\ndirhams to Player " + (thisGame.playerPaidIndex + 1));
+            }
+        }
+
 
         payment.setFont(Font.font(25));
         VBox vBox = new VBox();
@@ -363,7 +374,6 @@ public class Viewer extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
           primaryStage.setTitle("Marrakech Viewer");
-          playerSelectionWindow();
           Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
           root.getChildren().add(controls);
           primaryStage.setScene(scene);
