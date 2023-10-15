@@ -31,9 +31,13 @@ public class Game extends Application {
     Board board;
     Assam assam;
     Player currentPlayer;
+    Player playerPaid;
+    int playerPaidIndex;
     int currentPlayerIndex;
     int gamePhase;
     int currentDiceRoll;
+    int currentPaymentAmount;
+    Boolean rugSetIsHorizontal;
 
     public Game() {};
 

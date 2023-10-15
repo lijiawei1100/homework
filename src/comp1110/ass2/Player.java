@@ -83,6 +83,13 @@ public class Player{
             return "Unknown";
         }}
 
+    public void playerPays(int payment) {
+        money = money - payment;
+    }
+
+    public void playerIsPaid(int payment) {
+        money = money + payment;
+    }
 
     public static String plyaerToString(Player player){
         String moneyString ="";

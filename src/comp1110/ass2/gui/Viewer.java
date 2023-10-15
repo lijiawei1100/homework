@@ -22,8 +22,7 @@ import javafx.stage.Stage;
 
 import java.lang.reflect.Array;
 
-import static comp1110.ass2.Marrakech.rollDie;
-import static comp1110.ass2.Marrakech.rotateAssam;
+import static comp1110.ass2.Marrakech.*;
 
 public class Viewer extends Application {
 
@@ -182,6 +181,13 @@ public class Viewer extends Application {
 
     public void createPhase2(){
         Text rollNumber = new Text("Your number: " + thisGame.currentDiceRoll);
+        Text payment = new Text();
+        if (thisGame.currentPaymentAmount == 0) {
+            payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex+1) + " pays no one");
+        } else {
+            payment = new Text("Player " + (thisGame.currentPlayerIndex+1) + " pays " + thisGame.currentPaymentAmount +
+                        "\ndirhams to Player " + (thisGame.playerPaidIndex+1));
+        }
         //todo: hide below text and reveal if Assam landed... (Get Assam landing square)...GET DONE SOON
 
         rollNumber.setFont(Font.font(25));
@@ -198,25 +204,20 @@ public class Viewer extends Application {
         moveAssam.setOnAction(event -> {
             //move assam using the dice roll
             thisGame.assam = Assam.stringToAssam(Marrakech.moveAssam(Assam.assamToString(thisGame.assam), thisGame.currentDiceRoll));
-            //todo after this change the payment string
-
             thisGame.moveToNextPhase(); //move to phase 3
-            controls.getChildren().clear();
-            makeControls();
-        });
-
-        Text payment = new Text();
-        if (thisGame.gamePhase == 3){
-            System.out.println("aaaaaaaaaaaaaaaaa");
+            //change payments for players + change the string shown
             if (thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug == null) {
-                payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex+1) + " pays no one");
+                int paymentAmount = 0;
             } else {
-                Integer playerToPayIndex = thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug.getPlayerIndex();
-                Player playerToPay = thisGame.players[playerToPayIndex];
-                payment = new Text("Player " + (thisGame.currentPlayerIndex+1) + " pays " + 0 +
-                        "\ndirhams to Player " + (playerToPayIndex+1));
-            } //todo move this to event when moveAssam is clicked
-        }
+                thisGame.playerPaidIndex = thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug.getPlayerIndex();
+                thisGame.playerPaid = thisGame.players[thisGame.playerPaidIndex];
+                thisGame.currentPaymentAmount = getPaymentAmount(thisGame.gameToString());
+                thisGame.currentPlayer.playerPays(thisGame.currentPaymentAmount);
+                thisGame.playerPaid.playerIsPaid(thisGame.currentPaymentAmount);
+            }
+            controls.getChildren().clear();
+            makeControls(); //payment is made in the controls just below this
+        });
 
         //make the buttons clickable depending on the game phase
         if (thisGame.gamePhase == 1) {
@@ -243,14 +244,25 @@ public class Viewer extends Application {
         controls.getChildren().add(vBox);
     }
 
-    public void createPhase3(){
-        Text phase3 = new Text("Phase 3: ");
+    public void createPhase3() {
+        Text phase3 = new Text("Phase 3: \nPlace a Rug:");
         phase3.setFont(Font.font(25));
+        Button horizontalRug = new Button("Place a horizontal rug:");
+        Button verticalRug  = new Button("Place a horizontal rug:");
+        Boolean isHorizontal;
+        horizontalRug.setOnAction(event -> {
+            thisGame.rugSetIsHorizontal = Boolean.TRUE;
+            thisGame.moveToNextPhase(); //move to phase 4
+            controls.getChildren().clear();
+            makeControls();
+        });
+
         VBox vBox = new VBox();
         vBox.getChildren().add((phase3));
         vBox.setLayoutX(950);
         vBox.setLayoutY(370);
         controls.getChildren().add(vBox);
+
     }
 
     /**
@@ -309,3 +321,5 @@ public class Viewer extends Application {
         primaryStage.show();
     }
 }
+
+
