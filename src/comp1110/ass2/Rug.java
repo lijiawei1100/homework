@@ -50,6 +50,18 @@ public class Rug {
     }
     public int getId() { return this.id; }
 
+    public int getPlayerIndex() {
+        if (this.getColour() == Color.YELLOW) {
+            return 0;
+        } else if (this.getColour() == Color.PURPLE) {
+            return 1;
+        } else if (this.getColour() == Color.RED) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
+
     public static Rug stringToAbbreviatedRug(String inputString) {
         Color colour = null;
         char colourChar = inputString.charAt(0);

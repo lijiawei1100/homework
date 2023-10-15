@@ -33,8 +33,8 @@ public class Viewer extends Application {
     private final Group root = new Group();
     private final Group controls = new Group();
     private TextField boardTextField;
-    private Game thisGame = Game.stringToGame("Py03015iPp03015iPr03015iPc03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00");
-
+    private Game thisGame = Game.stringToGame("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
+//TODO FIX THIS - THIS IS WHERE GAME is found
 // other string: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
     public javafx.scene.Group getRoot() {
         return root;
@@ -136,19 +136,19 @@ public class Viewer extends Application {
         //add button functions
         left.setOnAction(event -> {
             thisGame.assam = Assam.stringToAssam(rotateAssam(Assam.assamToString(thisGame.assam), 270));
-            thisGame.moveToNextPhase();
+            thisGame.moveToNextPhase(); //move to phase 1
             controls.getChildren().clear();
             makeControls();
         });
         right.setOnAction(event -> {
             thisGame.assam = Assam.stringToAssam(rotateAssam(Assam.assamToString(thisGame.assam), 90));
             controls.getChildren().clear();
-            thisGame.moveToNextPhase();
+            thisGame.moveToNextPhase(); //move to phase 1
             makeControls();
         });
         stay.setOnAction(event -> {
             controls.getChildren().clear();
-            thisGame.moveToNextPhase();
+            thisGame.moveToNextPhase(); //move to phase 1
             makeControls();
         });
 
@@ -183,24 +183,16 @@ public class Viewer extends Application {
     public void createPhase2(){
         Text rollNumber = new Text("Your number: " + thisGame.currentDiceRoll);
         //todo: hide below text and reveal if Assam landed... (Get Assam landing square)...GET DONE SOON
-        Text payment = new Text();
-        if (thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug == null) {
-            String paymentText1 = "Player " + (thisGame.currentPlayerIndex+1) + " pays no one";
-            payment = new Text(paymentText1);
-        } else {
-            String paymentText2 = "Player " + (thisGame.currentPlayerIndex+1) + " pays " + 0 + "\ndirhams to Player___";
-            payment = new Text(paymentText2);
-        } //todo move this to event when moveAssam is clicked
 
-        payment.setFont(Font.font(25));
         rollNumber.setFont(Font.font(25));
         Text phase2 = new Text("Phase 2: ");
         phase2.setFont(Font.font(25));
         Button roll = new Button("Roll");
         roll.setOnAction(event -> {
             thisGame.currentDiceRoll = rollDie();
-            rollNumber.setText("Your number: " + thisGame.currentDiceRoll);
-            roll.setDisable(true);
+            thisGame.moveToNextPhase(); //move to phase 2
+            controls.getChildren().clear();
+            makeControls();
         });
         Button moveAssam = new Button("moveAssam");
         moveAssam.setOnAction(event -> {
@@ -208,20 +200,37 @@ public class Viewer extends Application {
             thisGame.assam = Assam.stringToAssam(Marrakech.moveAssam(Assam.assamToString(thisGame.assam), thisGame.currentDiceRoll));
             //todo after this change the payment string
 
-            thisGame.moveToNextPhase();
+            thisGame.moveToNextPhase(); //move to phase 3
             controls.getChildren().clear();
             makeControls();
         });
 
+        Text payment = new Text();
+        if (thisGame.gamePhase == 3){
+            System.out.println("aaaaaaaaaaaaaaaaa");
+            if (thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug == null) {
+                payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex+1) + " pays no one");
+            } else {
+                Integer playerToPayIndex = thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug.getPlayerIndex();
+                Player playerToPay = thisGame.players[playerToPayIndex];
+                payment = new Text("Player " + (thisGame.currentPlayerIndex+1) + " pays " + 0 +
+                        "\ndirhams to Player " + (playerToPayIndex+1));
+            } //todo move this to event when moveAssam is clicked
+        }
+
         //make the buttons clickable depending on the game phase
         if (thisGame.gamePhase == 1) {
             roll.setDisable(false);
-            moveAssam.setDisable(false);
         } else {
             roll.setDisable(true);
+        }
+        if (thisGame.gamePhase == 2) {
+            moveAssam.setDisable(false);
+        } else {
             moveAssam.setDisable(true);
         }
 
+        payment.setFont(Font.font(25));
         VBox vBox = new VBox();
         vBox.getChildren().add((phase2));
         vBox.getChildren().add(roll);
