@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
+
 import javax.swing.*;
 import javax.swing.text.html.ImageView;
 import java.awt.*;
@@ -289,6 +290,16 @@ public class Viewer extends Application {
     public void createPhase3(){
         Text phase3 = new Text("Phase 3: ");
         phase3.setFont(Font.font(25));
+        Button horizontalRug = new Button("Place a horizontal rug:");
+        Button verticalRug  = new Button("Place a horizontal rug:");
+        Boolean isHorizontal;
+        horizontalRug.setOnAction(event -> {
+            thisGame.rugSetIsHorizontal = Boolean.TRUE;
+            thisGame.moveToNextPhase(); //move to phase 4
+            controls.getChildren().clear();
+            makeControls();
+        });
+
         VBox vBox = new VBox();
         vBox.getChildren().add((phase3));
         vBox.setLayoutX(950);
