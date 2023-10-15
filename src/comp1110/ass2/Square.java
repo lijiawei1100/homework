@@ -26,8 +26,11 @@ public class Square {
             if(square.isEdge.equals(true)) return true;
         }
         return false;
-
     }
+
+    public void setOccupiedRug(Rug.RugWithPosition rug) {
+        this.occupiedRug = rug;
+    };
 
 
     public Boolean getIsEdge(){

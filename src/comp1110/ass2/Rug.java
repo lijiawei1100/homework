@@ -3,6 +3,8 @@ package comp1110.ass2;
 import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
+import static comp1110.ass2.Player.getColorName;
+
 public class Rug {
     private Color colour;
     private final int id;
@@ -83,6 +85,33 @@ public class Rug {
         }
         String idString = inputString.substring(1, 3);
         return (new Rug(colour, Integer.parseInt(idString)));
+    }
+
+    public static String rugWithPositionToString(RugWithPosition rug) {
+        String colourString;
+        String idString;
+        String position1;
+        String position2;
+        //create colourString
+        if (rug.getColour()==Color.YELLOW) {
+            colourString = "y";
+        } else if (rug.getColour()==Color.PURPLE) {
+            colourString = "p";
+        } else if (rug.getColour()==Color.RED) {
+            colourString = "r";
+        } else {
+            colourString = "c";
+        }
+        //create idString
+        if (rug.getId()<10) {
+            idString = "0" + (rug.getId());
+        } else {
+            idString = String.valueOf(rug.getId());
+        }
+        //create position1 and position2
+        position1 = String.valueOf((rug.p1.getKey())) + String.valueOf((rug.p1.getValue()));
+        position2 = String.valueOf((rug.p2.getKey())) + String.valueOf((rug.p2.getValue()));
+        return (colourString+idString+position1+position2);
     }
 
 
