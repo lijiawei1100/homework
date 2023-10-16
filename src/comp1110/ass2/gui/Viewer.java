@@ -698,8 +698,10 @@ public class Viewer extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
           primaryStage.setTitle("Marrakech Viewer");
+          thisGame = Game.stringToGame("Pc01807iPy07408iPp00208iPr02608iA63WBy02n00n00y07p11c07r06y02r11c16y12c17c17r06n00y05c16y16y15y17n00c10c10y13y16y06y17n00y00c00y08y04y06p06n00n00p04r03y04n00p06y03n00p04n00n00n00p17p17");
           Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
           root.getChildren().add(controls);
+          makeControls();
           primaryStage.setScene(scene);
           primaryStage.show();
     }

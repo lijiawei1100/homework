@@ -19,33 +19,26 @@ declaration: >-
 # Add as many "name+comment" entries as necessary
 # (or remove it altogether if you haven't collaborated with anyone)
 collaboration:
-  - name:
-    comment: >-
-
-# Use this to list any code that you used that you did not write,
-# aside from code provided by the lecturer.  Provide a comment
-# explaining your use and the URL to that code and the licence for
-# that code
-#
-# Add as many "url+licence+comment" entries as necessary
-# (or remove it altogether if you haven't used any external code)
-code:
-  - comment:
-    url:
-    licence:
-
+  - name: Benjamin Campbell
+    comment: I just fixed the problem of not being able to change two adjacent squares at the same time in phrase3, 
+              all other functions were done by Ben.
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 class:
-   - 
-   - 
+   - RugWithPosition
+   - https://gitlab.cecs.anu.edu.au/u7471333/comp1110-ass2/-/blob/main/src/comp1110/ass2/Rug.java#L33-42
 
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
 method:
-   - 
-   - 
+   -  getWinner
+   -  https://gitlab.cecs.anu.edu.au/u7471333/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L347-449
+   -  createPhase3()
+   -  https://gitlab.cecs.anu.edu.au/u7471333/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L461-500
+   -  playerSelectionWindow()
+   -  https://gitlab.cecs.anu.edu.au/u7471333/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L74-105
+
 
 # sign *your* name and uid here
-name:
-uid:
+name: Jiawei Li
+uid: u7531534

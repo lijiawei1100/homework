@@ -346,9 +346,6 @@ public class Marrakech {
      */
     public static char getWinner(String gameState) {
         // FIXME: Task 12
-        /**
-         * wrote for temporary
-         */
         Game game = Game.stringToGame(gameState);
         Board board = game.getBoard();
         Player[] players = game.getPlayers();
