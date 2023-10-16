@@ -333,13 +333,13 @@ public class Viewer extends Application {
         Button horizontalRug = new Button("Place a horizontal rug:");
         Button verticalRug  = new Button("Place a vertical rug:");
         horizontalRug.setOnAction(event -> {
-//            thisGame.rugHbox = buildImage(2);
+            thisGame.rugHbox = buildImage(2);
             thisGame.rugPlaceIsHorizontal = Boolean.TRUE;
             controls.getChildren().clear();
             makeControls();
         });
         verticalRug.setOnAction(event -> {
-//            thisGame.rugHbox = buildImage(1);
+            thisGame.rugHbox = buildImage(1);
             thisGame.rugPlaceIsHorizontal = Boolean.FALSE;
             controls.getChildren().clear();
             makeControls();
@@ -460,7 +460,7 @@ public class Viewer extends Application {
         vBox.getChildren().add(rugDirection);
         vBox.getChildren().add(verticalRug);
         vBox.getChildren().add(horizontalRug);
-//        vBox.getChildren().add(thisGame.rugHbox);
+        vBox.getChildren().add(thisGame.rugHbox);
         vBox.setLayoutX(950);
         vBox.setLayoutY(370);
         vBox.setSpacing(10);
