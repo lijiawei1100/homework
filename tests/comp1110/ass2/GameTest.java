@@ -37,7 +37,7 @@ class GameTest {
         Square[][] boardMatrix = new Square[7][7];
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
-                boardMatrix[x][y] = new Square(true,new Pair<>(x,y),null);
+                boardMatrix[x][y] = new Square(new Pair<>(x,y),null);
             }
         }
         Board testBoard = new Board(boardMatrix);
@@ -54,10 +54,10 @@ class GameTest {
         Square[][] boardMatrix = new Square[7][7];
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
-                boardMatrix[x][y] = new Square(true,new Pair<>(x,y),null);
+                boardMatrix[x][y] = new Square(new Pair<>(x,y),null);
             }
         }
-        boardMatrix[0][0] = new Square(true,new Pair<>(0,0), new Rug(Color.RED,1));
+        boardMatrix[0][0] = new Square(new Pair<>(0,0), new Rug(Color.RED,1));
         Board testBoard = new Board(boardMatrix);
         Assam testAssam = new Assam(90,new Pair<>(0, 1));
         Player testPlayer1 = new Player(Color.RED,10,13,Boolean.TRUE);

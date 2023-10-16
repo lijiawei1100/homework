@@ -36,7 +36,7 @@ class BoardTest {
         Square[][] boardMatrix = new Square[7][7];
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
-                boardMatrix[x][y] = new Square(true,new Pair<>(x,y),null);
+                boardMatrix[x][y] = new Square(new Pair<>(x,y),null);
             }
         }
         Board testBoard = new Board(boardMatrix);

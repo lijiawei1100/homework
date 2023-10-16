@@ -104,6 +104,12 @@ public class Game extends Application {
         gameString += boardToString(board);
         return gameString;
     }
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+    public int getCurrentPhase() {
+        return gamePhase;
+    }
 
 
     //created stringToGame, so we can converge those creating methods which are in the viewer
