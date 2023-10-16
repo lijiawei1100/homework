@@ -391,14 +391,50 @@ public class Viewer extends Application {
                         @Override
                         public void handle(MouseEvent event) {
                             //first check if the cursor position and rug placement is okay
-                            if ((thisGame.rugPlaceIsHorizontal & finalX != 6) | (thisGame.rugPlaceIsHorizontal==false & finalY != 6)) {
-                                if (isRugValid(thisGame.gameToString(),Rug.RugWithPosition.rugWithPositionToString(potentialRug))) {
+                            if ((thisGame.rugPlaceIsHorizontal == false & finalY != 6)) { //| (thisGame.rugPlaceIsHorizontal==false & finalY != 6)) {
+                                if (isRugValid(thisGame.gameToString(), Rug.RugWithPosition.rugWithPositionToString(potentialRug))) {
                                     //if potential rug placement is valid then outline the square with the right colour, if not then outline white
-                                    if (isPlacementValid(thisGame.gameToString(),Rug.RugWithPosition.rugWithPositionToString(potentialRug))) {
+                                    if (isPlacementValid(thisGame.gameToString(), Rug.RugWithPosition.rugWithPositionToString(potentialRug))) {
                                         squareImage.setStroke(potentialRug.getColour());
+                                        for (javafx.scene.Node node : invisibleGrid.getChildren()) {
+                                            if (GridPane.getRowIndex(node) == GridPane.getRowIndex(squareImage) + 1 && GridPane.getColumnIndex(node) == GridPane.getColumnIndex(squareImage)) {
+                                                Rectangle rectangle = (Rectangle) node;
+                                                rectangle.setStroke(potentialRug.getColour());
+                                            }
+                                        }
+
+                                    } else {
+                                        squareImage.setStroke(Color.WHITE);
+                                        for (javafx.scene.Node node : invisibleGrid.getChildren()) {
+                                            if (GridPane.getRowIndex(node) == GridPane.getRowIndex(squareImage) + 1 && GridPane.getColumnIndex(node) == GridPane.getColumnIndex(squareImage)) {
+                                                Rectangle rectangle = (Rectangle) node;
+                                                rectangle.setStroke(Color.WHITE);
+                                            }
+                                        }
                                     }
-                                    else squareImage.setStroke(Color.WHITE);
                                 }
+                            } else if (thisGame.rugPlaceIsHorizontal & finalX != 6) {
+                                if (isRugValid(thisGame.gameToString(), Rug.RugWithPosition.rugWithPositionToString(potentialRug))) {
+                                    //if potential rug placement is valid then outline the square with the right colour, if not then outline white
+                                    if (isPlacementValid(thisGame.gameToString(), Rug.RugWithPosition.rugWithPositionToString(potentialRug))) {
+                                        squareImage.setStroke(potentialRug.getColour());
+                                        for (javafx.scene.Node node : invisibleGrid.getChildren()) {
+                                            if (GridPane.getRowIndex(node) == GridPane.getRowIndex(squareImage) && GridPane.getColumnIndex(node) == GridPane.getColumnIndex(squareImage) + 1) {
+                                                Rectangle rectangle = (Rectangle) node;
+                                                rectangle.setStroke(potentialRug.getColour());
+                                            }
+                                        }
+                                    } else {
+                                        squareImage.setStroke(Color.WHITE);
+                                        for (javafx.scene.Node node : invisibleGrid.getChildren()) {
+                                            if (GridPane.getRowIndex(node) == GridPane.getRowIndex(squareImage) && GridPane.getColumnIndex(node) == GridPane.getColumnIndex(squareImage) + 1) {
+                                                Rectangle rectangle = (Rectangle) node;
+                                                rectangle.setStroke(Color.WHITE);
+                                            }
+                                        }
+                                    }
+                                }
+
                             }
                         }
                     });
@@ -406,7 +442,23 @@ public class Viewer extends Application {
                         @Override
                         public void handle(MouseEvent event) {
                             squareImage.setStroke(Color.BLACK);
+                            if (thisGame.rugPlaceIsHorizontal==false & finalY != 6){
+                                for (javafx.scene.Node node : invisibleGrid.getChildren()) {
+                                   if (GridPane.getRowIndex(node) == GridPane.getRowIndex(squareImage) + 1 && GridPane.getColumnIndex(node) == GridPane.getColumnIndex(squareImage)) {
+                                        Rectangle rectangle = (Rectangle) node;
+                                        rectangle.setStroke(Color.BLACK);
+                                   }
+                                }
                             }
+                            else if (thisGame.rugPlaceIsHorizontal & finalX != 6) {
+                                for (javafx.scene.Node node : invisibleGrid.getChildren()) {
+                                    if (GridPane.getRowIndex(node) == GridPane.getRowIndex(squareImage) && GridPane.getColumnIndex(node) == GridPane.getColumnIndex(squareImage) + 1) {
+                                        Rectangle rectangle = (Rectangle) node;
+                                        rectangle.setStroke(Color.BLACK);
+                                    }
+                                }
+                            }
+                        }
                     });
 
                     squareImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -424,6 +476,7 @@ public class Viewer extends Application {
                                         thisGame.currentPlayer.minusRug();
                                         thisGame.moveToNextPhase(); //move back to phase 1
                                         controls.getChildren().clear();
+                                        thisGame.rugHbox = buildImage(0);
                                         makeControls();
                                     }
                                     //if placement is not valid do nothing
@@ -437,7 +490,6 @@ public class Viewer extends Application {
         }
 
 //        Image image1 = new Image("file:///C:/Users/user/Desktop/x.jpg");
-
 
 
         Label messageLabel = new Label(" Hover over a square to see a message");
@@ -463,6 +515,7 @@ public class Viewer extends Application {
         controls.getChildren().add(vBox);
 
     }
+
 
     //return a string by mouse over position,checking if the rug and placement are valid.
     private String getMessageBasedOnMousePosition(double mouseX, double mouseY) {
