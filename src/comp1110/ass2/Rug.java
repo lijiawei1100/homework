@@ -9,6 +9,7 @@ import static comp1110.ass2.Player.getColorName;
  * AUTHORSHIP:
  * RugWithPosition class was written by Jiawei Li
  * rugWithPositionToString was written by Benjamin Campbell
+ * stringToAbbreviatedRug was written by both
  * we both checked and debugged each other's code
  */
 
