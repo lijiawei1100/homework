@@ -22,7 +22,7 @@ import static comp1110.ass2.Assam.assamToString;
 import static comp1110.ass2.Board.boardToString;
 import static comp1110.ass2.Marrakech.isGameOver;
 import static comp1110.ass2.Player.getColorName;
-import static comp1110.ass2.Player.plyaerToString;
+import static comp1110.ass2.Player.playerToString;
 import static javafx.stage.Stage.*;
 
 public class Game extends Application {
@@ -84,7 +84,7 @@ public class Game extends Application {
         for(Player i:players){
             //skip the null and generate the rest players
             if(i !=null){
-            gameString+=plyaerToString(i);}
+            gameString+=playerToString(i);}
         }
         gameString += assamToString(assam);
         gameString += boardToString(board);

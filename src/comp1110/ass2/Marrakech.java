@@ -10,7 +10,13 @@ import static comp1110.ass2.Player.getColorName;
 import static comp1110.ass2.Rug.*;
 
 public class Marrakech {
-    public final static int NUMBER_OF_PLAYERS = 4;
+    /**
+     * AUTHORSHIP
+     * isRugValid,isGameOver,rotateAssam,isPlacementValid,getAdjacentSquares,
+     * getPaymentAmount,getWinner,moveAssam and makePlacement were written by JiaWei Li
+     * rollDie was written by Benjamin Campbell
+     * we both checked and debugged each other's code
+     */
 
     /**
      * Determine whether a rug String is valid.
