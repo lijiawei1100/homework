@@ -5,17 +5,20 @@ import javafx.util.Pair;
 
 public class Assam {
     /**
+     * AUTHORSHIP:
+     *
      * initialize the statuses of Assam,including angle,direction,position and the current Assam's state.
      * angle(0,90,180,270)
      * direction: we have four direction(north,east,south,west),but we can use angle(0,90,180.270)
      * position: we need to initialize a square Intpair[] for it
      * Assam's state: unchanged or changed
      *
-     * AUTHORSHIP:
      * the class was written by both group members:
      * stringToAssam was written by Benjamin Campbell
      * assamToString was written by Jiawei Li
      * we both checked and debugged each other's code
+     *
+     * @author <u7531534><Jiawei Li>/ <u7471333><Benjamin Campbell>
      */
 
     private int angle;
@@ -40,6 +43,7 @@ public class Assam {
         return this.angle;
     }
 
+    //input a string and output an assam
     public static Assam stringToAssam(String inputString) {
         int inputAngle = 0;
         char angleChar = inputString.charAt(3);
@@ -62,6 +66,7 @@ public class Assam {
         return (new Assam(inputAngle,location));
     }
 
+    //input an assam and output a string
     public static String assamToString(Assam assam){
         String direction = "";
         String assamString;

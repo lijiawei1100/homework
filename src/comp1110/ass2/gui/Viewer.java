@@ -38,6 +38,17 @@ import static comp1110.ass2.Player.getColorName;
 
 
 public class Viewer extends Application {
+    /**
+     * AUTHORSHIP:
+     *
+     * displayState,createPhase1/2/3 were all written by Benjamin Campbell (Jiawei li help with a small modification)
+     * playerSelectionWindow and getMessageBasedOnMousePosition were written by Jiawei Li
+     * Work together to complete the winner() method
+     * Jiawei Li tried to use hbox to display image but failed.
+     *
+     * @author <u7531534><Jiawei Li>/ <u7471333><Benjamin Campbell>
+     *
+     */
 
     private static final int VIEWER_WIDTH = 1200;
     private static final int VIEWER_HEIGHT = 700;
@@ -47,6 +58,10 @@ public class Viewer extends Application {
     private TextField boardTextField;
 
     private Game thisGame;
+
+    //= Game.stringToGame("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
+//TODO FIX THIS - THIS IS WHERE GAME is found
+// other string: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
 
     public javafx.scene.Group getRoot() {
         return root;
@@ -93,10 +108,9 @@ public class Viewer extends Application {
         VBox vBox = new VBox();
         Button restartGame = new Button("Restart");
         restartGame.setOnAction(event -> {
+            //after clicking, clear all screens and switch to the player selection screen.
             this.controls.getChildren().clear();
             playerSelectionWindow();
-            //            thisGame.playerSelectionWindow();
-            //            root.getChildren().add(controls);
         });
         vBox.getChildren().add(restartGame);
         vBox.setLayoutX(950);
@@ -104,10 +118,8 @@ public class Viewer extends Application {
         controls.getChildren().add(vBox);
     }
 
-
     /**
      * Draw a placement in the window, removing any previously drawn placements
-     *
      * @param state an array of two strings, representing the current game state
      */
     //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08@2
@@ -442,18 +454,20 @@ public class Viewer extends Application {
                         @Override
                         public void handle(MouseEvent event) {
                             //first check if the cursor position and rug placement is okay
-                            if ((thisGame.rugPlaceIsHorizontal == false & finalY != 6)) { //| (thisGame.rugPlaceIsHorizontal==false & finalY != 6)) {
+                            // to judge if it is the vertical rug
+                            if ((thisGame.rugPlaceIsHorizontal == false & finalY != 6)) {
                                 if (isRugValid(thisGame.gameToString(), Rug.RugWithPosition.rugWithPositionToString(potentialRug))) {
                                     //if potential rug placement is valid then outline the square with the right colour, if not then outline white
                                     if (isPlacementValid(thisGame.gameToString(), Rug.RugWithPosition.rugWithPositionToString(potentialRug))) {
                                         squareImage.setStroke(potentialRug.getColour());
+                                        //Iterate over the existing nodes and make it possible to display the player color when placed
                                         for (javafx.scene.Node node : invisibleGrid.getChildren()) {
                                             if (GridPane.getRowIndex(node) == GridPane.getRowIndex(squareImage) + 1 && GridPane.getColumnIndex(node) == GridPane.getColumnIndex(squareImage)) {
                                                 Rectangle rectangle = (Rectangle) node;
                                                 rectangle.setStroke(potentialRug.getColour());
                                             }
                                         }
-
+                                        //Iterates over existing nodes and makes them white when they cannot be placed.
                                     } else {
                                         squareImage.setStroke(Color.WHITE);
                                         for (javafx.scene.Node node : invisibleGrid.getChildren()) {
@@ -464,17 +478,20 @@ public class Viewer extends Application {
                                         }
                                     }
                                 }
+                                // to judge if it is the horizontal rug
                             } else if (thisGame.rugPlaceIsHorizontal & finalX != 6) {
                                 if (isRugValid(thisGame.gameToString(), Rug.RugWithPosition.rugWithPositionToString(potentialRug))) {
                                     //if potential rug placement is valid then outline the square with the right colour, if not then outline white
                                     if (isPlacementValid(thisGame.gameToString(), Rug.RugWithPosition.rugWithPositionToString(potentialRug))) {
                                         squareImage.setStroke(potentialRug.getColour());
+                                        //Iterate over the existing nodes and make it possible to display the player color when placed
                                         for (javafx.scene.Node node : invisibleGrid.getChildren()) {
                                             if (GridPane.getRowIndex(node) == GridPane.getRowIndex(squareImage) && GridPane.getColumnIndex(node) == GridPane.getColumnIndex(squareImage) + 1) {
                                                 Rectangle rectangle = (Rectangle) node;
                                                 rectangle.setStroke(potentialRug.getColour());
                                             }
                                         }
+                                        //Iterates over existing nodes and makes them white when they cannot be placed.
                                     } else {
                                         squareImage.setStroke(Color.WHITE);
                                         for (javafx.scene.Node node : invisibleGrid.getChildren()) {
@@ -493,6 +510,7 @@ public class Viewer extends Application {
                         @Override
                         public void handle(MouseEvent event) {
                             squareImage.setStroke(Color.BLACK);
+                            //When it is vertical, let the corresponding square return to the black border.
                             if (thisGame.rugPlaceIsHorizontal==false & finalY != 6){
                                 for (javafx.scene.Node node : invisibleGrid.getChildren()) {
                                    if (GridPane.getRowIndex(node) == GridPane.getRowIndex(squareImage) + 1 && GridPane.getColumnIndex(node) == GridPane.getColumnIndex(squareImage)) {
@@ -501,6 +519,7 @@ public class Viewer extends Application {
                                    }
                                 }
                             }
+                            //When it is horizontal, let the corresponding square return to the black border.
                             else if (thisGame.rugPlaceIsHorizontal & finalX != 6) {
                                 for (javafx.scene.Node node : invisibleGrid.getChildren()) {
                                     if (GridPane.getRowIndex(node) == GridPane.getRowIndex(squareImage) && GridPane.getColumnIndex(node) == GridPane.getColumnIndex(squareImage) + 1) {
@@ -540,10 +559,8 @@ public class Viewer extends Application {
             controls.getChildren().add(invisibleGrid);
         }
 
-//        Image image1 = new Image("file:///C:/Users/user/Desktop/x.jpg");
 
-
-        Label messageLabel = new Label(" Hover over a square to see a message");
+        Label messageLabel = new Label(" Hover over a square to see a message"+"\n\n");
         root.setOnMouseMoved(event -> {
             if (thisGame.gamePhase == 3) {
                 double mouseX = event.getSceneX();
@@ -577,15 +594,25 @@ public class Viewer extends Application {
         int rugsNumber = thisGame.currentPlayer.getRugsNumber();
         if(15-rugsNumber<10) {rugId = "0"+ String.valueOf(15-rugsNumber);}
         else{ rugId = String.valueOf(15-rugsNumber);}
-
-        String rugString = getColorName(thisGame.currentPlayer.getColour()).toLowerCase().charAt(0) + rugId + String.valueOf(x) + String.valueOf(y) + String.valueOf(x) + String.valueOf(y + 1);
-        if (x<7 & x>=0 & y<7 & y>=0) {
-            if (isRugValid(thisGame.gameToString(), rugString) & isPlacementValid(thisGame.gameToString(),rugString)) {
-                return "You can place the rug in this square." + rugString;
-            } else return "You can not place the rug in this square." + rugString;
+        if(!thisGame.rugPlaceIsHorizontal) {
+            String rugString = getColorName(thisGame.currentPlayer.getColour()).toLowerCase().charAt(0) + rugId + String.valueOf(x) + String.valueOf(y) + String.valueOf(x) + String.valueOf(y + 1);
+            if (x < 7 & x >= 0 & y < 7 & y >= 0) {
+                if (isRugValid(thisGame.gameToString(), rugString) & isPlacementValid(thisGame.gameToString(), rugString)) {
+                    return "You can place the rug in this square." +"\nrugString is"+ rugString;
+                } else return "You can not place the rug in this square."+"\nrugString is" + rugString;
+            }
         }
-        return null;
+        else {
+            String rugString = getColorName(thisGame.currentPlayer.getColour()).toLowerCase().charAt(0) + rugId + String.valueOf(x) + String.valueOf(y) + String.valueOf(x+1) + String.valueOf(y);
+            if (x < 7 & x >= 0 & y < 7 & y >= 0) {
+                if (isRugValid(thisGame.gameToString(), rugString) & isPlacementValid(thisGame.gameToString(), rugString)) {
+                    return "You can place the rug in this square."+"\nrugString is" + rugString;
+                } else return "You can not place the rug in this square."+"\nrugString is" + rugString;
+            }
+        }
+        return "\n\n";
     }
+
 
     //designed three state for choosing the rug
 //    static HBox buildImage(int a){
@@ -652,8 +679,6 @@ public class Viewer extends Application {
         }
     }
 
-
-
     /**
      * Create a basic text field for input and a refresh button.
      */
@@ -663,39 +688,20 @@ public class Viewer extends Application {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+        winner();
         createPhase1();
         createPhase2();
         createPhase3();
-        winner();
         restart();
-        //        Label boardLabel = new Label("Game State:");
-//        boardTextField = new TextField();
-//        boardTextField.setPrefWidth(800);
-//        Button button = new Button("Refresh");
-//        button.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent e) {
-//                try {
-//                    displayState(boardTextField.getText());
-//                } catch (Exception ex) {
-//                    throw new RuntimeException(ex);
-//                }
-//            }
-//        });
-//        HBox hb = new HBox();
-//        hb.getChildren().addAll(boardLabel,
-//                boardTextField, button);
-//        hb.setSpacing(10);
-//        hb.setLayoutX(50);
-//        hb.setLayoutY(VIEWER_HEIGHT - 50);
-//        controls.getChildren().add(hb);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
           primaryStage.setTitle("Marrakech Viewer");
+          thisGame = Game.stringToGame("Pc01807iPy07408iPp00208iPr02608iA63WBy02n00n00y07p11c07r06y02r11c16y12c17c17r06n00y05c16y16y15y17n00c10c10y13y16y06y17n00y00c00y08y04y06p06n00n00p04r03y04n00p06y03n00p04n00n00n00p17p17");
           Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
           root.getChildren().add(controls);
+          makeControls();
           primaryStage.setScene(scene);
           primaryStage.show();
     }

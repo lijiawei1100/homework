@@ -7,10 +7,12 @@ import static comp1110.ass2.Player.getColorName;
 
 /**
  * AUTHORSHIP:
+ *
  * RugWithPosition class was written by Jiawei Li
- * rugWithPositionToString was written by Benjamin Campbell
- * stringToAbbreviatedRug was written by both
+ * rugWithPositionToString and stringToAbbreviatedRug were written by Benjamin Campbell
  * we both checked and debugged each other's code
+ *
+ * @author <u7531534><Jiawei Li>/ <u7471333><Benjamin Campbell>
  */
 
 public class Rug {
@@ -21,25 +23,29 @@ public class Rug {
     changed id type to integer instead of string - makes it easier to keep track of how many
     rugs have been placed and make for better object-oriented programming
     */
+
     Rug(Color colour, int id) {
         this.colour = colour;
         this.id = id;
     }
 
-    //created rugwithposition class to help complete the task10
+    //created RugWithPosition class to help complete the task10,and this class is a subclass of rug.
     public static class RugWithPosition extends Rug {
         Pair<Integer, Integer> p1;
         Pair<Integer, Integer> p2;
 
+        //use constructor here to initialize the basic elements
         public RugWithPosition(Color colour, int id, Pair<Integer, Integer> firstPosition, Pair<Integer, Integer> secondPosition) {
             super(colour, id);
             this.p1 = firstPosition;
             this.p2 = secondPosition;
         }
 
+        //to return a RugWithPosition object after reading a string ( like "r120102")
         public static RugWithPosition stringToRugWithPosition(String rugString) {
             Color colour;
             char colourChar = rugString.charAt(0);
+            //first check the color
             if (colourChar == 'c') {
                 colour = Color.CYAN;
             } else if (colourChar == 'y') {
@@ -49,6 +55,7 @@ public class Rug {
             } else if (colourChar == 'p') {
                 colour = Color.PURPLE;
             } else return null;
+            //check the rest elements
             String idString = rugString.substring(1, 3);
             Pair<Integer, Integer> firstPosition = new Pair<Integer, Integer>(Integer.parseInt(rugString.substring(3, 4)), Integer.parseInt(rugString.substring(4, 5)));
             Pair<Integer, Integer> secondPosition = new Pair<Integer, Integer>(Integer.parseInt(rugString.substring(5, 6)), Integer.parseInt(rugString.substring(6, 7)));
@@ -72,6 +79,7 @@ public class Rug {
         return this.id;
     }
 
+    //since we store each player in a certain position within an array, we can mark each player based on their rug's color
     public int getPlayerIndex() {
         if (this.getColour() == Color.YELLOW) {
             return 0;
@@ -84,6 +92,8 @@ public class Rug {
         }
     }
 
+
+    //return a abbreviated rug class by reading a string (like "r01" )
     public static Rug stringToAbbreviatedRug(String inputString) {
         Color colour = null;
         char colourChar = inputString.charAt(0);
@@ -102,12 +112,13 @@ public class Rug {
         return (new Rug(colour, Integer.parseInt(idString)));
     }
 
+    //express the textual form of a RugWithPosition object
     public static String rugWithPositionToString(RugWithPosition rug) {
         String colourString;
         String idString;
         String position1;
         String position2;
-        //create colourString
+        //create colour String
         if (rug.getColour() == Color.YELLOW) {
             colourString = "y";
         } else if (rug.getColour() == Color.PURPLE) {

@@ -26,7 +26,18 @@ import static comp1110.ass2.Player.playerToString;
 import static javafx.stage.Stage.*;
 
 public class Game extends Application {
-
+    /**
+     * AUTHORSHIP:
+     *
+     * use a unary array to store each player
+     * use gamePhase to control the ongoing phrase
+     * use rugPlaceIsHorizontal to determine whether the player is placing a vertical rug or a horizontal rug
+     *
+     * moveToNextPlayer and moveToNextPhrase were written by Benjamin Campbell
+     * stringToGame and gameToString were written by Jiawei Li
+     *
+     * @author <u7531534><Jiawei Li>/ <u7471333><Benjamin Campbell>
+     */
     private Group root = new Group();
     private static final int WINDOW_WIDTH = 1200;
     private static final int WINDOW_HEIGHT = 700;
@@ -43,11 +54,8 @@ public class Game extends Application {
     int currentPaymentAmount;
     Boolean rugPlaceIsHorizontal = Boolean.TRUE;
 //    HBox rugHbox = Viewer.buildImage(0);
-    private Group controls = new Group();
-    private Game thisGame;
 
     public Game() {};
-
     public Game(Player[] players,Board board,Assam assam){
         this.players=players;
         this.currentPlayer = players[0];
@@ -57,13 +65,7 @@ public class Game extends Application {
         this.assam=assam;
     }
 
-    public Player getCurrentPlayer() {
-        return this.currentPlayer;
-    }
-    public int getCurrentPhase() {
-        return this.gamePhase;
-    }
-
+    //switch to the next player
     public void moveToNextPlayer() {
         int nPlayers = 0;
         for(Player i:players) {
@@ -75,7 +77,10 @@ public class Game extends Application {
         currentPlayerIndex = (currentPlayerIndex + 1) % nPlayers;
         currentPlayer = players[currentPlayerIndex];
     }
+
     public void moveToNextPhase() {
+        //there are a total of three game phrase.Each time after finishing a stage operation will automatically
+        // go to the next stage, when the stage more than 3, automatically switch to the next player
         gamePhase = (gamePhase + 1) % 4;
         if (gamePhase==0) {
             moveToNextPlayer(); //move to next player
@@ -83,7 +88,9 @@ public class Game extends Application {
             currentPaymentAmount = 0;
         }
     }
-    public String gameToString(){
+
+
+    public String gameToString (){
         String gameString = "";
         Player[] players = this.players;
         Board board = this.board;
@@ -98,11 +105,8 @@ public class Game extends Application {
         return gameString;
     }
 
-    /**
-     * created stringToGame, so we can converge those creating methods which are in the viewer
-     * @param gameString
-     * @return
-     */
+
+    //created stringToGame, so we can converge those creating methods which are in the viewer
     public static Game stringToGame(String gameString) {
         Player[] players = new Player[4];
         int b = 0;
@@ -173,7 +177,6 @@ public class Game extends Application {
             "Py03015iPp03015iPr03015iPc03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
     //yellow, purple, red, cyan
 
-
     public String game = "Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
 // example board Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
 
@@ -181,11 +184,12 @@ public class Game extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // FIXME Task 7 and 15
-        //Game newgame = stringToGame("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
-        //Game newgame = stringToGame(game);
+        stage.setTitle("Marrakech Viewer");
         Viewer viewer = new Viewer();
+        //get the viewer's root so that we can use the viewer's functionality in the game as well
         this.root = viewer.getRoot();
         Scene scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        //What pops up at the beginning is the player selection screen
         viewer.playerSelectionWindow();
         root.getChildren().add(viewer.getControls());
         stage.setScene(scene);

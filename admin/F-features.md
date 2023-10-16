@@ -7,5 +7,6 @@ of our project implements the following features:
  - A basic playable game (Task 7)
  - A fully working game (Task 15)
 
-
-additional features...
+### additional features
+ - A start screen for the player to select the number of people
+    

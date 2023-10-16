@@ -16,6 +16,8 @@ public class Marrakech {
      * getPaymentAmount,getWinner,moveAssam and makePlacement were written by JiaWei Li
      * rollDie was written by Benjamin Campbell
      * we both checked and debugged each other's code
+     *
+     * @author <u7531534><Jiawei Li>/ <u7471333><Benjamin Campbell>
      */
 
     /**
@@ -344,9 +346,6 @@ public class Marrakech {
      */
     public static char getWinner(String gameState) {
         // FIXME: Task 12
-        /**
-         * wrote for temporary
-         */
         Game game = Game.stringToGame(gameState);
         Board board = game.getBoard();
         Player[] players = game.getPlayers();
