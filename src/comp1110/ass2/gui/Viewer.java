@@ -79,7 +79,6 @@ public class Viewer extends Application {
             try {
                 //create new game based on the selected players' number
                 thisGame = Game.stringToGame(initialGameString);
-                thisGame.rugHbox = buildImage(0);
                 //build a new viewer
                 makeControls();
                 restart();
@@ -337,13 +336,13 @@ public class Viewer extends Application {
         Button horizontalRug = new Button("Place a horizontal rug:");
         Button verticalRug  = new Button("Place a vertical rug:");
         horizontalRug.setOnAction(event -> {
-            thisGame.rugHbox = buildImage(2);
+//            thisGame.rugHbox = buildImage(2);
             thisGame.rugPlaceIsHorizontal = Boolean.TRUE;
             controls.getChildren().clear();
             makeControls();
         });
         verticalRug.setOnAction(event -> {
-            thisGame.rugHbox = buildImage(1);
+//            thisGame.rugHbox = buildImage(1);
             thisGame.rugPlaceIsHorizontal = Boolean.FALSE;
             controls.getChildren().clear();
             makeControls();
@@ -480,7 +479,7 @@ public class Viewer extends Application {
                                         thisGame.currentPlayer.minusRug();
                                         thisGame.moveToNextPhase(); //move back to phase 1
                                         controls.getChildren().clear();
-                                        thisGame.rugHbox = buildImage(0);
+//                                        thisGame.rugHbox = buildImage(0);
                                         makeControls();
                                     }
                                     //if placement is not valid do nothing
@@ -494,6 +493,7 @@ public class Viewer extends Application {
         }
 
 //        Image image1 = new Image("file:///C:/Users/user/Desktop/x.jpg");
+
 
         Label messageLabel = new Label(" Hover over a square to see a message");
         root.setOnMouseMoved(event -> {
@@ -511,7 +511,7 @@ public class Viewer extends Application {
         vBox.getChildren().add(rugDirection);
         vBox.getChildren().add(verticalRug);
         vBox.getChildren().add(horizontalRug);
-        vBox.getChildren().add(thisGame.rugHbox);
+//        vBox.getChildren().add(thisGame.rugHbox);
         vBox.setLayoutX(950);
         vBox.setLayoutY(370);
         vBox.setSpacing(10);
@@ -539,66 +539,69 @@ public class Viewer extends Application {
         return null;
     }
 
-
     //designed three state for choosing the rug
-    static HBox buildImage(int a){
-        Image image =new javafx.scene.image.Image("file:./assets/rug0.png");
-        Image image1 =new javafx.scene.image.Image("file:./assets/rug1.png");
-        Image image2 =new javafx.scene.image.Image("file:./assets/rug2.png");
-        Image image3 =new javafx.scene.image.Image("file:./assets/rug3.png");
-        ImageView imageView = new ImageView(image);
-        ImageView imageView1 = new ImageView(image1);
-        ImageView imageView2 = new ImageView(image2);
-        ImageView imageView3 = new ImageView(image3);
-        HBox hBox = new HBox();
-        hBox.setSpacing(30);
-        if(a==0){
-            imageView.setFitHeight(80);
-            imageView.setFitWidth(50);
-            imageView1.setFitHeight(50);
-            imageView1.setFitWidth(80);
-            hBox.getChildren().add(imageView);
-            hBox.getChildren().add(imageView1);
-        } else if (a==1) {
-            imageView2.setFitHeight(80);
-            imageView2.setFitWidth(50);
-            imageView1.setFitHeight(50);
-            imageView1.setFitWidth(80);
-            hBox.getChildren().add(imageView2);
-            hBox.getChildren().add(imageView1);
-        }else {
-            imageView.setFitHeight(80);
-            imageView.setFitWidth(50);
-            imageView3.setFitHeight(50);
-            imageView3.setFitWidth(80);
-            hBox.getChildren().add(imageView);
-            hBox.getChildren().add(imageView3);
-        }
-        return hBox;
-    }
+//    static HBox buildImage(int a){
+//        Image image =new javafx.scene.image.Image("file:./assets/rug0.png");
+//        Image image1 =new javafx.scene.image.Image("file:./assets/rug1.png");
+//        Image image2 =new javafx.scene.image.Image("file:./assets/rug2.png");
+//        Image image3 =new javafx.scene.image.Image("file:./assets/rug3.png");
+//        ImageView imageView = new ImageView(image);
+//        ImageView imageView1 = new ImageView(image1);
+//        ImageView imageView2 = new ImageView(image2);
+//        ImageView imageView3 = new ImageView(image3);
+//        HBox hBox = new HBox();
+//        hBox.setSpacing(30);
+//        if(a==0){
+//            imageView.setFitHeight(80);
+//            imageView.setFitWidth(50);
+//            imageView1.setFitHeight(50);
+//            imageView1.setFitWidth(80);
+//            hBox.getChildren().add(imageView);
+//            hBox.getChildren().add(imageView1);
+//        } else if (a==1) {
+//            imageView2.setFitHeight(80);
+//            imageView2.setFitWidth(50);
+//            imageView1.setFitHeight(50);
+//            imageView1.setFitWidth(80);
+//            hBox.getChildren().add(imageView2);
+//            hBox.getChildren().add(imageView1);
+//        }else {
+//            imageView.setFitHeight(80);
+//            imageView.setFitWidth(50);
+//            imageView3.setFitHeight(50);
+//            imageView3.setFitWidth(80);
+//            hBox.getChildren().add(imageView);
+//            hBox.getChildren().add(imageView3);
+//        }
+//        return hBox;
+//    }
 
     void winner(){
         char a = getWinner(thisGame.gameToString());
         String message = new String();
-        if(a == 't'){
-            message = "It's a tile. Let's start over";
+        if (a != 'n') {
+            if(a == 't'){
+                message = "It's a tie. Let's start over";
+            }
+            else if(a == 'r'){
+                message = "Player 3 won the game";
+            } else if (a=='c') {
+                message = "Player 4 won the game";
+            } else if (a == 'y') {
+                message = "Player 1 won the game";
+            } else if (a == 'p') {
+                message = "Player 2 won the game";
+            }
+            //end the game
+            thisGame.gamePhase=10;
+            //show the message
+            VBox vBox = new VBox();
+            vBox.setLayoutX(1000);
+            vBox.setLayoutY(600);
+            Text winnerInfo = new Text(message);
+            vBox.getChildren().add(winnerInfo);
+            controls.getChildren().add(vBox);
         }
-        else if(a == 'r'){
-            message = "Player 3 won the game";
-        } else if (a=='c') {
-           message = "Player 4 won the game";
-        } else if (a == 'y') {
-            message = "Player 1 won the game";
-        } else if (a == 'p') {
-            message = "Player 2 won the game";
-        }else{message = "n";}
-        VBox vBox = new VBox();
-        Text winnerInfo = new Text(message);
-        vBox.getChildren().add(winnerInfo);
-        vBox.setLayoutX(1000);
-        vBox.setLayoutY(600);
-        controls.getChildren().add(vBox);
-
     }
 
 

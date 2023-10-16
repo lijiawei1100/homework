@@ -42,7 +42,7 @@ public class Game extends Application {
     int currentDiceRoll;
     int currentPaymentAmount;
     Boolean rugPlaceIsHorizontal = Boolean.TRUE;
-    HBox rugHbox = Viewer.buildImage(0);
+//    HBox rugHbox = Viewer.buildImage(0);
     private Group controls = new Group();
     private Game thisGame;
 
