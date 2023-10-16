@@ -81,7 +81,6 @@ public class Viewer extends Application {
             String initialGameString = "";
             String selectedOption = playerSelectionBox.getValue();
             switch (selectedOption){
-                //case "2 Players" : initialGameString ="Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
                 case "2 Players" : initialGameString ="Py02901iPp03001iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
                 case "3 Players" : initialGameString = "Py03015iPp03015iPr03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
                 case "4 Players" : initialGameString = "Py03015iPp03015iPr03015iPc03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
@@ -126,7 +125,6 @@ public class Viewer extends Application {
     //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08@2
     void displayState(String state) throws Exception {
         // FIXME Task 5: implement the simple state viewer
-//        javafx.scene.image.ImageView boardImageView = new ImageView(new Image("assets\\Board Image.png"));
 
         Game game = Game.stringToGame(state);
         Player[] players =game.getPlayers();
@@ -147,6 +145,59 @@ public class Viewer extends Application {
                 playerInfo.getChildren().add(playerInfoText);
             }
         }
+
+        //draw boxes indicating assam movement options
+        StackPane stackPane = new StackPane();
+
+        //top rectangles
+        for (int i=0;i<3;i++) {
+            Rectangle square1 = new Rectangle(85,15);
+            square1.setTranslateX(35.5 + 20 + 42.5 + 172*i);
+            square1.setTranslateY(5);
+            stackPane.getChildren().addAll(square1);
+        }
+        Rectangle square1 = new Rectangle(42.5+15,15);
+        square1.setTranslateX(22 + 20 + 42.5 + 172*3);
+        square1.setTranslateY(5);
+        stackPane.getChildren().addAll(square1);
+        //bottom rectangles
+        for (int i=0;i<3;i++) {
+            Rectangle square2 = new Rectangle(85,15);
+            square2.setTranslateX(35.5 + 20 + 42.5 + 86 + 172*i);
+            square2.setTranslateY(20 + 86*7);
+            stackPane.getChildren().addAll(square2);
+        }
+        Rectangle square2 = new Rectangle(42.5+15,15);
+        square2.setTranslateX(7 + 20);
+        square2.setTranslateY(20 + 86*7);
+        stackPane.getChildren().addAll(square2);
+        //left rectangles
+        for (int i=0;i<3;i++) {
+            Rectangle square3 = new Rectangle(15,85);
+            square3.setTranslateY(35.5 + 20 + 42.5+ 172*i);
+            square3.setTranslateX(5);
+            stackPane.getChildren().addAll(square3);
+        }
+        Rectangle square3 = new Rectangle(15,42.5+15);
+        square3.setTranslateY(22 + 20 + 42.5+ 172*3);
+        square3.setTranslateX(5);
+        stackPane.getChildren().addAll(square3);
+        //right rectangles
+        for (int i=0;i<3;i++) {
+            Rectangle square4 = new Rectangle(15,85);
+            square4.setTranslateY(35.5 + 20 + 42.5 + 86 + 172*i);
+            square4.setTranslateX(20 + 86*7);
+            stackPane.getChildren().addAll(square4);
+        }
+        Rectangle square4 = new Rectangle(15,42.5+15);
+        square4.setTranslateX(20 + 86*7);
+        square4.setTranslateY(7 + 20);
+        stackPane.getChildren().addAll(square4);
+
+        stackPane.setLayoutX(-35.5);
+        stackPane.setLayoutY(-35.5);
+
+
         //create state viewer for Board
         GridPane gridPane = new GridPane();
         gridPane.setLayoutX(20);
@@ -190,6 +241,7 @@ public class Viewer extends Application {
 
         //add state viewers to controls
         controls.getChildren().add(gridPane);
+        controls.getChildren().add(stackPane);
         controls.getChildren().add(playerInfo);
         controls.getChildren().add(assamPane);
     }

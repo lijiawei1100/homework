@@ -18,6 +18,7 @@ import static comp1110.ass2.Player.getColorName;
 public class Rug {
     private Color colour;
     private final int id;
+
     /*
     changed id type to integer instead of string - makes it easier to keep track of how many
     rugs have been placed and make for better object-oriented programming
