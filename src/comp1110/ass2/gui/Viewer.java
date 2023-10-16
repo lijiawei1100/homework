@@ -177,7 +177,7 @@ public class Viewer extends Application {
         //right rectangles
         for (int i=0;i<3;i++) {
             Rectangle square4 = new Rectangle(15,85);
-            square4.setTranslateY(20 + 42.5 + 86 + 172*i);
+            square4.setTranslateY(35.5 + 20 + 42.5 + 86 + 172*i);
             square4.setTranslateX(20 + 86*7);
             stackPane.getChildren().addAll(square4);
         }
