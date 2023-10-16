@@ -41,8 +41,6 @@ class AssamTest {
             int yPosition = assam.getAssamY();
             assertTrue(Integer.toString(xPosition).equals(xPositionString),"xPosition is "+xPositionString+"now is "+xPosition);
             assertTrue(Integer.toString(yPosition).equals(yPositionString),"yPosition is "+yPositionString+"now is "+yPosition);
-
-
             }
         }
 }
