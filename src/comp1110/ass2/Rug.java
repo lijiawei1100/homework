@@ -128,22 +128,22 @@ public class Rug {
         position2 = String.valueOf((rug.p2.getKey())) + String.valueOf((rug.p2.getValue()));
         return (colourString + idString + position1 + position2);
     }
-}
+    public static void main(String[] args) throws Exception {
+        String input1 = "n00";
+        String input2 = "p04";
+        Rug rug2 = stringToAbbreviatedRug(input2);
+        System.out.println("Rug1 string: " + input1);
+        System.out.println("Rug1 is null");
+        System.out.println("Rug2 string: " + input2);
+        System.out.println("Rug2 colour: " + rug2.colour.toString());
+        System.out.println("Rug2 id: " + rug2.id);
+    }
+};
 
 
 
-//    /**
-//     * for testing
-//     * @param args
-//     * @throws Exception
-//     */
-//    public static void main(String[] args) throws Exception {
-//        String input1 = "n00";
-//        String input2 = "p04";
-//        Rug rug2 = stringToAbbreviatedRug(input2);
-//        System.out.println("Rug1 string: " + input1);
-//        System.out.println("Rug1 is null");
-//        System.out.println("Rug2 string: " + input2);
-//        System.out.println("Rug2 colour: " + rug2.colour.toString());
-//        System.out.println("Rug2 id: " + rug2.id);
-//    }
+    /**
+     * for testing
+     * @param args
+     * @throws Exception
+     */

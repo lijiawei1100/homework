@@ -2,12 +2,14 @@ package comp1110.ass2;
 
 import gittest.B;
 import javafx.scene.paint.Color;
+import javafx.util.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
 import java.util.concurrent.TimeUnit;
 
+import static comp1110.ass2.Player.getColorName;
 import static org.junit.jupiter.api.Assertions.*;
 @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
 class BoardTest {
@@ -30,6 +32,19 @@ class BoardTest {
 
     }
     @Test
+    public void checkBoardToString() throws Exception {
+        Square[][] boardMatrix = new Square[7][7];
+        for (int x = 0; x < 7; x++) {
+            for (int y = 0; y < 7; y++) {
+                boardMatrix[x][y] = new Square(true,new Pair<>(x,y),null);
+            }
+        }
+        Board testBoard = new Board(boardMatrix);
+        String boardString = "Bn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";
+        assertTrue(((Board.boardToString(testBoard)).equals(boardString)),"board string is "+(Board.boardToString(testBoard))+"; should be "+boardString);
+    }
+
+        @Test
     public void checkOccupiedRugsOnBoard() throws Exception {
         String inputString = "By02n00n00y07y07c07r06y02n00r02n00n00n00r06n00y05r07n00n00n00n00y00c00y08n00y06n00n00y00c00y08y04y06p06n00n00p04r03y04n00p06y03n00p04n00n00n00n00y03";
         Board board = Board.stringToBoard(inputString);
@@ -58,5 +73,4 @@ class BoardTest {
                 assertTrue(((colourChar+idString).equals(subString)),"substring is "+subString+" test string is "+colourChar+idString);
 
     }}}
-
 }

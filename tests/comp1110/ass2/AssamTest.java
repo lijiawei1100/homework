@@ -1,5 +1,8 @@
 package comp1110.ass2;
 
+import javafx.scene.paint.Color;
+import javafx.util.Pair;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
@@ -43,4 +46,15 @@ class AssamTest {
             assertTrue(Integer.toString(yPosition).equals(yPositionString),"yPosition is "+yPositionString+"now is "+yPosition);
             }
         }
+    @Test
+    public void checkAssamToString() throws Exception {
+        String testString = "A01E";
+        Assam testAssam = new Assam(90,new Pair<>(0, 1));
+        String testStringFromAssam = (Assam.assamToString(testAssam));
+        Assertions.assertEquals(testString,testStringFromAssam,"current string: "+testAssam+" but should be: "+testStringFromAssam);
+        String testString1 = "A54W";
+        Assam testAssam1 = new Assam(270,new Pair<>(5, 4));
+        String testStringFromAssam1 = (Assam.assamToString(testAssam1));
+        Assertions.assertEquals(testString1,testStringFromAssam1,"current string: "+testAssam1+" but should be: "+testStringFromAssam1);
+    }
 }

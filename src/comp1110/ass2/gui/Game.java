@@ -57,6 +57,13 @@ public class Game extends Application {
         this.assam=assam;
     }
 
+    public Player getCurrentPlayer() {
+        return this.currentPlayer;
+    }
+    public int getCurrentPhase() {
+        return this.gamePhase;
+    }
+
     public void moveToNextPlayer() {
         int nPlayers = 0;
         for(Player i:players) {
@@ -76,7 +83,7 @@ public class Game extends Application {
             currentPaymentAmount = 0;
         }
     }
-    public String gameToString (){
+    public String gameToString(){
         String gameString = "";
         Player[] players = this.players;
         Board board = this.board;
