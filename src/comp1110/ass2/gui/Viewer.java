@@ -442,18 +442,14 @@ public class Viewer extends Application {
 
         Label messageLabel = new Label(" Hover over a square to see a message");
         root.setOnMouseMoved(event -> {
-            double mouseX = event.getSceneX();
-            double mouseY = event.getSceneY();
-            String message = getMessageBasedOnMousePosition(mouseX, mouseY);
-            messageLabel.setText(message);
+            if (thisGame.gamePhase == 3) {
+                double mouseX = event.getSceneX();
+                double mouseY = event.getSceneY();
+                String message = getMessageBasedOnMousePosition(mouseX, mouseY);
+                messageLabel.setText(message);
+            }
         });
 
-//
-//        imageView.setOnMouseClicked(event -> {
-//            if (event.getClickCount() == 1) {
-//                System.out.println("Image Clicked!");
-//            }
-//        });
         VBox vBox = new VBox();
         vBox.getChildren().add(phase3);
         vBox.getChildren().add(messageLabel);

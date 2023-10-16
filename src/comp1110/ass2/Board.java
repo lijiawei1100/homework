@@ -8,6 +8,13 @@ import static comp1110.ass2.Player.getColorName;
 import static comp1110.ass2.Rug.stringToAbbreviatedRug;
 
 public class Board {
+    /**
+     * AUTHORSHIP:
+     * the class was written by both group members:
+     * stringToBoard was written by Benjamin Campbell
+     * boardToString was written by Jiawei Li
+     * we both checked and debugged each other's code
+     */
     public final static int BOARD_WIDTH = 7; // The width of the board (left to right)
     public final static int BOARD_HEIGHT = 7; // The height of the board (top to bottom)
     private
@@ -19,14 +26,6 @@ public class Board {
 
     public Square[][] getBoardMatrix() {
         return this.boardMatrix;
-    }
-
-    void calcScore (Player player) {
-        //calculates a player's score given a board
-    }
-    Player calcWinner (Player player[]) {
-        //returns the winning player on a board
-        return null;
     }
 
     public static Board stringToBoard(String inputString)  {

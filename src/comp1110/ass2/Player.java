@@ -5,6 +5,11 @@ import javafx.scene.paint.Color;
 public class Player{
 
     /**
+     * AUTHORSHIP:
+     * stringToPlayer was written by Benjamin Campbell
+     * playerToString was written by Jiawei Li
+     * we both checked and debugged each other's code
+     *
      * colour represents different players. we have four players in this game,so we have cyan,yellow,red,purple as their colors
      * money represents the remaining dirhams
      * rugsNumber represents the remaining numbers of rugs, it should be a two-digit number. 00 when there is no rugs. 15 is the starting number.
@@ -95,7 +100,7 @@ public class Player{
         rugsNumber = rugsNumber - 1;
     }
 
-    public static String plyaerToString(Player player){
+    public static String playerToString(Player player){
         String moneyString;
         String rugsNumberString;
         String isPlayingString;

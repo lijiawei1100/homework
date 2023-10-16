@@ -2,7 +2,6 @@ package comp1110.ass2;
 
 import javafx.util.Pair;
 
-import java.security.PrivateKey;
 
 public class Assam {
     /**
@@ -10,12 +9,17 @@ public class Assam {
      * angle(0,90,180,270)
      * direction: we have four direction(north,east,south,west),but we can use angle(0,90,180.270)
      * position: we need to initialize a square Intpair[] for it
-     * Assam's state: unchangeed or changed
+     * Assam's state: unchanged or changed
+     *
+     * AUTHORSHIP:
+     * the class was written by both group members:
+     * stringToAssam was written by Benjamin Campbell
+     * assamToString was written by Jiawei Li
+     * we both checked and debugged each other's code
      */
 
     private int angle;
     private Pair<Integer,Integer> position;
-    private Square Square;
 
     public Assam(int angle, Pair<Integer, Integer> position){
         this.angle = angle;
@@ -37,32 +41,30 @@ public class Assam {
     }
 
     public static Assam stringToAssam(String inputString) {
-        int angle = 0;
+        int inputAngle = 0;
         char angleChar = inputString.charAt(3);
         if (angleChar == 'N') {
-            angle = 0;
+            inputAngle = 0;
         } else if (angleChar == 'E') {
-            angle = 90;
+            inputAngle = 90;
         } else if(angleChar == 'S') {
-            angle = 180;
+            inputAngle = 180;
         } else if(angleChar == 'W') {
-            angle = 270;
+            inputAngle = 270;
         }
-//            else {
-//            throw new Exception("direction is not a valid character");
-//        }
+
         Pair<Integer,Integer> location;
         char charX = inputString.charAt(1);
         char charY = inputString.charAt(2);
         Integer intX = Integer.parseInt(String.valueOf(charX));
         Integer intY = Integer.parseInt(String.valueOf(charY));
         location = new Pair<>(intX,intY);
-        return (new Assam(angle,location));
+        return (new Assam(inputAngle,location));
     }
 
     public static String assamToString(Assam assam){
-        String direction ="";
-        String assamString = "";
+        String direction = "";
+        String assamString;
         switch (assam.getAngle()){
             case 0 :direction="N";break;
             case 90 : direction = "E";break;
@@ -78,6 +80,8 @@ public class Assam {
       * @param args
      * @throws Exception
      */
+
+    //code to test stringToAssam
 //    public static void main(String[] args) throws Exception {
 //        String input1 = "A04E";
 //        String input2 = "A53S";
