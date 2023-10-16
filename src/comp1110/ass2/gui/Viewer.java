@@ -36,6 +36,7 @@ import java.lang.reflect.Array;
 import static comp1110.ass2.Marrakech.*;
 import static comp1110.ass2.Player.getColorName;
 
+
 public class Viewer extends Application {
 
     private static final int VIEWER_WIDTH = 1200;
@@ -46,6 +47,7 @@ public class Viewer extends Application {
     private TextField boardTextField;
 
     private Game thisGame;
+
             //= Game.stringToGame("Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08");
 //TODO FIX THIS - THIS IS WHERE GAME is found
 // other string: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
@@ -68,7 +70,8 @@ public class Viewer extends Application {
             String initialGameString = "";
             String selectedOption = playerSelectionBox.getValue();
             switch (selectedOption){
-                case "2 Players" : initialGameString ="Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
+                //case "2 Players" : initialGameString ="Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
+                case "2 Players" : initialGameString ="Py02901iPp03001iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
                 case "3 Players" : initialGameString = "Py03015iPp03015iPr03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
                 case "4 Players" : initialGameString = "Py03015iPp03015iPr03015iPc03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
             }
@@ -76,6 +79,7 @@ public class Viewer extends Application {
             try {
                 //create new game based on the selected players' number
                 thisGame = Game.stringToGame(initialGameString);
+                thisGame.rugHbox = buildImage(0);
                 //build a new viewer
                 makeControls();
                 restart();
@@ -491,7 +495,6 @@ public class Viewer extends Application {
 
 //        Image image1 = new Image("file:///C:/Users/user/Desktop/x.jpg");
 
-
         Label messageLabel = new Label(" Hover over a square to see a message");
         root.setOnMouseMoved(event -> {
             if (thisGame.gamePhase == 3) {
@@ -535,6 +538,7 @@ public class Viewer extends Application {
         }
         return null;
     }
+
 
     //designed three state for choosing the rug
     static HBox buildImage(int a){
@@ -587,13 +591,14 @@ public class Viewer extends Application {
             message = "Player 1 won the game";
         } else if (a == 'p') {
             message = "Player 2 won the game";
-        }
-        if(message!=null){
-            VBox vBox = new VBox();
-            Text winnerInfo = new Text(message);
-            vBox.getChildren().add(winnerInfo);
-            controls.getChildren().add(vBox);
-        }
+        }else{message = "n";}
+        VBox vBox = new VBox();
+        Text winnerInfo = new Text(message);
+        vBox.getChildren().add(winnerInfo);
+        vBox.setLayoutX(1000);
+        vBox.setLayoutY(600);
+        controls.getChildren().add(vBox);
+
     }
 
 

@@ -48,7 +48,6 @@ public class Rug {
             } else if (colourChar == 'p') {
                 colour = Color.PURPLE;
             } else return null;
-
             String idString = rugString.substring(1, 3);
             Pair<Integer, Integer> firstPosition = new Pair<Integer, Integer>(Integer.parseInt(rugString.substring(3, 4)), Integer.parseInt(rugString.substring(4, 5)));
             Pair<Integer, Integer> secondPosition = new Pair<Integer, Integer>(Integer.parseInt(rugString.substring(5, 6)), Integer.parseInt(rugString.substring(6, 7)));
