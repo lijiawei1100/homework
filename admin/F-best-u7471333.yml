@@ -19,8 +19,8 @@ declaration: >-
 # Add as many "name+comment" entries as necessary
 # (or remove it altogether if you haven't collaborated with anyone)
 collaboration:
-  - name:
-    comment: >-
+  - name: Jiawei Li
+    comment: Jiawei helped me with text formatting, code comments and displaying panes
 
 # Use this to list any code that you used that you did not write,
 # aside from code provided by the lecturer.  Provide a comment
@@ -32,15 +32,16 @@ collaboration:
 
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
-class:
-   - 
-   - 
 
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
 method:
-   - 
-   - 
+   - createPhase2()
+   - https://gitlab.cecs.anu.edu.au/u7471333/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java/#L302-380
+   - first half of createPhase3()
+   - https://gitlab.cecs.anu.edu.au/u7471333/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java/#L382-447
+   - rugWithPositionToString
+   - https://gitlab.cecs.anu.edu.au/u7471333/comp1110-ass2/-/blob/main/src/comp1110/ass2/Rug.java/#L116-141
 
 # sign *your* name and uid here
 name: Benjamin Campbell

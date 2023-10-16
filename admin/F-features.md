@@ -9,4 +9,5 @@ of our project implements the following features:
 
 ### additional features
  - A start screen for the player to select the number of people
+ - A reset button for the player to restart the game
     
