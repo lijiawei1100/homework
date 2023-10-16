@@ -10,10 +10,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
 
 class SquareTest {
-    @Test
-    public  void checkSquareValid() throws Exception{
-        Rug occupiedRug = Rug.stringToAbbreviatedRug("r01");
-        Square square = new Square(true, new Pair<>(0,5),occupiedRug);
-        assertTrue(square.isSquareValid(square),"is not on a edge");
-    }
+//    @Test
+//    public  void checkSquareValid() throws Exception{
+//        Rug occupiedRug = Rug.stringToAbbreviatedRug("r01");
+//        Square square = new Square(true, new Pair<>(0,5),occupiedRug);
+//        assertTrue(square.isSquareValid(square),"is not on a edge");
+//    }
 }

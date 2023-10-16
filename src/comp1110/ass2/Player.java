@@ -6,14 +6,17 @@ public class Player{
 
     /**
      * AUTHORSHIP:
-     * stringToPlayer was written by Benjamin Campbell
-     * playerToString was written by Jiawei Li
-     * we both checked and debugged each other's code
      *
      * colour represents different players. we have four players in this game,so we have cyan,yellow,red,purple as their colors
      * money represents the remaining dirhams
      * rugsNumber represents the remaining numbers of rugs, it should be a two-digit number. 00 when there is no rugs. 15 is the starting number.
      * gameState represents if players are in the game or not. 'p' represents they are in the game, 'o' represents out of the game.
+     *
+     * stringToPlayer was written by Benjamin Campbell
+     * playerToString was written by Jiawei Li
+     * we both checked and debugged each other's code
+     *
+     * @author <u7531534><Jiawei Li>/ <u7471333><Benjamin Campbell>
      */
     private Color colour;
     private int money;
@@ -73,7 +76,7 @@ public class Player{
         return (new Player(colour,money,rugsNumber,isPlaying));
     }
 
-
+    //Since we can't return the color as a string directly from the javafx function, we need to create a method to do that.
     public static String getColorName(Color color) {
         if (color.equals(Color.RED)) {
             return "Red";
@@ -100,6 +103,7 @@ public class Player{
         rugsNumber = rugsNumber - 1;
     }
 
+    //input a player output a string
     public static String playerToString(Player player){
         String moneyString;
         String rugsNumberString;
@@ -111,13 +115,13 @@ public class Player{
         }else{
             rugsNumberString = String.valueOf(player.getRugsNumber());
         }
+        //different cases to add "0";
         if (player.money<100 & player.money>=10){
             moneyString = "0"+String.valueOf(player.money);
         } else if(player.money<10){moneyString ="00" +String.valueOf(player.money);
         } else{
             moneyString = String.valueOf(player.money);
         }
-
         if(player.isPlaying == true){isPlayingString = "i";}
         else{isPlayingString = "o";}
         playerString = "P" + getColorName(player.colour).toLowerCase().charAt(0)+moneyString+rugsNumberString+isPlayingString;
