@@ -52,6 +52,9 @@ public class Game extends Application {
     int gamePhase;
     int currentDiceRoll;
     int currentPaymentAmount;
+    int actualPaymentAmount;
+    boolean playerDoPay;
+    boolean skip;
     Boolean rugPlaceIsHorizontal = Boolean.TRUE;
 //    HBox rugHbox = Viewer.buildImage(0);
 
@@ -63,6 +66,7 @@ public class Game extends Application {
         this.gamePhase = 0;
         this.board=board;
         this.assam=assam;
+        this.playerDoPay =true;
     }
 
     //switch to the next player
@@ -76,6 +80,7 @@ public class Game extends Application {
         }
         currentPlayerIndex = (currentPlayerIndex + 1) % nPlayers;
         currentPlayer = players[currentPlayerIndex];
+        if(!currentPlayer.getIsPlaying()) moveToNextPlayer();
     }
 
     public void moveToNextPhase() {
@@ -120,7 +125,7 @@ public class Game extends Application {
         for (int i = 0; i < 32; i++) {
             if (gameString.charAt(i) == 'P') {
                 // when the string is Pr00012o,he is out of game, since the money become 0;
-                if (!(gameString.substring(i+2, i + 5).equals("000") & gameString.substring(i+7,i+8).equals("o"))) {
+               // if (!(gameString.substring(i+2, i + 5).equals("000") & gameString.substring(i+7,i+8).equals("o"))) {
                     Color color =null;
                     int money;
                     int rugsNumber;
@@ -146,7 +151,7 @@ public class Game extends Application {
                     players[b] = new Player(color,money,rugsNumber,isPlaying);
                     }
                 }
-            }
+
         // get assam
         String assamString = null;
         for(int i=0;i<gameString.length();i++){

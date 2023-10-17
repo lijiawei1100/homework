@@ -32,8 +32,11 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Collections;
 
 import static comp1110.ass2.Marrakech.*;
+import static comp1110.ass2.Player.getActualPayAmount;
 import static comp1110.ass2.Player.getColorName;
 
 
@@ -136,9 +139,16 @@ public class Viewer extends Application {
                 String colour = getColorName(ithPlayer.getColour());
                 String money = String.valueOf(ithPlayer.getMoney());
                 String rugs = String.valueOf(ithPlayer.getRugsNumber());
-                Text playerInfoText = new Text("Player "+i+": " + colour + "\nRemaining Dirhams: " + money + "\nRemaining Rugs: " + rugs + "\n");
-                playerInfoText.setFont(Font.font(25));
-                playerInfo.getChildren().add(playerInfoText);
+                if(ithPlayer.getIsPlaying() ==true) {
+                    Text playerInfoText = new Text("Player " + i + ": " + colour + "\nRemaining Dirhams: " + money + "\nRemaining Rugs: " + rugs + "\n");
+                    playerInfoText.setFont(Font.font(25));
+                    playerInfo.getChildren().add(playerInfoText);
+                }
+                else {
+                    Text playerInfoText = new Text("Player " + i + ": " + colour + " (out)\nRemaining Dirhams: " + money + "\nRemaining Rugs: " + rugs + "\n");
+                    playerInfoText.setFont(Font.font(25));
+                    playerInfo.getChildren().add(playerInfoText);
+                }
             }
         }
 
@@ -302,6 +312,7 @@ public class Viewer extends Application {
     public void createPhase2(){
         Text rollNumber = new Text("Your number: " + thisGame.currentDiceRoll);
         //todo: hide below text and reveal if Assam landed... (Get Assam landing square)...GET DONE SOON
+        final int[] tmp = new int[2];
 
         rollNumber.setFont(Font.font(25));
         Text phase2 = new Text("Phase 2: ");
@@ -329,17 +340,25 @@ public class Viewer extends Application {
             Rug occupiedRug = thisGame.board.getBoardMatrix()[thisGame.assam.getAssamX()][thisGame.assam.getAssamY()].occupiedRug;
             if (occupiedRug != null) {
                 //if occupied rug exists pay that player
+                thisGame.playerDoPay = true;
                 thisGame.playerPaidIndex = occupiedRug.getPlayerIndex();
                 Player playerToPay = thisGame.players[thisGame.playerPaidIndex];
                 thisGame.currentPaymentAmount = getPaymentAmount(thisGame.gameToString());
                 if (thisGame.currentPlayer == playerToPay) {
                     thisGame.currentPaymentAmount = 0; //a player does not need to play themselves
                 } else {
-                    thisGame.currentPlayer.playerPays(thisGame.currentPaymentAmount);
-                    playerToPay.playerIsPaid(thisGame.currentPaymentAmount);
+                    if(playerToPay.getIsPlaying()) {
+                        //need to fix how to pay as much as the player can when the payment is above the money
+                        tmp[0] = thisGame.currentPlayer.getMoney();
+                        thisGame.currentPlayer.playerPays(thisGame.currentPaymentAmount);
+                        thisGame.actualPaymentAmount = getActualPayAmount(thisGame.currentPaymentAmount, tmp[0]);
+                        playerToPay.playerIsPaid(thisGame.actualPaymentAmount);
+                    }
+                    else thisGame.playerDoPay=false;
                 }
             } //else thisGame.currentPaymentAmount = 0;
             thisGame.moveToNextPhase(); //move to phase 3
+            updateStatus();
             controls.getChildren().clear();
             makeControls();
         });
@@ -357,14 +376,14 @@ public class Viewer extends Application {
 
         Text payment = new Text();
         if (thisGame.gamePhase>=3){
-            if (thisGame.currentPaymentAmount == 0) {
-                payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");
-            } else {
-                payment = new Text("Player " + (thisGame.currentPlayerIndex + 1) + " pays " + thisGame.currentPaymentAmount +
+//            if (thisGame.currentPaymentAmount == 0) {
+//                payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");
+              if (thisGame.currentPaymentAmount!=0 & thisGame.playerDoPay) {
+                payment = new Text("Player " + (thisGame.currentPlayerIndex + 1) + " pays " + thisGame.actualPaymentAmount+
                         "\ndirhams to Player " + (thisGame.playerPaidIndex + 1));
-            }
+              }
+              else {payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");}
         }
-
 
         payment.setFont(Font.font(25));
         VBox vBox = new VBox();
@@ -377,6 +396,13 @@ public class Viewer extends Application {
         vBox.setLayoutY(150);
         vBox.setSpacing(5);
         controls.getChildren().add(vBox);
+    }
+    public void updateStatus(){
+        if (thisGame.currentPlayer.getMoney() == 0) {
+            thisGame.currentPlayer.playerOut();
+            thisGame.skip=true;
+        }
+        winner();
     }
 
     public void createPhase3(){
@@ -403,7 +429,7 @@ public class Viewer extends Application {
             controls.getChildren().clear();
             makeControls();
         });
-        if (thisGame.gamePhase == 3) {
+        if (thisGame.gamePhase == 3 & thisGame.currentPlayer.getIsPlaying()) {
             horizontalRug.setDisable(false);
             verticalRug.setDisable(false);
         } else {
@@ -411,8 +437,14 @@ public class Viewer extends Application {
             verticalRug.setDisable(true);
         }
 
+//        if(thisGame.currentPlayer.getIsPlaying()){
+//            thisGame.moveToNextPhase(); //move back to phase 1
+////            controls.getChildren().clear();
+////            makeControls();
+//        }
+
         //create invisible GridPane for squares
-        if (thisGame.gamePhase == 3) {
+        if (thisGame.gamePhase == 3 & !thisGame.skip) {
             GridPane invisibleGrid = new GridPane();
             invisibleGrid.setLayoutX(20);
             invisibleGrid.setLayoutY(20);
@@ -425,7 +457,6 @@ public class Viewer extends Application {
                     squareImage.setFill(Color.web("0x0000FF",0.0));
                     squareImage.setStroke(Color.BLACK);
                     invisibleGrid.add(squareImage, x, y, 1, 1);
-
 
                     int finalX = x;
                     int finalY = y;
@@ -558,27 +589,42 @@ public class Viewer extends Application {
 
         Label messageLabel = new Label(" Hover over a square to see a message"+"\n\n");
         root.setOnMouseMoved(event -> {
-            if (thisGame.gamePhase == 3) {
+            if (thisGame.gamePhase == 3 ) {
                 double mouseX = event.getSceneX();
                 double mouseY = event.getSceneY();
                 String message = getMessageBasedOnMousePosition(mouseX, mouseY);
                 messageLabel.setText(message);
             }
         });
+        //use remain button to skip when the player is out of game
+        Label messageLabel1 = new Label("Press remain button to continue"+"\n\n");
+        Button remain = new Button("remain");
+        remain.setOnAction(event ->{
+            thisGame.skip=false;
+            thisGame.moveToNextPhase();
+            controls.getChildren().clear();
+            makeControls();});
 
         VBox vBox = new VBox();
         vBox.getChildren().add(phase3);
-        vBox.getChildren().add(messageLabel);
-        vBox.getChildren().add(rugDirection);
+        if(!thisGame.skip) {
+            vBox.getChildren().add(messageLabel);}
+        if(!thisGame.skip & thisGame.gamePhase ==3){
+            vBox.getChildren().add(rugDirection);}
         vBox.getChildren().add(verticalRug);
         vBox.getChildren().add(horizontalRug);
+        if(thisGame.skip) {
+            vBox.getChildren().add(messageLabel1);
+            vBox.getChildren().add(remain);}
 //        vBox.getChildren().add(thisGame.rugHbox);
         vBox.setLayoutX(950);
         vBox.setLayoutY(370);
         vBox.setSpacing(10);
         controls.getChildren().add(vBox);
 
+
     }
+
 
 
     //return a string by mouse over position,checking if the rug and placement are valid.
@@ -694,7 +740,9 @@ public class Viewer extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
           primaryStage.setTitle("Marrakech Viewer");
-          thisGame = Game.stringToGame("Pc01807iPy07408iPp00208iPr02608iA63WBy02n00n00y07p11c07r06y02r11c16y12c17c17r06n00y05c16y16y15y17n00c10c10y13y16y06y17n00y00c00y08y04y06p06n00n00p04r03y04n00p06y03n00p04n00n00n00p17p17");
+          //thisGame = Game.stringToGame("Pc00307iPy00306iPp00308iPr00308iA63WBy02n00n00y07p11c07r06y02r11c16y12c17c17r06n00y05c16y16y15y17n00c10c10y13y16y06y17n00y00c00y08y04y06p06n00n00p04r03y04n00p06y03n00p04n00n00n00p17p17");
+          thisGame = Game.stringToGame("Pc00307iPy00306iPp00308iPr00308iA63WBy99n00n00y98p11c07r06y99r11c16y97c17c17r06n00y96c16y95y94y93n00c10c10y92y95y91y93n00y90c00y89y88y91p06n00n00p04r87y88n00p06y87n00p04n00n00n00p17p17");
+          //thisGame = Game.stringToGame("Pc03014iPy03014iPp03215iPr02815iA14SBn00n00y01n00n00n00n00n00n00y01n00n00n00n00n00n00n00p00n00n00n00n00n00n00p00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00");
           Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
           root.getChildren().add(controls);
           makeControls();
