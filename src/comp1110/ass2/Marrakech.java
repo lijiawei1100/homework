@@ -136,7 +136,9 @@ public class Marrakech {
         int countNull=0;
         //since the stringToGame method only create the players who are still existing, we can count the remaining players to see if game is over.
         for (Player i : game.getPlayers()){
-            if (!i.getIsPlaying()) countNull+=1;
+            if (i==null) {
+                countNull+=1;
+            } else if (!i.getIsPlaying()) countNull+=1;
         }
         if (countNull==4) return true;//if all the players are not existing,obviously game is over.
         //otherwise, check remaining players.
