@@ -137,29 +137,4 @@ public class Player{
         playerString = "P" + getColorName(player.colour).toLowerCase().charAt(0)+moneyString+rugsNumberString+isPlayingString;
         return playerString;
     }
-
-
-//    /**
-//     * testing code here.
-//     * @param args
-//     * @throws Exception
-//     */
-//    public static void main(String[] args) throws Exception {
-//        String input1 = "Pr12345i";
-//        String input2 = "Pc00415o";
-//        Player player1 = stringToPlayer(input1);
-//        Player player2 = stringToPlayer(input2);
-//        System.out.println("String 1: " + input1);
-//        System.out.println("Player1 colour: " + player1.colour);
-//        System.out.println("Player1 money: " + player1.money);
-//        System.out.println("Player1 rugs: " + player1.rugsNumber);
-//        System.out.println("Player1 is playing: " + player1.isPlaying);
-//        System.out.println("String 2: " + input2);
-//        System.out.println("Player2 colour: " + player2.colour);
-//        System.out.println("Player2 money: " + player2.money);
-//        System.out.println("Player2 rugs: " + player2.rugsNumber);
-//        System.out.println("Player2 is playing: " + player2.isPlaying);
-//        System.out.println(plyaerToString(player2));
-//    }
-
 }

@@ -1,20 +1,14 @@
 package comp1110.ass2.gui;
-
 import comp1110.ass2.*;
-import gittest.B;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Polygon;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -23,18 +17,7 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
-import javafx.scene.image.Image;
-
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
 import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Collections;
-
 import static comp1110.ass2.Marrakech.*;
 import static comp1110.ass2.Player.getActualPayAmount;
 import static comp1110.ass2.Player.getColorName;
@@ -58,10 +41,7 @@ public class Viewer extends Application {
 
     private final Group root = new Group();
     private final Group controls = new Group();
-    private TextField boardTextField;
-
     private Game thisGame;
-
     public javafx.scene.Group getRoot() {
         return root;
     }
@@ -80,9 +60,13 @@ public class Viewer extends Application {
             String initialGameString = "";
             String selectedOption = playerSelectionBox.getValue();
             switch (selectedOption){
-                case "2 Players" : initialGameString ="Py02901iPp03001iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
+                //change initial game string based on chosen number of players
+                case "2 Players" : initialGameString ="Py03015iPp03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
+                //yellow, purple
                 case "3 Players" : initialGameString = "Py03015iPp03015iPr03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
+                //yellow, purple, red
                 case "4 Players" : initialGameString = "Py03015iPp03015iPr03015iPc03015iA33NBn00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00";break;
+                //yellow, purple, red, cyan
             }
             this.controls.getChildren().clear();
             try {
@@ -121,7 +105,6 @@ public class Viewer extends Application {
      * Draw a placement in the window, removing any previously drawn placements
      * @param state an array of two strings, representing the current game state
      */
-    //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08@2
     void displayState(String state) throws Exception {
         // FIXME Task 5: implement the simple state viewer
 
@@ -307,7 +290,6 @@ public class Viewer extends Application {
 
         controls.getChildren().add(vBox);
     }
-    //test board: Py04706iPp00406iPr02806iA15SBy11y11p14p14y07c07y01r00c11c11p16y17y17y10p17y19r11c01c01n00n00p17y19c15n00r17r13n00r06c13r05r05r17r13y04y18y20n00n00c02r16r08y18y20y02y02c09r16r08
 
     public void createPhase2(){
         Text rollNumber = new Text("Your number: " + thisGame.currentDiceRoll);
@@ -376,8 +358,6 @@ public class Viewer extends Application {
 
         Text payment = new Text();
         if (thisGame.gamePhase>=3){
-//            if (thisGame.currentPaymentAmount == 0) {
-//                payment = new Text("Player " + Integer.toString(thisGame.currentPlayerIndex + 1) + " pays no one");
               if (thisGame.currentPaymentAmount!=0 & thisGame.playerDoPay) {
                 payment = new Text("Player " + (thisGame.currentPlayerIndex + 1) + " pays " + thisGame.actualPaymentAmount+
                         "\ndirhams to Player " + (thisGame.playerPaidIndex + 1));
@@ -437,11 +417,6 @@ public class Viewer extends Application {
             verticalRug.setDisable(true);
         }
 
-//        if(thisGame.currentPlayer.getIsPlaying()){
-//            thisGame.moveToNextPhase(); //move back to phase 1
-////            controls.getChildren().clear();
-////            makeControls();
-//        }
 
         //create invisible GridPane for squares
         if (thisGame.gamePhase == 3 & !thisGame.skip) {
@@ -625,8 +600,6 @@ public class Viewer extends Application {
 
     }
 
-
-
     //return a string by mouse over position,checking if the rug and placement are valid.
     private String getMessageBasedOnMousePosition(double mouseX, double mouseY) {
         // Example: Determine the message based on the mouse position
@@ -655,7 +628,7 @@ public class Viewer extends Application {
         return "\n\n";
     }
 
-    //designed three state for choosing the rug
+    //designed three state for choosing the rug, but unfortunately it has functional conflicts.So I'll leave the code here to indicate the method I've tried
 //    static HBox buildImage(int a){
 //        Image image =new javafx.scene.image.Image("file:./assets/rug0.png");
 //        Image image1 =new javafx.scene.image.Image("file:./assets/rug1.png");
@@ -739,9 +712,12 @@ public class Viewer extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
           primaryStage.setTitle("Marrakech Viewer");
-          //thisGame = Game.stringToGame("Pc00307iPy00306iPp00308iPr00308iA63WBy02n00n00y07p11c07r06y02r11c16y12c17c17r06n00y05c16y16y15y17n00c10c10y13y16y06y17n00y00c00y08y04y06p06n00n00p04r03y04n00p06y03n00p04n00n00n00p17p17");
-          thisGame = Game.stringToGame("Pc00307iPy00306iPp00308iPr00308iA63WBy99n00n00y98p11c07r06y99r11c16y97c17c17r06n00y96c16y95y94y93n00c10c10y92y95y91y93n00y90c00y89y88y91p06n00n00p04r87y88n00p06y87n00p04n00n00n00p17p17");
-          //thisGame = Game.stringToGame("Pc03014iPy03014iPp03215iPr02815iA14SBn00n00y01n00n00n00n00n00n00y01n00n00n00n00n00n00n00p00n00n00n00n00n00n00p00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00n00");
+          //testing gameState
+          //In our design rug placed ids are in order, so if you want to test any state here,
+          // please make sure that the rugs that have been placed are in order,
+          // otherwise the game won't be able to play,but it won't be a problem during normal gameplay.
+          // The instructions are just to make you use the viewer better.
+          thisGame = Game.stringToGame("Pc00306iPy00306iPp00306iPr00306`iA63WBy99n00n00y98p99c99r99y99r98c16y97c17c17r99n00y96c16y95y94y93n00c98c98y92y95y91y93n00y90c97y89y88y91p98n00n00p97r87y88n00p98y87n00p97n00n00n00p17p17");
           Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
           root.getChildren().add(controls);
           makeControls();

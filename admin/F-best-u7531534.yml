@@ -32,9 +32,9 @@ class:
 # you want to just submit classes):
 method:
    -  getWinner
-   -  https://gitlab.cecs.anu.edu.au/u7471333/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L347-449
+   -  https://gitlab.cecs.anu.edu.au/u7471333/comp1110-ass2/-/blob/main/src/comp1110/ass2/Marrakech.java#L349-449
    -  createPhase3()
-   -  https://gitlab.cecs.anu.edu.au/u7471333/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L461-500
+   -  https://gitlab.cecs.anu.edu.au/u7471333/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L482-527
    -  playerSelectionWindow()
    -  https://gitlab.cecs.anu.edu.au/u7471333/comp1110-ass2/-/blob/main/src/comp1110/ass2/gui/Viewer.java#L74-105
 

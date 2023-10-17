@@ -2,10 +2,7 @@ package comp1110.ass2;
 
 import comp1110.ass2.gui.Game;
 import javafx.scene.paint.Color;
-import javafx.util.Pair;
-
 import java.util.*;
-
 import static comp1110.ass2.Player.getColorName;
 import static comp1110.ass2.Rug.*;
 
@@ -45,7 +42,6 @@ public class Marrakech {
          //1.to see if the string is 7 characters long
         if(rug.length()!=7) return false;
         //2.to see if the first character in the String corresponds to the color in the game
-        //TODO Since the player will lose the game, the list could be changeable
         List list = new ArrayList();
         list.add('r');
         list.add('y');
@@ -131,20 +127,13 @@ public class Marrakech {
     public static boolean isGameOver(String currentGame) {
         // FIXME: Task 8
         Game game = Game.stringToGame(currentGame);
-
         int count=0;
         int countNull=0;
-        //       int playerNumber=0;
-
         //since the stringToGame method only create the players who are still existing, we can count the remaining players to see if game is over.
         for (Player i : game.getPlayers()){
             if (i==null) {
                 countNull+=1;
             } else if (!i.getIsPlaying()) countNull+=1;
-//            if (i != null) {
-//                  if (!i.getIsPlaying())
-//                countNull += 1;
-//            }
         }
         if (countNull==4) return true;//if all the players are not existing,obviously game is over.
         //otherwise, check remaining players.
@@ -256,7 +245,7 @@ public class Marrakech {
 
 
 
-//created for task 11
+   //created for task 11
    public static List<Square> getAdjacentSquares (Board board, Square currentSquare){
         List<Square> squaresList = new ArrayList<>();
         int x = currentSquare.position.getKey();

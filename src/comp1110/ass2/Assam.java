@@ -79,25 +79,4 @@ public class Assam {
         assamString = "A" + assam.getAssamX().toString() + assam.getAssamY().toString() + direction;
         return assamString;
     }
-
-    /**
-     * testing code here
-      * @param args
-     * @throws Exception
-     */
-
-    //code to test stringToAssam
-//    public static void main(String[] args) throws Exception {
-//        String input1 = "A04E";
-//        String input2 = "A53S";
-//        Assam assam1 = stringToAssam(input1);
-//        Assam assam2 = stringToAssam(input2);
-//        System.out.println("String 1: " + input1);
-//        System.out.println("Assam1 direction: " + assam1.angle);
-//        System.out.println("Assam1 position: " + assam1.position.getKey()+assam1.position.getValue());
-//        System.out.println("String 2: " + input2);
-//        System.out.println("Assam2 direction: " + assam2.angle);
-//        System.out.println("Assam2 position: " + assam2.position);
-//        System.out.println(assamToString(assam2));
-//    }
 }

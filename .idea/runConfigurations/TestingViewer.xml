@@ -1,9 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="TestingViewer" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="comp1110.ass2.gui.TestingViewer" />
-    <module name="comp1110-ass2" />
-    <method v="2">
-      <option name="Make" enabled="true" />
-    </method>
-  </configuration>
-</component>
