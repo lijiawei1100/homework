@@ -655,7 +655,6 @@ public class Viewer extends Application {
         return "\n\n";
     }
 
-
     //designed three state for choosing the rug
 //    static HBox buildImage(int a){
 //        Image image =new javafx.scene.image.Image("file:./assets/rug0.png");
