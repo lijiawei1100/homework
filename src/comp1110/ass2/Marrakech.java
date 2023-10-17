@@ -136,7 +136,7 @@ public class Marrakech {
         int countNull=0;
         //since the stringToGame method only create the players who are still existing, we can count the remaining players to see if game is over.
         for (Player i : game.getPlayers()){
-            if (i==null) countNull+=1;
+            if (!i.getIsPlaying()) countNull+=1;
         }
         if (countNull==4) return true;//if all the players are not existing,obviously game is over.
         //otherwise, check remaining players.
@@ -144,8 +144,8 @@ public class Marrakech {
         //count the people who have no rug and is still in the game. the string is like"Pr12000i". we need all players have same ending substring like "00i"
         for (Player i : game.getPlayers()){
             if(i!=null){
-                if (i.getIsPlaying() == false & i.getRugsNumber() == 0) return true;
-                else if (i.getIsPlaying() == true & i.getRugsNumber() == 0) count += 1;
+                //if (i.getIsPlaying() == false & i.getRugsNumber() == 0) return true;
+                if (i.getIsPlaying() == true & i.getRugsNumber() == 0) count += 1;
             }
         }
         if (count == game.getPlayers().length-countNull) return true;
@@ -440,7 +440,8 @@ public class Marrakech {
                 if (remainingListDirhamsScoreIndex.size() == 1)
                     return Character.toLowerCase(remainingListDirhamsScore.get(remainingListDirhamsScoreIndex.get(0)).getKey().charAt(0));
                 else  return  't';
-            } else
+            }
+            else
                 return (Character.toLowerCase(listTotalScore.get(listTotalScoreIndex.get(0)).getKey().charAt(0)));
         } else return 'n';
     }

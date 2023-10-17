@@ -92,11 +92,21 @@ public class Player{
         }}
 
     public void playerPays(int payment) {
-        money = money - payment;
+        if(payment > money) money = 0;
+        else  money = money - payment;
+    }
+
+    public static int getActualPayAmount(int payment, int a){
+        if(payment>a) return a;
+        else return  payment;
     }
 
     public void playerIsPaid(int payment) {
-        money = money + payment;
+       money = money+payment;
+    }
+
+    public void playerOut(){
+        this.isPlaying = false;
     }
 
     public void minusRug() {
