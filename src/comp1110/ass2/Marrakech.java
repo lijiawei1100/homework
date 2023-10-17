@@ -134,16 +134,19 @@ public class Marrakech {
 
         int count=0;
         int countNull=0;
-        int playerNumber=0;
+        //       int playerNumber=0;
 
         //since the stringToGame method only create the players who are still existing, we can count the remaining players to see if game is over.
         for (Player i : game.getPlayers()){
-            if (i != null) {
-               // if (!i.getIsPlaying())
-                countNull += 1;
-            }
+            if (i==null) {
+                countNull+=1;
+            } else if (!i.getIsPlaying()) countNull+=1;
+//            if (i != null) {
+//                  if (!i.getIsPlaying())
+//                countNull += 1;
+//            }
         }
-        if (countNull==playerNumber) return true;//if all the players are not existing,obviously game is over.
+        if (countNull==4) return true;//if all the players are not existing,obviously game is over.
         //otherwise, check remaining players.
         //if one of the players is out of game,and the rugsNumber is 0,then game is over. the string is like "Pr12000o"
         //count the people who have no rug and is still in the game. the string is like"Pr12000i". we need all players have same ending substring like "00i"
