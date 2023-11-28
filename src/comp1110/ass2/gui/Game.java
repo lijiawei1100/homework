@@ -24,6 +24,7 @@ public class Game extends Application {
      *
      * @author <u7531534><Jiawei Li>/ <u7471333><Benjamin Campbell>
      */
+
     private Group root = new Group();
     private static final int WINDOW_WIDTH = 1200;
     private static final int WINDOW_HEIGHT = 700;
